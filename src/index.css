@@ -54,10 +54,15 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.hero-section-test-bg {
+  background-color: #e0e0e0;
+  padding: 32px 0;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
+    background-color: #e0e0e0;
   }
   a:hover {
     color: #747bff;
