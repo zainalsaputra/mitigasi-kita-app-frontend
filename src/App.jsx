@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
 import './App.css'
-import Home from './pages/Home/home'
-import Education from './pages/Education/education'
-import Login from './pages/Login/login'
-import Register from './pages/Register/register'
-import Map from './pages/Map/map'
+import Home from './pages/Homes/home'
+import Education from './pages/Education/Education-page'
+import Login from './pages/Login/Login-page'
+import Register from './pages/Register/Register-page'
+import Map from './pages/Map/Map-page'
 import PrivateRoute from './components/privateRoute'
 
 
