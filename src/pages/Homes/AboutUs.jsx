@@ -7,9 +7,9 @@ function AboutUs() {
       {/* Lapisan putih transparan */}
       <div className="absolute inset-0 z-0"></div>
 
-      <div className="relative z-10 max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-10">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-10 w-full text-center md:text-left">
         {/* Judul */}
-        <div className="md:w-2/3 w-full text-center md:text-left">
+        <div className="md:w-1/3 w-full text-center md:text-left">
           <h2
             className="text-2xl sm:text-3xl md:text-4xl font-bold text-black text-center"
             style={{ textShadow: '4px 8px 4px rgba(0, 0, 0, 0.5)' }}
@@ -19,7 +19,7 @@ function AboutUs() {
         </div>
 
         {/* Deskripsi */}
-        <div className="md:w-12/3 w-full text-gray-800 text-center md:text-left text-sm sm:text-base md:text-lg leading-relaxed">
+        <div className="md:w-2/1 w-full text-gray-800 text-center md:text-left text-sm sm:text-base md:text-lg leading-relaxed">
           <p className="mb-4">
             MitigasiKita adalah aplikasi web yang dikembangkan oleh tim CC25-CF278 sebagai bagian dari Capstone Project program Studi Independen Dicoding. Aplikasi ini bertujuan untuk membantu masyarakat dalam memahami, mempersiapkan, dan merespons risiko bencana alam seperti gempa bumi dan tsunami.
           </p>

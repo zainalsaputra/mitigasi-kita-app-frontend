@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 
-function EduPreview(){
-    return (
-      <div className="min-h-screen flex items-center justify-center px-4 py-16">
-      <div className="flex flex-col md:flex-row md:space-x-6 items-center md:items-start max-w-4xl w-full font-poppins text-center md:text-left">
+function EduPreview() {
+  return (
+    <div className="min-h-screen px-6 py-16 flex items-center justify-center font-poppins">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-10 w-full text-center md:text-left">
         {/* Judul kiri */}
-        <div className="w-full md:w-2/3 mb-8 md:mb-0">
+        <div className="w-full md:w-1/3">
           <h2
-            className="text-2xl font-bold leading-snug sm:text-5xl md:text-4xl lg:text-5xl"
+            className="text-2xl sm:text-3xl md:text-4xl font-bold"
             style={{
               color: "#000000",
               textShadow: "4px 8px 4px rgba(0, 0, 0, 0.5)",
@@ -18,24 +18,22 @@ function EduPreview(){
         </div>
 
         {/* Deskripsi dan tombol kanan */}
-        <div className="w-full md:w-12/3">
-          <p
-            className="text-lg mb-4 sm:text-lg md:text-xl lg:text-xl"
-            style={{ color: "#000000" }}
-          >
-            Edukasi berisi panduan dan tips untuk mempersiapkan diri sebelum,
-            saat, dan setelah terjadi bencana seperti gempa bumi dan tsunami.
+        <div className="w-full md:w-2/1 text-sm sm:text-base md:text-lg text-black leading-relaxed">
+          <p className="mb-6">
+            Edukasi berisi panduan dan tips untuk mempersiapkan diri sebelum, saat, dan setelah terjadi bencana seperti gempa bumi dan tsunami.
           </p>
-          <Link to="/education">
-            <button className="px-6 py-2 text-white rounded-xl font-semibold" style={{ backgroundColor: "#0D3553" }}>
+          <Link to="/education" className="relative z-20">
+            <button
+              className="px-6 py-3 text-white rounded-xl font-semibold transition duration-300"
+              style={{ backgroundColor: "#0D3553" }}
+            >
               Klik Di Sini
             </button>
           </Link>
         </div>
       </div>
     </div>
-    );
+  );
 }
-
 
 export default EduPreview;

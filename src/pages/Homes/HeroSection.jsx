@@ -37,14 +37,14 @@ function HeroSection() {
         >
           <div className="flex flex-col md:flex-row justify-center items-center gap-8 text-center px-7">
             {/* Item 1 */}
-            <Link to="/map" className="flex flex-col items-center space-y-2 w-48 sm:w-56 md:w-64 hover:scale-105 transition-transform duration-300">
+            <Link to="/map" className="flex flex-col items-center space-y-2 w-48 sm:w-56 md:w-64 hover:scale-105 transition-transform duration-300 relative z-20">
               <FaMapMarkerAlt className="text-3xl sm:text-4xl md:text-5xl text-white" />
               <p className="text-base sm:text-lg md:text-xl font-semibold">Peta Resiko</p>
               <p className="text-xs sm:text-sm md:text-base">Data Gempa dan Tsunami</p>
             </Link>
 
             {/* Item 2 */}
-            <Link to="/education" className="flex flex-col items-center space-y-2 w-48 sm:w-56 md:w-64 hover:scale-105 transition-transform duration-300">
+            <Link to="/education" className="flex flex-col items-center space-y-2 w-48 sm:w-56 md:w-64 hover:scale-105 transition-transform duration-300 relative z-20">
               <FaBookOpen className="text-3xl sm:text-4xl md:text-5xl text-white" />
               <p className="text-base sm:text-lg md:text-xl font-semibold">Edukasi</p>
               <p className="text-xs sm:text-sm md:text-base">Panduan Mitigasi</p>

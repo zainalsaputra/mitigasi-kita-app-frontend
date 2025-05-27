@@ -1,6 +1,6 @@
 import AboutUs from "./AboutUs";
 import Navbar from "../../components/navbar";
-import Footer from "../../components/Footer";
+import Footer from "../../components/footer";
 import EduPreview from "./EduPreview";
 import HeroSection from "./HeroSection";
 import MapPreview from "./MapPreview";

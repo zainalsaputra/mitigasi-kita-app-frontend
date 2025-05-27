@@ -1,14 +1,14 @@
 import Navbar from "../../components/navbar";
-import Footer from "../../components/Footer";
+import Footer from "../../components/footer";
 
 function Education() {
   return (
     <div>
       <Navbar />
 
-      <div className="max-w-6xl mx-auto px-4 py-32 font-poppins">
+      <div className=" py-32 font-poppins">
         {/* Judul Halaman */}
-        <div className="text-center mb-12 py-8 rounded-[12px]" style={{ backgroundColor: "#ECECEC", color: "#000000" }}>
+        <div className="text-center mb-24 py-20" style={{ backgroundColor: "#ECECEC", color: "#000000" }}>
           <h2 className="text-4xl font-bold text-gray-900">
             Edukasi <span> Gempa dan Tsunami</span>
           </h2>
@@ -18,6 +18,7 @@ function Education() {
         </div>
 
         {/* Edukasi Gempa */}
+        <div className="max-w-6xl mx-auto px-4">
         <div className="flex flex-col md:flex-row gap-6 mb-12 items-start">
           <div className="md:w-1/3">
             <img
@@ -103,6 +104,7 @@ function Education() {
               Lihat Video →
             </a>
           </div>
+        </div>
         </div>
       </div>
 
