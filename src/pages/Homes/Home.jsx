@@ -1,5 +1,5 @@
 import AboutUs from "./AboutUs";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/navbar";
 import Footer from "../../components/Footer";
 import EduPreview from "./EduPreview";
 import HeroSection from "./HeroSection";

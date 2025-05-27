@@ -7,14 +7,14 @@ function HeroSection() {
       {/* Hero Putih */}
       <section className="py-64 flex flex-col font-poppins justify-end items-center text-center px-4 pb-0 max-w-4xl mx-auto">
         <p
-          className="text-lg sm:text-5xl md:text-2xl lg:text-5xl font-bold text-center"
+          className="text-2xl sm:text-4xl md:text-2xl lg:text-4xl font-bold text-center"
           style={{
             color: "#000000",
             textShadow: "4px 10px 4px rgba(0, 0, 0, 0.5)",
             lineHeight: "1.5",
           }}
         >
-          Sistem Peringatan Dini Gempa<br />dan Tsunami untuk
+          Sistem Peringatan Dini Gempa Bumi<br />dan Tsunami untuk
         </p>
       </section>
 
@@ -25,7 +25,7 @@ function HeroSection() {
       >
         <div className="text-center mb-12">
           <p 
-            className="text-lg sm:text-5xl md:text-2xl lg:text-5xl font-bold text-center" 
+            className="text-2xl sm:text-4xl md:text-2xl lg:text-4xl font-bold text-center" 
             style={{ textShadow: "4px 10px 4px rgba(0, 0, 0, 0.5)" }}
           >
             Keselamatan Masyarakat
