@@ -3,29 +3,53 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 function Register() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    province: "",
+    district: "",
+    subdistrict: "",
+    village: "",
+  });
 
-  const handleRegister = (e) => {
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleRegister = async (e) => {
     e.preventDefault();
-
-    if (password !== confirmPassword) {
+    if (form.password !== form.confirmPassword) {
       alert("Password dan Konfirmasi Password harus sama!");
       return;
     }
+    try {
+      // Remove confirmPassword before sending to backend
+      const submitForm = { ...form };
+      delete submitForm.confirmPassword;
+      const res = await fetch('https://sec-prediction-app-backend.vercel.app/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submitForm),
+      });
 
-    if (name && email && password) {
-      
-      const userData = { name, email, password };
-      const users = JSON.parse(localStorage.getItem("users")) || [];
-      users.push(userData);
-      localStorage.setItem("users", JSON.stringify(users));
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || 'Registration failed');
+      }
+
+      const data = await res.json();
+      console.log('Register response:', data);
+      // Simpan user ke localStorage jika ingin, atau bisa dihapus jika tidak perlu
+      localStorage.setItem("user", JSON.stringify(data.data));
       navigate("/login");
-    } else {
-      alert("Semua field harus diisi!");
+    } catch (error) {
+      console.error("Registration error:", error);
+      alert(error.message || "Registration failed");
     }
   };
 
@@ -35,33 +59,42 @@ function Register() {
 
       <input
         type="text"
+        name="name"
         placeholder="Nama"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={form.name}
+        onChange={handleChange}
         required
       />
 
       <input
         type="email"
+        name="email"
         placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        value={form.email}
+        onChange={handleChange}
         required
       />
 
+      <input name="province" placeholder="Provinsi" value={form.province} onChange={handleChange} required />
+      <input name="district" placeholder="Kabupaten/Kota" value={form.district} onChange={handleChange} required />
+      <input name="subdistrict" placeholder="Kecamatan" value={form.subdistrict} onChange={handleChange} required />
+      <input name="village" placeholder="Kelurahan/Desa" value={form.village} onChange={handleChange} required />
+
       <input
         type="password"
+        name="password"
         placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        value={form.password}
+        onChange={handleChange}
         required
       />
 
       <input
         type="password"
+        name="confirmPassword"
         placeholder="Konfirmasi Password"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
+        value={form.confirmPassword}
+        onChange={handleChange}
         required
       />
 
