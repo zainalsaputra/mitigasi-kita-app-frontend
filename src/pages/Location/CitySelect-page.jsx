@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import { Select } from 'react-select';
+import Select from 'react-select';
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
 function CitySelect () {
@@ -57,14 +57,14 @@ function CitySelect () {
     return (
       <div>
         <Navbar />
-        <div>
+        <div className="pt-24 px-4">
           <h1>Pilih Lokasi Anda</h1>
           <h4>Cari kota: </h4>
           <Select
             options={cities}
             value={selectedCity}
             onChange={setSelectedCity}
-            placeholder="Pilih kota..."
+            placeholder="Masukkan Nama Kota..."
             isClearable
           />
         </div>

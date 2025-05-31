@@ -3,26 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 function Login() {
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const navigate = useNavigate();
-
-  // const handleLogin = (e) => {
-  //   e.preventDefault();
-
-  //   const users = JSON.parse(localStorage.getItem("users")) || [];
-  //   const user = users.find(
-  //     (u) => u.email === email && u.password === password
-  //   );
-  //   console.log(user);
-
-  //   if (user) {
-  //     localStorage.setItem("currentUser", JSON.stringify(user));
-  //     navigate("/");
-  //   } else {
-  //     alert("Email atau password salah!");
-  //   }
-  // };
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -47,24 +27,22 @@ function Login() {
 
       const data = await res.json();
       console.log('Login response:', data);
-      // Jika backend mengirim accessToken & refreshToken di dalam user
+     
       if (data.response && data.response.accessToken && data.response.refreshToken) {
         localStorage.setItem("accessToken", data.response.accessToken);
         localStorage.setItem("refreshToken", data.response.refreshToken);
-        // Buang token dari user sebelum simpan user ke localStorage (opsional)
+      
         const userWithoutToken = { ...data.response };
         delete userWithoutToken.accessToken;
         delete userWithoutToken.refreshToken;
         localStorage.setItem("user", JSON.stringify(userWithoutToken));
       } else if (data.accessToken && data.refreshToken) {
-        // Jika token ada di root response
         localStorage.setItem("accessToken", data.accessToken);
         localStorage.setItem("refreshToken", data.refreshToken);
         if (data.response) {
           localStorage.setItem("user", JSON.stringify(data.response));
         }
       } else if (data.response) {
-        // Jika hanya user saja
         localStorage.setItem("user", JSON.stringify(data.response));
       }
       navigate("/");

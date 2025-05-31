@@ -44,7 +44,6 @@ function Register() {
 
       const data = await res.json();
       console.log('Register response:', data);
-      // Simpan user ke localStorage jika ingin, atau bisa dihapus jika tidak perlu
       localStorage.setItem("user", JSON.stringify(data.data));
       navigate("/login");
     } catch (error) {
