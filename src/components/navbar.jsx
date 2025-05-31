@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Typo 'navigate.' diperbaiki
 import { FaBars, FaTimes } from "react-icons/fa";
+import { logout } from "../utils/auth";
 
 function Navbar() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleLogout = () => {
-    localStorage.removeItem("currentUser");
+  const handleLogout = async () => {
+    await logout();
     navigate("/login");
-    setIsOpen(false); // Selalu tutup menu saat logout
+    setIsOpen(false);
   };
 
   // Fungsi terpisah untuk membuka dan menutup menu mobile

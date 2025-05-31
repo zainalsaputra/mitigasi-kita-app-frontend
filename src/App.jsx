@@ -5,8 +5,7 @@ import Education from './pages/Education/Education-page'
 import Login from './pages/Login/Login-page'
 import Register from './pages/Register/Register-page'
 import Map from './pages/Map/Map-page'
-import PrivateRoute from './components/privateRoute'
-
+import ForgotPasswordForm from './pages/Login/ForgotPasswordForm'
 
 function App() {
   return (
@@ -14,12 +13,13 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<PrivateRoute><Home /></PrivateRoute>}
+          element={<Home />}
         />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/education" element={<Education />} />
         <Route path="/map" element={<Map />} />
+        <Route path="/forgot-password" element={<ForgotPasswordForm />} />
       </Routes>
     </Router>
   );
