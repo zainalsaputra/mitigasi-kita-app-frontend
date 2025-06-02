@@ -22,7 +22,7 @@ function App() {
         <Route path="/education" element={<Education />} />
         <Route path="/map" element={<Map />} />
         <Route path="/forgot-password" element={<ForgotPasswordForm />} />
-        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/city-select" element={<CitySelect />} />
       </Routes>
     </Router>
