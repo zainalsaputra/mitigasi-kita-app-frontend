@@ -8,6 +8,7 @@ import Map from './pages/Map/Map-page'
 import ForgotPasswordForm from './pages/Login/ForgotPasswordForm'
 import ResetPassword from './pages/Login/ResetPassword'
 import CitySelect from './pages/Location/CitySelect-page'
+import HistoryPage from './pages/History/Historypage'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordForm />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/city-select" element={<CitySelect />} />
+        <Route path="/history" element={<HistoryPage />} />
       </Routes>
     </Router>
   );

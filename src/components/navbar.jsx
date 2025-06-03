@@ -28,10 +28,17 @@ function Navbar() {
       <div className="px-6 sm:px-12">
         {/* Kontainer utama untuk item Navbar */}
         <div className="flex h-20 items-center justify-between">
-
           {/* Kiri: Logo dan Nama Aplikasi (Link ke Beranda) */}
-          <Link to="/" className="flex items-center space-x-2" onClick={handleLinkClick}>
-            <img className="h-12 md:h-14 w-auto" src="/logo-removebg-preview 1.svg" alt="Logo MitigasiKita" />
+          <Link
+            to="/"
+            className="flex items-center space-x-2"
+            onClick={handleLinkClick}
+          >
+            <img
+              className="h-12 md:h-14 w-auto"
+              src="/logo-removebg-preview 1.svg"
+              alt="Logo MitigasiKita"
+            />
             <p className="font-patua-one text-lg md:text-xl text-[#0D3553]">
               MITIGASIKITA
             </p>
@@ -39,14 +46,33 @@ function Navbar() {
 
           {/* Tengah: Link Navigasi (Hanya tampil di desktop - sm ke atas) */}
           <div className="hidden sm:flex flex-1 items-center justify-center space-x-4 md:space-x-6 lg:space-x-8">
-            <Link to="/" className="text-base md:text-lg font-medium text-blue-950 hover:text-red-600" onClick={handleLinkClick}>
+            <Link
+              to="/"
+              className="text-base md:text-lg font-medium text-blue-950 hover:text-red-600"
+              onClick={handleLinkClick}
+            >
               Beranda
             </Link>
-            <Link to="/map" className="text-base md:text-lg font-medium text-blue-950 hover:text-red-600" onClick={handleLinkClick}>
+            <Link
+              to="/map"
+              className="text-base md:text-lg font-medium text-blue-950 hover:text-red-600"
+              onClick={handleLinkClick}
+            >
               Peta Resiko
             </Link>
-            <Link to="/education" className="text-base md:text-lg font-medium text-blue-950 hover:text-red-600" onClick={handleLinkClick}>
+            <Link
+              to="/education"
+              className="text-base md:text-lg font-medium text-blue-950 hover:text-red-600"
+              onClick={handleLinkClick}
+            >
               Edukasi
+            </Link>
+            <Link
+              to="/history"
+              className="text-base md:text-lg font-medium text-blue-950 hover:text-red-600"
+              onClick={handleLinkClick}
+            >
+              History
             </Link>
           </div>
 
@@ -73,10 +99,15 @@ function Navbar() {
       {isOpen && (
         <>
           {/* Backdrop untuk menutup menu saat diklik di luar panel */}
-          <div onClick={closeMenu} className="sm:hidden fixed inset-0  bg-opacity-50 z-30 transition-opacity duration-300 ease-in-out"></div>
-          
+          <div
+            onClick={closeMenu}
+            className="sm:hidden fixed inset-0  bg-opacity-50 z-30 transition-opacity duration-300 ease-in-out"
+          ></div>
+
           {/* Konten Panel Menu */}
-          <div className="sm:hidden fixed top-0 right-0 h-full w-3/4 max-w-xs bg-white shadow-xl z-40 flex flex-col p-6 transition-transform duration-300 ease-in-out transform translate-x-0"> {/* max-w-xs untuk batasan lebar */}
+          <div className="sm:hidden fixed top-0 right-0 h-full w-3/4 max-w-xs bg-white shadow-xl z-40 flex flex-col p-6 transition-transform duration-300 ease-in-out transform translate-x-0">
+            {" "}
+            {/* max-w-xs untuk batasan lebar */}
             {/* Header Menu Mobile dengan Tombol Close */}
             <div className="flex justify-between items-center mb-6">
               <p className="font-patua-one text-lg text-white">MENU</p>
@@ -84,14 +115,37 @@ function Navbar() {
                 <FaTimes /> {/* Tombol close di dalam panel */}
               </button>
             </div>
-
             {/* Link Navigasi Mobile */}
             <nav className="flex-grow flex flex-col space-y-3">
-              <Link to="/" onClick={handleLinkClick} className="block py-2 text-lg font-medium text-blue-950 hover:text-red-600">Beranda</Link>
-              <Link to="/map" onClick={handleLinkClick} className="block py-2 text-lg font-medium text-blue-950 hover:text-red-600">Peta Resiko</Link>
-              <Link to="/education" onClick={handleLinkClick} className="block py-2 text-lg font-medium text-blue-950 hover:text-red-600">Edukasi</Link>
+              <Link
+                to="/"
+                onClick={handleLinkClick}
+                className="block py-2 text-lg font-medium text-blue-950 hover:text-red-600"
+              >
+                Beranda
+              </Link>
+              <Link
+                to="/map"
+                onClick={handleLinkClick}
+                className="block py-2 text-lg font-medium text-blue-950 hover:text-red-600"
+              >
+                Peta Resiko
+              </Link>
+              <Link
+                to="/education"
+                onClick={handleLinkClick}
+                className="block py-2 text-lg font-medium text-blue-950 hover:text-red-600"
+              >
+                Edukasi
+              </Link>
+              <Link
+                to="/history"
+                onClick={handleLinkClick}
+                className="block py-2 text-lg font-medium text-blue-950 hover:text-red-600"
+              >
+                History
+              </Link>
             </nav>
-
             {/* Tombol Logout Mobile di bagian bawah panel */}
             <button
               onClick={handleLogout}

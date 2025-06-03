@@ -22,18 +22,24 @@ export async function refreshAccessToken() {
 
 export async function logout() {
   const refreshToken = localStorage.getItem("refreshToken");
+ 
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("user");
+
+  
   if (refreshToken) {
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(), 3000); // Timeout 3 detik
     try {
       await fetch('https://sec-prediction-app-backend.vercel.app/auth/logout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ refreshToken }),
+        signal: controller.signal
       });
     } catch {
-      // Abaikan error, tetap hapus localStorage
+      // Abaikan error, user sudah logout di frontend
     }
   }
-  localStorage.removeItem("accessToken");
-  localStorage.removeItem("refreshToken");
-  localStorage.removeItem("user");
 }

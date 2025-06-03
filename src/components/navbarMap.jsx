@@ -61,6 +61,13 @@ function NavbarMap() {
             >
               Edukasi
             </Link>
+            <Link
+              to="/history"
+              className="text-base md:text-lg font-medium text-blue-950 hover:text-red-600"
+              onClick={handleLinkClick}
+            >
+              History
+            </Link>
           </div>
 
           {/* Kanan: Tombol Logout (Hanya tampil di desktop - sm ke atas) */}
@@ -128,6 +135,14 @@ function NavbarMap() {
               >
                 Edukasi
               </Link>
+              <Link
+                to="/history"
+                onClick={handleLinkClick}
+                className="block py-2 text-lg font-medium text-blue-950 hover:text-red-600"
+              >
+                History
+              </Link>
+
             </nav>
             {/* Tombol Logout Mobile di bagian bawah panel */}
             <button
