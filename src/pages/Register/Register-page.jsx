@@ -9,10 +9,6 @@ function Register() {
     email: "",
     password: "",
     confirmPassword: "",
-    province: "",
-    district: "",
-    subdistrict: "",
-    village: "",
   });
 
   const handleChange = (e) => {
@@ -26,15 +22,18 @@ function Register() {
       return;
     }
     try {
-      // Remove confirmPassword before sending to backend
-      const submitForm = { ...form };
-      delete submitForm.confirmPassword;
-      const res = await fetch('https://sec-prediction-app-backend.vercel.app/auth/register', {
-        method: 'POST',
+      const payLoad = {
+        name: form.name,
+        email: form.email,
+        password: form.password,
+      };
+      delete payLoad.confirmPassword;
+      const res = await fetch("http://localhost:3000/api/auth/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(submitForm),
+        body: JSON.stringify(payLoad),
       });
 
       if (!res.ok) {
@@ -73,11 +72,6 @@ function Register() {
         onChange={handleChange}
         required
       />
-
-      <input name="province" placeholder="Provinsi" value={form.province} onChange={handleChange} required />
-      <input name="district" placeholder="Kabupaten/Kota" value={form.district} onChange={handleChange} required />
-      <input name="subdistrict" placeholder="Kecamatan" value={form.subdistrict} onChange={handleChange} required />
-      <input name="village" placeholder="Kelurahan/Desa" value={form.village} onChange={handleChange} required />
 
       <input
         type="password"

@@ -9,10 +9,10 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('https://sec-prediction-app-backend.vercel.app/auth/login', {
-        method: 'POST',
+      const res = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email,
