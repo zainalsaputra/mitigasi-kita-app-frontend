@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Typo 'navigate.' diperbaiki
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { logout } from "../utils/auth";
 
@@ -13,27 +13,28 @@ function Navbar() {
     setIsOpen(false);
   };
 
-  // Fungsi terpisah untuk membuka dan menutup menu mobile
   const openMenu = () => setIsOpen(true);
   const closeMenu = () => setIsOpen(false);
+  const handleLinkClick = () => closeMenu();
 
-  // Menutup menu mobile saat link di logo atau navigasi diklik
-  const handleLinkClick = () => {
-    closeMenu();
-  };
+  const navLinkClass = ({ isActive }) =>
+  `text-base md:text-lg font-medium ${
+    isActive ? "text-red-600" : "text-blue-950"
+  }`;
+
+  const mobileNavLinkClass = ({ isActive }) =>
+    `block py-2 text-lg font-medium ${
+      isActive ? "text-red-600" : "text-blue-950"
+    }`;
+
 
   return (
     <nav className="bg-white fixed top-0 left-0 w-full z-50">
-      {/* Padding horizontal untuk Navbar */}
       <div className="px-6 sm:px-12">
-        {/* Kontainer utama untuk item Navbar */}
-        <div className="flex h-20 items-center justify-between">
-          {/* Kiri: Logo dan Nama Aplikasi (Link ke Beranda) */}
-          <Link
-            to="/"
-            className="flex items-center space-x-2"
-            onClick={handleLinkClick}
-          >
+        <div className="grid grid-cols-3 items-center h-20">
+
+          {/*Kolom Kiri: Logo MitigasiKita */}
+          <div className="flex items-center space-x-2">
             <img
               className="h-12 md:h-14 w-auto"
               src="/logo-removebg-preview 1.svg"
@@ -42,42 +43,27 @@ function Navbar() {
             <p className="font-patua-one text-lg md:text-xl text-[#0D3553]">
               MITIGASIKITA
             </p>
-          </Link>
-
-          {/* Tengah: Link Navigasi (Hanya tampil di desktop - sm ke atas) */}
-          <div className="hidden sm:flex flex-1 items-center justify-center space-x-4 md:space-x-6 lg:space-x-8">
-            <Link
-              to="/"
-              className="text-base md:text-lg font-medium text-blue-950 hover:text-red-600"
-              onClick={handleLinkClick}
-            >
-              Beranda
-            </Link>
-            <Link
-              to="/map"
-              className="text-base md:text-lg font-medium text-blue-950 hover:text-red-600"
-              onClick={handleLinkClick}
-            >
-              Peta Resiko
-            </Link>
-            <Link
-              to="/education"
-              className="text-base md:text-lg font-medium text-blue-950 hover:text-red-600"
-              onClick={handleLinkClick}
-            >
-              Edukasi
-            </Link>
-            <Link
-              to="/history"
-              className="text-base md:text-lg font-medium text-blue-950 hover:text-red-600"
-              onClick={handleLinkClick}
-            >
-              History
-            </Link>
           </div>
 
-          {/* Kanan: Tombol Logout (Hanya tampil di desktop - sm ke atas) */}
-          <div className="hidden sm:flex items-center">
+          {/*Kolom Tengah: Desktop Navigation */}
+          <div className="hidden sm:flex items-center space-x-6 justify-center">
+            <NavLink to="/" end onClick={handleLinkClick} className={navLinkClass}>
+              Beranda
+            </NavLink>
+            <NavLink to="/map" onClick={handleLinkClick} className={navLinkClass}>
+              Peta Resiko
+            </NavLink>
+            <NavLink to="/education" onClick={handleLinkClick} className={navLinkClass}>
+              Edukasi
+            </NavLink>
+            <NavLink to="/history" onClick={handleLinkClick} className={navLinkClass}>
+              History
+            </NavLink>
+
+          </div>
+
+          {/*Kolom Kanan: Desktop Logout Button */}
+          <div className="hidden sm:flex justify-end">
             <button
               onClick={handleLogout}
               className="text-base md:text-lg font-medium text-white"
@@ -86,7 +72,7 @@ function Navbar() {
             </button>
           </div>
 
-          {/* Tombol Hamburger (Hanya tampil di mobile - di bawah sm) */}
+          {/* Mobile Hamburger Button */}
           <div className="sm:hidden flex items-center">
             <button onClick={openMenu} className="text-white">
               <FaBars />
@@ -95,58 +81,42 @@ function Navbar() {
         </div>
       </div>
 
-      {/* Panel Menu Mobile (Fixed Sidebar) */}
+      {/* Mobile Menu Panel */}
       {isOpen && (
         <>
-          {/* Backdrop untuk menutup menu saat diklik di luar panel */}
           <div
             onClick={closeMenu}
-            className="sm:hidden fixed inset-0  bg-opacity-50 z-30 transition-opacity duration-300 ease-in-out"
+            className="sm:hidden fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity duration-300 ease-in-out"
           ></div>
 
-          {/* Konten Panel Menu */}
           <div className="sm:hidden fixed top-0 right-0 h-full w-3/4 max-w-xs bg-white shadow-xl z-40 flex flex-col p-6 transition-transform duration-300 ease-in-out transform translate-x-0">
-            {" "}
-            {/* max-w-xs untuk batasan lebar */}
-            {/* Header Menu Mobile dengan Tombol Close */}
             <div className="flex justify-between items-center mb-6">
-              <p className="font-patua-one text-lg text-white">MENU</p>
-              <button onClick={closeMenu} className="text-2xl text-white">
-                <FaTimes /> {/* Tombol close di dalam panel */}
+              <p className="font-patua-one text-lg text-blue-950">MENU</p>
+              <button onClick={closeMenu} className="text-2xl text-blue-950">
+                <FaTimes />
               </button>
             </div>
-            {/* Link Navigasi Mobile */}
+
+            {/* Mobile Navigation */}
             <nav className="flex-grow flex flex-col space-y-3">
-              <Link
-                to="/"
-                onClick={handleLinkClick}
-                className="block py-2 text-lg font-medium text-blue-950 hover:text-red-600"
-              >
+              <NavLink to="/" onClick={handleLinkClick} className={mobileNavLinkClass}>
                 Beranda
-              </Link>
-              <Link
-                to="/map"
-                onClick={handleLinkClick}
-                className="block py-2 text-lg font-medium text-blue-950 hover:text-red-600"
-              >
+              </NavLink>
+              <NavLink to="/map" onClick={handleLinkClick} className={mobileNavLinkClass}>
                 Peta Resiko
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/education"
                 onClick={handleLinkClick}
-                className="block py-2 text-lg font-medium text-blue-950 hover:text-red-600"
+                className={mobileNavLinkClass}
               >
                 Edukasi
-              </Link>
-              <Link
-                to="/history"
-                onClick={handleLinkClick}
-                className="block py-2 text-lg font-medium text-blue-950 hover:text-red-600"
-              >
+              </NavLink>
+              <NavLink to="/history" onClick={handleLinkClick} className={mobileNavLinkClass}>
                 History
-              </Link>
+              </NavLink>
             </nav>
-            {/* Tombol Logout Mobile di bagian bawah panel */}
+
             <button
               onClick={handleLogout}
               className="w-full bg-red-600 text-white mt-6 px-4 py-3 rounded-lg hover:bg-red-700 text-lg font-medium"
