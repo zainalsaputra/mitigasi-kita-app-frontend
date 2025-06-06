@@ -1,25 +1,25 @@
-import React from "react"; // Wajib kalau pakai JSX
-import { useNavigate } from "react-router-dom"; // Kalau kamu pakai React Router
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoginNavbar = () => {
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    navigate("/login"); // Ganti sesuai route login kamu
+    navigate("/login");
   };
 
   return (
-    <nav className=" fixed top-0 left-0 w-full z-50 ">
-      <div className="px-6 sm:px-12">
-        <div className="grid grid-cols-3 items-center h-20">
+    <nav className="fixed top-0 left-0 w-full z-50">
+      <div className="px-4 sm:px-8 md:px-12">
+        <div className="grid grid-cols-3 items-center h-16 sm:h-20">
           {/* Kolom 1: Logo + Nama */}
           <div className="flex items-center space-x-2">
             <img
-              className="h-15 md:h-15 w-auto"
+              className="h-10 sm:h-12 md:h-15 w-auto"
               src="/logo-removebg-preview 1.svg"
               alt="Logo MitigasiKita"
             />
-            <p className="font-patua-one text-lg md:text-xl text-[#0D3553]">
+            <p className="font-patua-one text-base sm:text-lg md:text-xl text-[#0D3553]">
               MITIGASIKITA
             </p>
           </div>
@@ -31,7 +31,8 @@ const LoginNavbar = () => {
           <div className="flex justify-end">
             <button
               onClick={handleLoginClick}
-              className="text-lg md:text-base font-medium text-white px-4 py-2 rounded-md bg-[#0D3553]"
+              className="text-sm sm:text-base md:text-lg font-medium text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-md bg-[#0D3553] hover:bg-[#0b2a43] transition-colors duration-300"
+              aria-label="Login"
             >
               Login
             </button>
