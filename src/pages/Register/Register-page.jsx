@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-
+import { handleRegister } from "../../../presenters/register-presenter";
 function Register() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -9,51 +9,23 @@ function Register() {
     email: "",
     password: "",
     confirmPassword: "",
-    province: "",
-    district: "",
-    subdistrict: "",
-    village: "",
   });
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleRegister = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    if (form.password !== form.confirmPassword) {
-      alert("Password dan Konfirmasi Password harus sama!");
-      return;
-    }
-    try {
-      // Remove confirmPassword before sending to backend
-      const submitForm = { ...form };
-      delete submitForm.confirmPassword;
-      const res = await fetch('https://sec-prediction-app-backend.vercel.app/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(submitForm),
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.message || 'Registration failed');
-      }
-
-      const data = await res.json();
-      console.log('Register response:', data);
-      localStorage.setItem("user", JSON.stringify(data.data));
-      navigate("/login");
-    } catch (error) {
-      console.error("Registration error:", error);
-      alert(error.message || "Registration failed");
-    }
+    handleRegister(
+      form,
+      () => navigate("/login"),
+      (message) => alert(message)
+    );
   };
 
   return (
-    <form onSubmit={handleRegister}>
+    <form onSubmit={onSubmit}>
       <h2>Register</h2>
 
       <input
@@ -73,11 +45,6 @@ function Register() {
         onChange={handleChange}
         required
       />
-
-      <input name="province" placeholder="Provinsi" value={form.province} onChange={handleChange} required />
-      <input name="district" placeholder="Kabupaten/Kota" value={form.district} onChange={handleChange} required />
-      <input name="subdistrict" placeholder="Kecamatan" value={form.subdistrict} onChange={handleChange} required />
-      <input name="village" placeholder="Kelurahan/Desa" value={form.village} onChange={handleChange} required />
 
       <input
         type="password"

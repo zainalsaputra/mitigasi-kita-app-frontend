@@ -9,6 +9,8 @@ import ForgotPasswordForm from './pages/Login/ForgotPasswordForm'
 import ResetPassword from './pages/Login/ResetPassword'
 import CitySelect from './pages/Location/CitySelect-page'
 import HistoryPage from './pages/History/Historypage'
+import DetailHistory from './pages/History/DetailHistory'
+//import PrivateRoute from './components/privateRoute'
 
 function App() {
   return (
@@ -16,19 +18,95 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<Home />}
+          element={
+              <Home />
+          }
         />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/education" element={<Education />} />
-        <Route path="/map" element={<Map />} />
+        <Route
+          path="/education"
+          element={
+              <Education />
+          }
+        />
+        <Route
+          path="/map"
+          element={
+              <Map />
+          }
+        />
         <Route path="/forgot-password" element={<ForgotPasswordForm />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/city-select" element={<CitySelect />} />
-        <Route path="/history" element={<HistoryPage />} />
+        <Route
+          path="/city-select"
+          element={
+              <CitySelect />
+          }
+        />
+        <Route
+          path="/history"
+          element={
+              <HistoryPage />
+          }
+        />
+        <Route
+          path="/history/:id"
+          element={<DetailHistory />} 
+        />
       </Routes>
     </Router>
   );
+  // return (
+  //   <Router>
+  //     <Routes>
+  //       <Route
+  //         path="/"
+  //         element={
+  //           <PrivateRoute>
+  //             <Home />
+  //           </PrivateRoute>
+  //         }
+  //       />
+  //       <Route path="/login" element={<Login />} />
+  //       <Route path="/register" element={<Register />} />
+  //       <Route
+  //         path="/education"
+  //         element={
+  //           <PrivateRoute>
+  //             <Education />
+  //           </PrivateRoute>
+  //         }
+  //       />
+  //       <Route
+  //         path="/map"
+  //         element={
+  //           <PrivateRoute>
+  //             <Map />
+  //           </PrivateRoute>
+  //         }
+  //       />
+  //       <Route path="/forgot-password" element={<ForgotPasswordForm />} />
+  //       <Route path="/reset-password" element={<ResetPassword />} />
+  //       <Route
+  //         path="/city-select"
+  //         element={
+  //           <PrivateRoute>
+  //             <CitySelect />
+  //           </PrivateRoute>
+  //         }
+  //       />
+  //       <Route
+  //         path="/history"
+  //         element={
+  //           <PrivateRoute>
+  //             <HistoryPage />
+  //           </PrivateRoute>
+  //         }
+  //       />
+  //     </Routes>
+  //   </Router>
+  // );
 }
 
 export default App

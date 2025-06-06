@@ -1,10 +1,11 @@
 import React, { useState, useEffect} from 'react';
 import Select from 'react-select';
-import Navbar from "../../components/navbar";
-import Footer from "../../components/footer";
-function CitySelect () {
+// import Navbar from "../../components/navbar";
+// import Footer from "../../components/footer";
+import CityData from '../../data/CityData';
+function CitySelect ({onCityChange}) {
     const [cities, setCities] = useState([]);
-    const [selectedCity, setSelectedCity] = useState(null);
+
 
     useEffect(() => {
       const fetchCities = async () => {
@@ -29,11 +30,17 @@ function CitySelect () {
                   return;
                 }
                 const regencies = await res.json();
+                
                 regencies.forEach((city) => {
+                  const found = CityData.find(
+                    (d) => d.name.toUpperCase() === city.name.toUpperCase()
+                  );
                   allCities.push({
                     value: city.id,
-                    label:city.name
-                  })
+                    label: city.name,
+                    lat: found?.lat || null,
+                    long: found?.long || null,
+                  });
                 });
               } catch (err) {
                 console.error(
@@ -43,8 +50,6 @@ function CitySelect () {
               }
             })
           );
-
-          console.log("All cities loaded:", allCities);
           setCities(allCities);
         } catch (error) {
           console.error("Error fetching provinces or regencies:", error);
@@ -56,19 +61,15 @@ function CitySelect () {
 
     return (
       <div>
-        <Navbar />
         <div className="pt-24 px-4">
-          <h1>Pilih Lokasi Anda</h1>
-          <h4>Cari kota: </h4>
           <Select
             options={cities}
-            value={selectedCity}
-            onChange={setSelectedCity}
+            // value={selectedCity}
+            onChange={onCityChange}
             placeholder="Masukkan Nama Kota..."
             isClearable
           />
         </div>
-        <Footer />
       </div>
     );
 }

@@ -1,16 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import HistoryCard from "../../components/HistoryCard";
-import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
-
-const SampleData = [
-  { city: "Jakarta", agency: "BMKG", risk: "aman" },
-  { city: "Bandung", agency: "BMKG", risk: "waspada" },
-  { city: "Surabaya", agency: "BMKG", risk: "bahaya" },
-  { city: "Medan", agency: "BMKG", risk: "aman" },
-];
-
+import { useNavigate } from "react-router-dom";
+import { loadHistoryListPresenter, deleteHistoryPresenter } from "../../../presenters/history-presenter";
 const monthNames = [
   "Januari",
   "Februari",
@@ -27,59 +21,70 @@ const monthNames = [
 ];
 
 function HistoryPage() {
-    const [data, setData] = useState(SampleData);
-    const [monthIndex, setMonthIndex] = useState(new Date().getMonth());
-    
-    const handleDelete = (city) => {
-        setData(data.filter(item => item.city !== city));
-    }
+  const [historyList, setHistoryList] = useState([]);
+  const [monthIndex, setMonthIndex] = useState(new Date().getMonth());
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    loadHistoryListPresenter(setHistoryList);
+  }, []);
 
-    const handleDetail = (city) => {
-        alert(`Detail for ${city}`);
-    };
+  const handleDelete = (id) => {
+    deleteHistoryPresenter(id, setHistoryList);
+  };
 
-    const handlePrevMonth = () => {
-      setMonthIndex((prev) => (prev - 1 + 12) % 12);
-    };
+  const handleDetail = (id) => {
+    navigate(`/history/${id}`);
+  };
 
-    const handleNextMonth = () => {
-      setMonthIndex((prev) => (prev + 1) % 12);
-    };
+  const handlePrevMonth = () => {
+    setMonthIndex((prev) => (prev - 1 + 12) % 12);
+  };
 
-    return (
-      <div>
-        <Navbar />
-        <div className="pt-24 px-6 min-h-screen">
-          <h2 className="text-xl font-bold">History {monthNames[monthIndex]}</h2>
-          {data.map((item) => (
+  const handleNextMonth = () => {
+    setMonthIndex((prev) => (prev + 1) % 12);
+  };
+
+  return (
+    <div>
+      <Navbar />
+      <div className="pt-24 px-6 min-h-screen">
+        <h2 className="text-xl font-bold">History {monthNames[monthIndex]}</h2>
+        {historyList
+          .filter((item) => {
+            const createdAtMonth = new Date(item.createdAt).getMonth();
+            return createdAtMonth === monthIndex;
+          })
+          .map((item) => (
             <HistoryCard
-              key={item.city}
+              key={item.id}
               city={item.city}
-              agency={item.agency}
-              risk={item.risk}
-              onDetail={() => handleDetail(item.city)}
-              onDelete={() => handleDelete(item.city)}
+              status={item.status}
+              magnitude={item.magnitude}
+              tsunami={item.potensi_tsunami}
+              temperature={item.temperature_2m_max}
+              onDelete={() => handleDelete(item.id)}
+              onDetail={() => handleDetail(item.id)}
             />
           ))}
-          <div className="flex justify-between mt-4">
-            <button
-              onClick={handlePrevMonth}
-              className="text-black hover:text-gray-300"
-            >
-              <FaArrowLeft />
-            </button>
-            <button
-              onClick={handleNextMonth}
-              className="text-black hover:text-gray-300"
-            >
-              <FaArrowRight />
-            </button>
-          </div>
+        <div className="flex justify-between mt-4">
+          <button
+            onClick={handlePrevMonth}
+            className="text-black hover:text-gray-300"
+          >
+            <FaArrowLeft />
+          </button>
+          <button
+            onClick={handleNextMonth}
+            className="text-black hover:text-gray-300"
+          >
+            <FaArrowRight />
+          </button>
         </div>
-        <Footer />
       </div>
-    );
-        
-    };
+      <Footer />
+    </div>
+  );
+}
+
 export default HistoryPage;

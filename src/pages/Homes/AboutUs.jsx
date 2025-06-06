@@ -1,4 +1,4 @@
- // Ganti sesuai lokasi file gambar kamu
+ 
 function AboutUs() {
   return (
     <div

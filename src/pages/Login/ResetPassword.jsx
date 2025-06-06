@@ -23,7 +23,7 @@ function ResetPassword() {
         setMessage("");
         setError("");
         try {
-            const res = await fetch("https://sec-prediction-app-backend.vercel.app/auth/reset-password", {
+            const res = await fetch("", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ token, newPassword }),
