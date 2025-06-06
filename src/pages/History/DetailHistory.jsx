@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
+import { loadHistoryDetailPresenter, deleteHistoryAndRedirectPresenter } from "../../../presenters/detailHistory-presenter";
 
 function DetailHistory() {
     const { id } = useParams();
@@ -9,49 +10,11 @@ function DetailHistory() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchDetail = async () => {
-            const token = localStorage.getItem("accessToken");
-            try {
-                const response = await fetch(`https://mitigasi-kita-app-backend-production.up.railway.app/api/history/${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        Accept: "application/json",
-                    },
-                });
-
-                // if (!response.ok) throw new Error("Gagal mengambil detail history");
-
-                const result = await response.json();
-
-                if (result.status !== "success" || !result.data) {
-                    throw new Error("Data history tidak valid");
-                }
-
-                setHistory(result.data);
-            } catch (error) {
-                console.error("Error:", error);
-            }
-        };
-
-        fetchDetail();
+      loadHistoryDetailPresenter(id, setHistory);
     }, [id]);
 
     const handleDelete = async () => {
-        const token = localStorage.getItem("accessToken");
-        try {
-          const res = await fetch(
-            `https://mitigasi-kita-app-backend-production.up.railway.app/api/history/${id}`,
-            {
-              method: "DELETE",
-              headers: { Authorization: `Bearer ${token}` },
-            }
-          );
-    
-          if (res.ok) navigate("/history");
-          else throw new Error("Gagal menghapus data.");
-        } catch (err) {
-          console.error(err);
-        }
+      deleteHistoryAndRedirectPresenter(id, navigate);
       };
     
       if (!data) return <p>Loading...</p>;

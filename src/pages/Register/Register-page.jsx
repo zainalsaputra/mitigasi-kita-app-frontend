@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-
+import { handleRegister } from "../../../presenters/register-presenter";
 function Register() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -15,47 +15,17 @@ function Register() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleRegister = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    if (form.password !== form.confirmPassword) {
-      alert("Password dan Konfirmasi Password harus sama!");
-      return;
-    }
-    try {
-      const payLoad = {
-        name: form.name,
-        email: form.email,
-        password: form.password,
-      };
-      delete payLoad.confirmPassword;
-      const res = await fetch(
-        "https://mitigasi-kita-app-backend-production.up.railway.app/api/auth/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payLoad),
-        }
-      );
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.message || 'Registration failed');
-      }
-
-      const data = await res.json();
-      console.log('Register response:', data);
-      localStorage.setItem("user", JSON.stringify(data.data));
-      navigate("/login");
-    } catch (error) {
-      console.error("Registration error:", error);
-      alert(error.message || "Registration failed");
-    }
+    handleRegister(
+      form,
+      () => navigate("/login"),
+      (message) => alert(message)
+    );
   };
 
   return (
-    <form onSubmit={handleRegister}>
+    <form onSubmit={onSubmit}>
       <h2>Register</h2>
 
       <input

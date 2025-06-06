@@ -1,61 +1,23 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { handleLoginSubmit } from "../../../presenters/login-presenter";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const handleLogin = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const res = await fetch(
-        "https://mitigasi-kita-app-backend-production.up.railway.app/api/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
-        }
-      );
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.message || 'Login failed');
-      }
-
-      const data = await res.json();
-      console.log('Login response:', data);
-     
-      if (data.response && data.response.accessToken && data.response.refreshToken) {
-        localStorage.setItem("accessToken", data.response.accessToken);
-        localStorage.setItem("refreshToken", data.response.refreshToken);
-      
-        const userWithoutToken = { ...data.response };
-        delete userWithoutToken.accessToken;
-        delete userWithoutToken.refreshToken;
-        localStorage.setItem("user", JSON.stringify(userWithoutToken));
-      } else if (data.accessToken && data.refreshToken) {
-        localStorage.setItem("accessToken", data.accessToken);
-        localStorage.setItem("refreshToken", data.refreshToken);
-        if (data.response) {
-          localStorage.setItem("user", JSON.stringify(data.response));
-        }
-      } else if (data.response) {
-        localStorage.setItem("user", JSON.stringify(data.response));
-      }
-      navigate("/");
-    } catch (error) {
-      console.error("Login error:", error);
-      alert(error.message || "Login failed");
-    }
-  } 
+    handleLoginSubmit({
+      email,
+      password,
+      navigate,
+      onError: (msg) => alert(msg),
+    });
+  };
   return (
-    <form onSubmit={handleLogin}>
+    <form onSubmit={handleSubmit}>
       <h2>Login</h2>
 
       <input
