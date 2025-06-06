@@ -55,7 +55,6 @@ function Map() {
     }
   
     const handleSaveHistory = async () => {
-
       const token = await getAccessTokenWithRefresh();
       if (!token) {
         console.error("Tidak ada token yang ditemukan. Pastikan Anda sudah login.");
@@ -77,16 +76,16 @@ function Map() {
         });
         if (res.ok) {
           alert("Prediksi berhasil disimpan!");
-        }else{
-          const err= await res.json();
+        } else {
+          const err = await res.json();
           console.log("Gagal menyimpan: " + err.message);
-        }  
+        }
       } catch (error) {
         console.error("Error saving history:", error);
         alert("Terjadi kesalahan saat menyimpan data prediksi.");
       }
     }
-  
+  // console.log("Render Map with selectedCity:", selectedCity);
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
