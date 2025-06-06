@@ -27,6 +27,9 @@ function Navbar() {
       isActive ? "text-red-600" : "text-blue-950"
     }`;
 
+  const handleLoginClick = () => {
+    navigate("/login"); // Ganti sesuai route login kamu
+  };
 
   return (
     <nav className="bg-white fixed top-0 left-0 w-full z-50">
@@ -63,12 +66,12 @@ function Navbar() {
           </div>
 
           {/*Kolom Kanan: Desktop Logout Button */}
-          <div className="hidden sm:flex justify-end">
+          <div className="flex justify-end">
             <button
-              onClick={handleLogout}
-              className="text-base md:text-lg font-medium text-white"
+              onClick={handleLoginClick}
+              className="text-lg md:text-base font-medium text-white px-4 py-2 rounded-md bg-[#0D3553]"
             >
-              Logout
+              Login
             </button>
           </div>
 

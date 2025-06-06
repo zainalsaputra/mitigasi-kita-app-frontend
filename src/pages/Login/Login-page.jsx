@@ -55,7 +55,7 @@ function Login() {
       <NavbarLogin />
 
       <div className="flex-grow flex items-center justify-center px-4">
-        <div className="w-full max-w-md p-8 rounded-lg bg-[#CA3C3E]">
+        <div className="w-full max-w-md p-8 rounded-lg bg-[#0D3553]">
           <h2 className="text-2xl font-bold text-center text-white mb-6 font-poppins">
             LOGIN
           </h2>
@@ -105,7 +105,7 @@ function Login() {
             <div className="flex items-center justify-center">
               <button
                 type="submit"
-                className="w-45 h-11 px-3 py-2 text-lg font-bold rounded-md text-[#CA3C3E] bg-white"
+                className="w-45 h-11 px-3 py-2 text-lg font-bold rounded-md text-[#0D3553] bg-white"
               >
                 Login
               </button>

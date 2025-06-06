@@ -1,3 +1,4 @@
+import { BiStreetView } from 'react-icons/bi';
 import { FaMapMarkerAlt, FaBookOpen } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -10,7 +11,7 @@ function HeroSection() {
           className="text-2xl sm:text-4xl md:text-2xl lg:text-4xl font-bold text-center"
           style={{
             color: "#000000",
-            textShadow: "4px 10px 4px rgba(0, 0, 0, 0.5)",
+           
             lineHeight: "1.5",
           }}
         >
@@ -26,14 +27,13 @@ function HeroSection() {
         <div className="text-center mb-12">
           <p 
             className="text-2xl sm:text-4xl md:text-2xl lg:text-4xl font-bold text-center" 
-            style={{ textShadow: "4px 10px 4px rgba(0, 0, 0, 0.5)" }}
           >
             Keselamatan Masyarakat
           </p>
         </div>
 
         <div
-          className="flex flex-col md:flex-row justify-around items-center space-y-12 md:space-y-0 md:space-x-4 text-center min-h-[200px]"
+          className="grid-center grid-cols-3 gap-8 h-full py-10"
         >
           <div className="flex flex-col md:flex-row justify-center items-center gap-8 text-center px-7">
             {/* Item 1 */}
@@ -48,6 +48,13 @@ function HeroSection() {
               <FaBookOpen className="text-3xl sm:text-4xl md:text-5xl text-white" />
               <p className="text-base sm:text-lg md:text-xl font-semibold">Edukasi</p>
               <p className="text-xs sm:text-sm md:text-base">Panduan Mitigasi</p>
+            </Link>
+
+            {/* Item 3 */}
+            <Link to="/city-select" className="flex flex-col items-center space-y-2 w-48 sm:w-56 md:w-64 hover:scale-105 transition-transform duration-300 relative z-20">
+              <BiStreetView className="text-3xl sm:text-4xl md:text-5xl text-white" />
+              <p className="text-base sm:text-lg md:text-xl font-semibold">Cek Lokasi Anda!</p>
+              <p className="text-xs sm:text-sm md:text-base">Prediksi Gempa Bumi dan Tsunami di sekitar anda</p>
             </Link>
           </div>
         </div>
