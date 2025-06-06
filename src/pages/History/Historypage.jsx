@@ -3,13 +3,7 @@ import HistoryCard from "../../components/HistoryCard";
 import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
-
-const SampleData = [
-  { city: "Jakarta", agency: "BMKG", risk: "aman" },
-  { city: "Bandung", agency: "BMKG", risk: "waspada" },
-  { city: "Surabaya", agency: "BMKG", risk: "bahaya" },
-  { city: "Medan", agency: "BMKG", risk: "aman" },
-];
+import { useNavigate } from "react-router-dom";
 
 const monthNames = [
   "Januari",
@@ -26,18 +20,48 @@ const monthNames = [
   "Desember",
 ];
 
+const dummyData = [
+  {
+    id: 1,
+    city: "Jakarta",
+    status: "Waspada",
+    magnitude: 5.2,
+    potensi_tsunami: "Tidak",
+    temperature_2m_max: 34,
+    createdAt: "2025-06-01T10:00:00Z",
+  },
+  {
+    id: 2,
+    city: "Bandung",
+    status: "Aman",
+    magnitude: 3.1,
+    potensi_tsunami: "Tidak",
+    temperature_2m_max: 28,
+    createdAt: "2025-05-20T09:00:00Z",
+  },
+  {
+    id: 3,
+    city: "Surabaya",
+    status: "Bahaya",
+    magnitude: 6.5,
+    potensi_tsunami: "Ya",
+    temperature_2m_max: 36,
+    createdAt: "2025-06-05T14:30:00Z",
+  },
+];
+
 function HistoryPage() {
-    const [data, setData] = useState(SampleData);
-    const [monthIndex, setMonthIndex] = useState(new Date().getMonth());
-    
-    const handleDelete = (city) => {
-        setData(data.filter(item => item.city !== city));
-    }
+  const [monthIndex, setMonthIndex] = useState(new Date().getMonth());
+  const [historyList, setHistoryList] = useState(dummyData);
+  const navigate = useNavigate();
 
+  const handleDelete = (id) => {
+    setHistoryList((prevList) => prevList.filter((item) => item.id !== id));
+  };
 
-    const handleDetail = (city) => {
-        alert(`Detail for ${city}`);
-    };
+  const handleDetail = (id) => {
+    navigate(`/history/${id}`);
+  };
 
     const handlePrevMonth = () => {
       setMonthIndex((prev) => (prev - 1 + 12) % 12);
@@ -51,17 +75,25 @@ function HistoryPage() {
       <div>
         <Navbar />
         <div className="pt-24 px-6 min-h-screen">
-          <h2 className="text-xl font-bold">History {monthNames[monthIndex]}</h2>
-          {data.map((item) => (
-            <HistoryCard
-              key={item.city}
-              city={item.city}
-              agency={item.agency}
-              risk={item.risk}
-              onDetail={() => handleDetail(item.city)}
-              onDelete={() => handleDelete(item.city)}
-            />
-          ))}
+          <h2 className="text-xl font-bold">
+            History {monthNames[monthIndex]}
+          </h2>
+          {historyList
+            .filter(
+              (item) => new Date(item.createdAt).getMonth() === monthIndex
+            )
+            .map((item) => (
+              <HistoryCard
+                key={item.id}
+                city={item.city}
+                status={item.status}
+                magnitude={item.magnitude}
+                tsunami={item.potensi_tsunami}
+                temperature={item.temperature_2m_max}
+                onDelete={() => handleDelete(item.id)}
+                onDetail={() => handleDetail(item.id)}
+              />
+            ))}
           <div className="flex justify-between mt-4">
             <button
               onClick={handlePrevMonth}

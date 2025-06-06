@@ -20,6 +20,14 @@ export async function refreshAccessToken() {
   }
 }
 
+export async function getAccessTokenWithRefresh() {
+  let token = localStorage.getItem("accessToken");
+  if (!token) {
+    token = await refreshAccessToken();
+  }
+  return token;
+}
+
 export async function logout() {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
