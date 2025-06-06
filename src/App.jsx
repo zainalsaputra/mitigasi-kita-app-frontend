@@ -9,6 +9,7 @@ import ForgotPasswordForm from './pages/Login/ForgotPasswordForm'
 import ResetPassword from './pages/Login/ResetPassword'
 import CitySelect from './pages/Location/CitySelect-page'
 import HistoryPage from './pages/History/Historypage'
+import DetailHistory from './pages/History/DetailHistory'
 //import PrivateRoute from './components/privateRoute'
 
 function App() {
@@ -48,6 +49,10 @@ function App() {
           element={
               <HistoryPage />
           }
+        />
+        <Route
+          path="/history/:id"
+          element={<DetailHistory />} 
         />
       </Routes>
     </Router>

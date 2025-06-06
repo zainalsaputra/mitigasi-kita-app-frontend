@@ -28,13 +28,16 @@ function Register() {
         password: form.password,
       };
       delete payLoad.confirmPassword;
-      const res = await fetch("http://localhost:3000/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payLoad),
-      });
+      const res = await fetch(
+        "https://mitigasi-kita-app-backend-production.up.railway.app/api/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payLoad),
+        }
+      );
 
       if (!res.ok) {
         const errorData = await res.json();

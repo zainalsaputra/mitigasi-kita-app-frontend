@@ -3,11 +3,14 @@ export async function refreshAccessToken() {
   if (!refreshToken) return null;
 
   try {
-    const res = await fetch("http://localhost:3000/api/auth/refresh", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ refreshToken }),
-    });
+    const res = await fetch(
+      "https://mitigasi-kita-app-backend-production.up.railway.app/api/auth/refresh",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ refreshToken }),
+      }
+    );
     if (!res.ok) return null;
     const data = await res.json();
     if (data.accessToken) {
@@ -18,6 +21,14 @@ export async function refreshAccessToken() {
   } catch {
     return null;
   }
+}
+
+export async function getAccessTokenWithRefresh() {
+  let token = localStorage.getItem("accessToken");
+  if (!token) {
+    token = await refreshAccessToken();
+  }
+  return token;
 }
 
 export async function logout() {

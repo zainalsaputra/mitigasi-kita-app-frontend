@@ -12,7 +12,7 @@ export default function ForgotPasswordForm({ onSuccess }) {
     setMessage("");
     setError("");
     try {
-      const res = await fetch("https://sec-prediction-app-backend.vercel.app/auth/forgot-password", {
+      const res = await fetch("", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

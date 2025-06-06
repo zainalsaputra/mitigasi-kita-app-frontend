@@ -1,15 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import HistoryCard from "../../components/HistoryCard";
 import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
-
-const SampleData = [
-  { city: "Jakarta", agency: "BMKG", risk: "aman" },
-  { city: "Bandung", agency: "BMKG", risk: "waspada" },
-  { city: "Surabaya", agency: "BMKG", risk: "bahaya" },
-  { city: "Medan", agency: "BMKG", risk: "aman" },
-];
+import { useNavigate } from "react-router-dom";
 
 const monthNames = [
   "Januari",
@@ -26,17 +20,71 @@ const monthNames = [
   "Desember",
 ];
 
+
+
 function HistoryPage() {
-    const [data, setData] = useState(SampleData);
+  const [historyList, setHistoryList] = useState([]);
     const [monthIndex, setMonthIndex] = useState(new Date().getMonth());
+    const Navigate = useNavigate();
+
+    useEffect(() => {
+      const fetchHistory = async () => {
+        const token = localStorage.getItem("accessToken");
+        try {
+          const response = await fetch(
+            "https://mitigasi-kita-app-backend-production.up.railway.app/api/history",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: "application/json",
+              },
+            }
+          );
+
+          // if (!response.ok) throw new Error("Gagal mengambil history");
+
+          const result = await response.json(); // result = { status: "success", data: [...] }
+
+          if (!response.ok || !Array.isArray(result.data)) {
+            throw new Error("Data history tidak valid");
+          }
+
+          setHistoryList(result.data);
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      };
+
+      fetchHistory();
+    }, []);
+
+    const handleDelete = async (id) => {
+      const token = localStorage.getItem("accessToken");
     
-    const handleDelete = (city) => {
-        setData(data.filter(item => item.city !== city));
-    }
+      try {
+        const response = await fetch(
+          `https://mitigasi-kita-app-backend-production.up.railway.app/api/history/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Accept: "application/json",
+            },
+          }
+        );
+    
+        if (!response.ok) throw new Error("Gagal menghapus history");
+    
+        // Update state setelah sukses hapus
+        setHistoryList((prevList) => prevList.filter((item) => item.id !== id));
+      } catch (error) {
+        console.error("Error menghapus history:", error);
+      }
+    };
 
 
-    const handleDetail = (city) => {
-        alert(`Detail for ${city}`);
+    const handleDetail = (id) => {
+        Navigate(`/history/${id}`)
     };
 
     const handlePrevMonth = () => {
@@ -46,22 +94,31 @@ function HistoryPage() {
     const handleNextMonth = () => {
       setMonthIndex((prev) => (prev + 1) % 12);
     };
-
     return (
       <div>
         <Navbar />
         <div className="pt-24 px-6 min-h-screen">
-          <h2 className="text-xl font-bold">History {monthNames[monthIndex]}</h2>
-          {data.map((item) => (
-            <HistoryCard
-              key={item.city}
-              city={item.city}
-              agency={item.agency}
-              risk={item.risk}
-              onDetail={() => handleDetail(item.city)}
-              onDelete={() => handleDelete(item.city)}
-            />
-          ))}
+          <h2 className="text-xl font-bold">
+            History {monthNames[monthIndex]}
+          </h2>
+          {Array.isArray(historyList) &&
+            historyList
+              .filter((item) => {
+                const createdAtMonth = new Date(item.createdAt).getMonth();
+                return createdAtMonth === monthIndex;
+              })
+              .map((item) => (
+                <HistoryCard
+                  key={item.id}
+                  city={item.city}
+                  status={item.status}
+                  magnitude={item.magnitude}
+                  tsunami={item.potensi_tsunami}
+                  temperature={item.temperature_2m_max}
+                  onDelete={() => handleDelete(item.id)}
+                  onDetail={() => handleDetail(item.id)}
+                />
+              ))}
           <div className="flex justify-between mt-4">
             <button
               onClick={handlePrevMonth}
