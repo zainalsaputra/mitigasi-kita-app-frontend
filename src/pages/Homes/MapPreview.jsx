@@ -10,7 +10,7 @@ function MapPreview() {
             className="text-2xl sm:text-3xl md:text-4xl font-bold"
             style={{
               color: "#000000",
-              textShadow: "4px 8px 4px rgba(0, 0, 0, 0.5)",
+              textShadow: "4px 4px 4px rgba(0, 0, 0, 0.5)",
             }}
           >
             Peta <br className="hidden md:block" /> Resiko

@@ -8,10 +8,10 @@ function HeroSection() {
       {/* Hero Putih */}
       <section className="py-64 flex flex-col font-poppins justify-end items-center text-center px-4 pb-0 max-w-4xl mx-auto">
         <p
-          className="text-2xl sm:text-4xl md:text-2xl lg:text-4xl font-bold text-center"
+          className="text-4xl sm:text-4xl md:text-2xl lg:text-4xl font-bold text-center"
           style={{
             color: "#000000",
-           
+            textShadow: "4px 4px 4px rgba(0, 0, 0, 0.5)",
             lineHeight: "1.5",
           }}
         >
@@ -22,11 +22,14 @@ function HeroSection() {
       {/* Section Biru */}
       <section
         className="text-white pb-20 pt-0 font-poppins"  
-        style={{ backgroundColor: "#0D3553" }}
+        style={{ 
+          backgroundColor: "#0D3553", 
+          textShadow: "4px 4px 4px rgba(0, 0, 0, 0.5)",
+        }}
       >
-        <div className="text-center mb-12">
+        <div className="text-center mb-14">
           <p 
-            className="text-2xl sm:text-4xl md:text-2xl lg:text-4xl font-bold text-center" 
+            className="text-4xl sm:text-4xl md:text-2xl lg:text-4xl font-bold text-center" 
           >
             Keselamatan Masyarakat
           </p>
@@ -48,13 +51,6 @@ function HeroSection() {
               <FaBookOpen className="text-3xl sm:text-4xl md:text-5xl text-white" />
               <p className="text-base sm:text-lg md:text-xl font-semibold">Edukasi</p>
               <p className="text-xs sm:text-sm md:text-base">Panduan Mitigasi</p>
-            </Link>
-
-            {/* Item 3 */}
-            <Link to="/city-select" className="flex flex-col items-center space-y-2 w-48 sm:w-56 md:w-64 hover:scale-105 transition-transform duration-300 relative z-20">
-              <BiStreetView className="text-3xl sm:text-4xl md:text-5xl text-white" />
-              <p className="text-base sm:text-lg md:text-xl font-semibold">Cek Lokasi Anda!</p>
-              <p className="text-xs sm:text-sm md:text-base">Prediksi Gempa Bumi dan Tsunami di sekitar anda</p>
             </Link>
           </div>
         </div>

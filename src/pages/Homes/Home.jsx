@@ -12,7 +12,6 @@ function Home() {
             <HeroSection />
             <MapPreview />
             <EduPreview />
-            <LocationPreview />
             <AboutUs />
             <Footer />
         </div>

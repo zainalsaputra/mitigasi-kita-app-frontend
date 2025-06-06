@@ -12,7 +12,7 @@ function AboutUs() {
         <div className="md:w-1/3 w-full text-center md:text-left">
           <h2
             className="text-2xl sm:text-3xl md:text-4xl font-bold text-black text-center"
-            style={{ textShadow: '4px 8px 4px rgba(0, 0, 0, 0.5)' }}
+            style={{ textShadow: '4px 4px 4px rgba(0, 0, 0, 0.5)' }}
           >
             Tentang <br className="hidden md:block" /> Kami
           </h2>
