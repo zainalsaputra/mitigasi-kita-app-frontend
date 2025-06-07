@@ -1,4 +1,4 @@
-import { loginUser } from "../src/utils/auth";
+import { loginUser, getUserFromToken } from "../src/utils/auth";
 
 export async function handleLoginSubmit({
   email,
@@ -11,7 +11,6 @@ export async function handleLoginSubmit({
 
     let accessToken = null;
     let refreshToken = null;
-    let user = null;
 
     if (
       data.response &&
@@ -20,15 +19,9 @@ export async function handleLoginSubmit({
     ) {
       accessToken = data.response.accessToken;
       refreshToken = data.response.refreshToken;
-      user = { ...data.response };
-      delete user.accessToken;
-      delete user.refreshToken;
     } else if (data.accessToken && data.refreshToken) {
       accessToken = data.accessToken;
       refreshToken = data.refreshToken;
-      user = data.response || {};
-    } else if (data.response) {
-      user = data.response;
     }
 
     if (accessToken && refreshToken) {
@@ -36,10 +29,9 @@ export async function handleLoginSubmit({
       localStorage.setItem("refreshToken", refreshToken);
     }
 
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-    }
-
+    
+    const user = getUserFromToken();
+    console.log(user);
     navigate("/");
   } catch (error) {
     onError(error.message || "Login failed");

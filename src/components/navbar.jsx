@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
-
+import { logout } from "../utils/auth";
 function LogoutButton({ fullWidth = false, onClose }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    logout()
     navigate("/login");
     if (onClose) {
       onClose();
@@ -32,7 +32,7 @@ function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("accessToken");
     setIsLoggedIn(!!token);
   }, []);
 
@@ -74,18 +74,37 @@ function Navbar() {
           </div>
           {/* Navigasi Tengah - Adjusted for Flexbox on desktop */}
           <div className="hidden lg:flex space-x-6 items-center">
-            <NavLink to="/" end onClick={handleLinkClick} className={navLinkClass}>
+            <NavLink
+              to="/"
+              end
+              onClick={handleLinkClick}
+              className={navLinkClass}
+            >
               Beranda
             </NavLink>
-            <NavLink to="/map" onClick={handleLinkClick} className={navLinkClass}>
+            <NavLink
+              to="/map"
+              onClick={handleLinkClick}
+              className={navLinkClass}
+            >
               Peta Resiko
             </NavLink>
-            <NavLink to="/education" onClick={handleLinkClick} className={navLinkClass}>
+            <NavLink
+              to="/education"
+              onClick={handleLinkClick}
+              className={navLinkClass}
+            >
               Edukasi
             </NavLink>
-            <NavLink to="/history" onClick={handleLinkClick} className={navLinkClass}>
-              History
-            </NavLink>
+            {isLoggedIn && (
+              <NavLink
+                to="/history"
+                onClick={handleLinkClick}
+                className={navLinkClass}
+              >
+                History
+              </NavLink>
+            )}
           </div>
           {/* Kanan: Login atau Logout */}
           <div className="hidden lg:flex flex-shrink-0">
@@ -124,7 +143,11 @@ function Navbar() {
               </button>
             </div>
             <nav className="flex-grow flex flex-col space-y-3">
-              <NavLink to="/" onClick={handleLinkClick} className={mobileNavLinkClass}>
+              <NavLink
+                to="/"
+                onClick={handleLinkClick}
+                className={mobileNavLinkClass}
+              >
                 Beranda
               </NavLink>
               <NavLink
