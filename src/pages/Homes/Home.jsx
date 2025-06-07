@@ -4,7 +4,6 @@ import Footer from "../../components/footer";
 import EduPreview from "./EduPreview";
 import HeroSection from "./HeroSection";
 import MapPreview from "./MapPreview";
-import LocationPreview from "./LocationPreview";
 function Home() {
     return (
         <div>

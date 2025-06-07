@@ -1,55 +1,79 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { logout } from "../utils/auth";
+
+function LogoutButton({ fullWidth = false, onClose }) {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+    if (onClose) {
+      onClose();
+    }
+    window.location.reload();
+  };
+
+  return (
+    <button
+      onClick={handleLogout}
+      className={`text-white px-4 py-2 rounded-md bg-[#C43238] font-poppins font-semibold ${
+        fullWidth ? "w-full text-lg py-3 rounded-lg mt-6" : ""
+      }`}
+    >
+      Logout
+    </button>
+  );
+}
 
 function Navbar() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleLogout = async () => {
-    await logout();
-    navigate("/login");
-    setIsOpen(false);
-  };
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
 
   const openMenu = () => setIsOpen(true);
   const closeMenu = () => setIsOpen(false);
   const handleLinkClick = () => closeMenu();
 
   const navLinkClass = ({ isActive }) =>
-  `text-base md:text-lg font-medium ${
-    isActive ? "text-red-600" : "text-blue-950"
-  }`;
-
-  const mobileNavLinkClass = ({ isActive }) =>
-    `block py-2 text-lg font-medium ${
-      isActive ? "text-red-600" : "text-blue-950"
+    `text-base md:text-lg font-medium transition-colors duration-200 ${
+      isActive ? "text-red-600" : "text-blue-950 hover:text-red-600"
     }`;
 
-  const handleLoginClick = () => {
-    navigate("/login"); // Ganti sesuai route login kamu
+  const mobileNavLinkClass = ({ isActive }) =>
+    `block py-2 text-lg font-medium transition-colors duration-200 ${
+      isActive ? "text-red-600" : "text-blue-950 hover:text-red-600"
+    }`;
+
+  const handleAuthClick = () => {
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+    setIsOpen(false); 
   };
 
   return (
     <nav className="bg-white fixed top-0 left-0 w-full z-50">
-      <div className="px-6 sm:px-12">
-        <div className="grid grid-cols-3 items-center h-20">
-
-          {/*Kolom Kiri: Logo MitigasiKita */}
-          <div className="flex items-center space-x-2">
+      <div className="px-4 sm:px-6 lg:px-12 relative">
+        <div className="flex justify-between items-center h-16 sm:h-20">
+          {/* Logo */}
+          <div className="flex items-center space-x-2 flex-shrink-0">
             <img
-              className="h-12 md:h-14 w-auto"
+              className="h-10 sm:h-12 md:h-14 w-auto"
               src="/logo-removebg-preview 1.svg"
               alt="Logo MitigasiKita"
             />
-            <p className="font-patua-one text-lg md:text-xl text-[#0D3553]">
+            <p className="font-patua-one text-lg sm:text-xl text-[#0D3553]">
               MITIGASIKITA
             </p>
           </div>
-
-          {/*Kolom Tengah: Desktop Navigation */}
-          <div className="hidden sm:flex items-center space-x-6 justify-center">
+          {/* Navigasi Tengah - Adjusted for Flexbox on desktop */}
+          <div className="hidden lg:flex space-x-6 items-center">
             <NavLink to="/" end onClick={handleLinkClick} className={navLinkClass}>
               Beranda
             </NavLink>
@@ -62,50 +86,52 @@ function Navbar() {
             <NavLink to="/history" onClick={handleLinkClick} className={navLinkClass}>
               History
             </NavLink>
-
+          </div>
+          {/* Kanan: Login atau Logout */}
+          <div className="hidden lg:flex flex-shrink-0">
+            {isLoggedIn ? (
+              <LogoutButton />
+            ) : (
+              <button
+                onClick={handleAuthClick}
+                className="text-white px-4 py-2 rounded-md bg-[#C43238] font-poppins font-semibold"
+              >
+                Login
+              </button>
+            )}
           </div>
 
-          {/*Kolom Kanan: Desktop Logout Button */}
-          <div className="flex justify-end">
-            <button
-              onClick={handleLoginClick}
-              className="text-lg md:text-base font-medium text-white px-4 py-2 rounded-md bg-[#0D3553]"
-            >
-              Login
-            </button>
-          </div>
-
-          {/* Mobile Hamburger Button */}
-          <div className="sm:hidden flex items-center">
-            <button onClick={openMenu} className="text-white">
+          {/* Hamburger Button */}
+          <div className="lg:hidden">
+            <button onClick={openMenu} className="text-[#0D3553] text-2xl">
               <FaBars />
             </button>
           </div>
         </div>
       </div>
-
       {/* Mobile Menu Panel */}
       {isOpen && (
         <>
           <div
             onClick={closeMenu}
-            className="sm:hidden fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity duration-300 ease-in-out"
+            className="lg:hidden fixed inset-0 bg-black opacity-25 z-30"
           ></div>
-
-          <div className="sm:hidden fixed top-0 right-0 h-full w-3/4 max-w-xs bg-white shadow-xl z-40 flex flex-col p-6 transition-transform duration-300 ease-in-out transform translate-x-0">
+          <div className="lg:hidden fixed top-0 right-0 h-full w-2/4 max-w-xs bg-white shadow-xl z-40 flex flex-col p-6">
             <div className="flex justify-between items-center mb-6">
               <p className="font-patua-one text-lg text-blue-950">MENU</p>
               <button onClick={closeMenu} className="text-2xl text-blue-950">
                 <FaTimes />
               </button>
             </div>
-
-            {/* Mobile Navigation */}
             <nav className="flex-grow flex flex-col space-y-3">
               <NavLink to="/" onClick={handleLinkClick} className={mobileNavLinkClass}>
                 Beranda
               </NavLink>
-              <NavLink to="/map" onClick={handleLinkClick} className={mobileNavLinkClass}>
+              <NavLink
+                to="/map"
+                onClick={handleLinkClick}
+                className={mobileNavLinkClass}
+              >
                 Peta Resiko
               </NavLink>
               <NavLink
@@ -115,17 +141,24 @@ function Navbar() {
               >
                 Edukasi
               </NavLink>
-              <NavLink to="/history" onClick={handleLinkClick} className={mobileNavLinkClass}>
+              <NavLink
+                to="/history"
+                onClick={handleLinkClick}
+                className={mobileNavLinkClass}
+              >
                 History
               </NavLink>
             </nav>
-
-            <button
-              onClick={handleLogout}
-              className="w-full bg-red-600 text-white mt-6 px-4 py-3 rounded-lg hover:bg-red-700 text-lg font-medium"
-            >
-              Logout
-            </button>
+            {isLoggedIn ? (
+              <LogoutButton fullWidth onClose={closeMenu} />
+            ) : (
+              <button
+                onClick={handleAuthClick}
+                className="w-full bg-[#0D3553] text-white mt-6 px-4 py-3 rounded-lg hover:bg-[#0b2a43] text-lg font-medium"
+              >
+                Login
+              </button>
+            )}
           </div>
         </>
       )}
