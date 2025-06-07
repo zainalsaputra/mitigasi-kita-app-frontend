@@ -1,3 +1,5 @@
+import { jwtDecode } from "jwt-decode";
+
 export async function refreshAccessToken() {
   const refreshToken = localStorage.getItem("refreshToken");
   if (!refreshToken) return null;
@@ -34,7 +36,6 @@ export async function getAccessTokenWithRefresh() {
 export async function logout() {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
-  localStorage.removeItem("user");
 }
 
 export async function loginUser(email, password) {
@@ -164,4 +165,20 @@ export async function fetchHistoryDetail(id, token) {
   }
 
   return result.data;
+}
+
+export function getUserFromToken() {
+  try {
+    const token = localStorage.getItem("accessToken");
+    if (!token) return null;
+    const decoded = jwtDecode(token);
+    const now = Date.now() / 1000;
+    if (decoded.exp && decoded.exp < now) {
+      return null; 
+    }
+
+    return decoded;
+  } catch {
+    return null;
+  }
 }
