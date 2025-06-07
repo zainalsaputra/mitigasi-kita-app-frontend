@@ -1,54 +1,23 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import NavbarLogin from "../../components/navbarLogin";
+import { handleLoginSubmit } from "../../../presenters/login-presenter";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const res = await fetch('https://sec-prediction-app-backend.vercel.app/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.message || 'Login failed');
-      }
-
-      const data = await res.json();
-
-      // Simpan token dan data user
-      if (data.response?.accessToken && data.response?.refreshToken) {
-        localStorage.setItem("accessToken", data.response.accessToken);
-        localStorage.setItem("refreshToken", data.response.refreshToken);
-        const userWithoutToken = { ...data.response };
-        delete userWithoutToken.accessToken;
-        delete userWithoutToken.refreshToken;
-        localStorage.setItem("user", JSON.stringify(userWithoutToken));
-      } else if (data.accessToken && data.refreshToken) {
-        localStorage.setItem("accessToken", data.accessToken);
-        localStorage.setItem("refreshToken", data.refreshToken);
-        if (data.response) {
-          localStorage.setItem("user", JSON.stringify(data.response));
-        }
-      } else if (data.response) {
-        localStorage.setItem("user", JSON.stringify(data.response));
-      }
-
-      navigate("/");
-    } catch (error) {
-      console.error("Login error:", error);
-      alert(error.message || "Login failed");
-    }
+    handleLoginSubmit({
+      email,
+      password,
+      navigate,
+      onError: (msg) => alert(msg),
+    });
   };
+
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -60,7 +29,7 @@ function Login() {
             LOGIN
           </h2>
 
-          <form className="space-y-4" onSubmit={handleLogin}>
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="email-address" className="block text-sm font-bold text-white mb-1 font-poppins">
                 E-mail
