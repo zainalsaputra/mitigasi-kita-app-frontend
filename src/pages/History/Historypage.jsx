@@ -4,20 +4,14 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
 import { useNavigate } from "react-router-dom";
-import { loadHistoryListPresenter, deleteHistoryPresenter } from "../../../presenters/history-presenter";
+import {
+  loadHistoryListPresenter,
+  deleteHistoryPresenter,
+} from "../../../presenters/history-presenter";
+
 const monthNames = [
-  "Januari",
-  "Februari",
-  "Maret",
-  "April",
-  "Mei",
-  "Juni",
-  "Juli",
-  "Agustus",
-  "September",
-  "Oktober",
-  "November",
-  "Desember",
+  "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+  "Juli", "Agustus", "September", "Oktober", "November", "Desember",
 ];
 
 function HistoryPage() {
@@ -46,42 +40,52 @@ function HistoryPage() {
   };
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Navbar />
-      <div className="pt-24 px-6 min-h-screen">
-        <h2 className="text-xl font-bold">History {monthNames[monthIndex]}</h2>
-        {historyList
-          .filter((item) => {
-            const createdAtMonth = new Date(item.createdAt).getMonth();
-            return createdAtMonth === monthIndex;
-          })
-          .map((item) => (
-            <HistoryCard
-              key={item.id}
-              city={item.city}
-              status={item.status}
-              magnitude={item.magnitude}
-              tsunami={item.potensi_tsunami}
-              temperature={item.temperature_2m_max}
-              onDelete={() => handleDelete(item.id)}
-              onDetail={() => handleDetail(item.id)}
-            />
-          ))}
-        <div className="flex justify-between mt-4">
-          <button
-            onClick={handlePrevMonth}
-            className="text-black hover:text-gray-300"
-          >
-            <FaArrowLeft />
-          </button>
-          <button
-            onClick={handleNextMonth}
-            className="text-black hover:text-gray-300"
-          >
-            <FaArrowRight />
-          </button>
+
+      {/* Content Wrapper */}
+      <main className="flex-1 pt-24 px-4 md:px-6 pb-8">
+        <div className="max-w-7xl mx-auto p-6 md:p-8 rounded-lg bg-[#0D3553] text-white" style={{ boxShadow: "6px 6px 2px rgba(0, 0, 0, 0.5)" }}>
+          <h2 className="text-2xl font-bold text-center mb-6 text-white">
+            History {monthNames[monthIndex]}
+          </h2>
+
+          {/* List of Cards */}
+          <div className="space-y-4">
+            {historyList
+              .filter((item) => new Date(item.createdAt).getMonth() === monthIndex)
+              .map((item) => (
+                <HistoryCard
+                  key={item.id}
+                  city={item.city}
+                  status={item.status}
+                  magnitude={item.magnitude}
+                  tsunami={item.potensi_tsunami}
+                  temperature={item.temperature_2m_max}
+                  onDelete={() => handleDelete(item.id)}
+                  onDetail={() => handleDetail(item.id)}
+                />
+              ))}
+          </div>
+
+          {/* Month Navigation */}
+          <div className="flex justify-between mt-8">
+            <button
+              onClick={handlePrevMonth}
+              className="text-white"
+            >
+              <FaArrowLeft size={20} />
+            </button>
+            <button
+              onClick={handleNextMonth}
+              className="text-white"
+            >
+              <FaArrowRight size={20} />
+            </button>
+          </div>
         </div>
-      </div>
+      </main>
+
       <Footer />
     </div>
   );
