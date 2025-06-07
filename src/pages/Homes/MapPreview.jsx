@@ -27,7 +27,7 @@ function MapPreview() {
             className="relative z-20"
           >
             <button
-              className="px-6 py-3 text-white font-semibold rounded-xl transition duration-300"
+              className="px-4 py-2 text-white font-semibold rounded-md transition duration-300"
               style={{ backgroundColor: "#C43238" }}
             >
               Klik Di Sini

@@ -24,7 +24,7 @@ function EduPreview() {
           </p>
           <Link to="/education" className="relative z-20">
             <button
-              className="px-6 py-3 text-white rounded-xl font-semibold transition duration-300"
+              className="px-4 py-2 text-white rounded-md font-semibold transition duration-300"
               style={{ backgroundColor: "#0D3553" }}
             >
               Klik Di Sini
