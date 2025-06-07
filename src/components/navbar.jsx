@@ -42,12 +42,12 @@ function Navbar() {
 
   const navLinkClass = ({ isActive }) =>
     `text-base md:text-lg font-medium transition-colors duration-200 ${
-      isActive ? "text-red-600" : "text-blue-950 hover:text-red-600"
+      isActive ? "text-red-600" : "text-black"
     }`;
 
   const mobileNavLinkClass = ({ isActive }) =>
     `block py-2 text-lg font-medium transition-colors duration-200 ${
-      isActive ? "text-red-600" : "text-blue-950 hover:text-red-600"
+      isActive ? "text-red-600" : "text-black"
     }`;
 
   const handleAuthClick = () => {
@@ -122,7 +122,7 @@ function Navbar() {
 
           {/* Hamburger Button */}
           <div className="lg:hidden">
-            <button onClick={openMenu} className="text-[#0D3553] text-2xl">
+            <button onClick={openMenu} className="text-[#000000] text-2xl">
               <FaBars />
             </button>
           </div>
@@ -136,8 +136,7 @@ function Navbar() {
             className="lg:hidden fixed inset-0 bg-black opacity-25 z-30"
           ></div>
           <div className="lg:hidden fixed top-0 right-0 h-full w-2/4 max-w-xs bg-white shadow-xl z-40 flex flex-col p-6">
-            <div className="flex justify-between items-center mb-6">
-              <p className="font-patua-one text-lg text-blue-950">MENU</p>
+            <div className="flex justify-end items-center mb-6">
               <button onClick={closeMenu} className="text-2xl text-blue-950">
                 <FaTimes />
               </button>
@@ -177,7 +176,7 @@ function Navbar() {
             ) : (
               <button
                 onClick={handleAuthClick}
-                className="w-full bg-[#0D3553] text-white mt-6 px-4 py-3 rounded-lg hover:bg-[#0b2a43] text-lg font-medium"
+                className="w-full bg-[#C43238] text-white mt-6 px-4 py-3 rounded-lg text-lg font-medium"
               >
                 Login
               </button>
