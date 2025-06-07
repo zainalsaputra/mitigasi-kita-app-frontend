@@ -50,7 +50,6 @@ function CitySelect({ onCityChange }) {
     fetchCities();
   }, []);
 
-  // Custom styles react-select untuk warna teks hitam
   const customStyles = {
     option: (provided) => ({
       ...provided,

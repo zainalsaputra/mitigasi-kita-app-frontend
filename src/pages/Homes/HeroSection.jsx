@@ -7,7 +7,7 @@ function HeroSection() {
       {/* Hero Putih */}
       <section className="py-64 flex flex-col font-poppins justify-end items-center text-center px-4 pb-0 max-w-4xl mx-auto">
         <p
-          className="text-xl sm:text-2xl md:text-4xl lg:text-4xl font-bold text-center"
+          className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center"
           style={{
             color: "#000000",
             textShadow: "4px 4px 4px rgba(0, 0, 0, 0.5)",
@@ -28,7 +28,7 @@ function HeroSection() {
       >
         <div className="text-center mb-14">
           <p 
-            className="text-xl sm:text-2xl md:text-4xl lg:text-4xl font-bold text-center" 
+            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center" 
           >
             Keselamatan Masyarakat
           </p>

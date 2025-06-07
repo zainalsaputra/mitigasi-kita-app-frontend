@@ -1,88 +1,140 @@
-import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
+import React, { useState, useEffect } from "react";
+import Navbar from "../../components/navbar";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+import 'leaflet/dist/leaflet.css';
+import CitySelect from "../Location/CitySelect-page";
+import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
+import iconUrl from "leaflet/dist/images/marker-icon.png";
+import shadowUrl from "leaflet/dist/images/marker-shadow.png";
+import ChangeView from "../../components/ChangeView";
+import { handlePredictionPresenter, handleSaveHistoryPresenter } from "../../../presenters/map-presenter";
+import { FaLocationDot, FaCircleInfo, FaWaveSquare, FaWater, FaCloudSun, FaDownload } from "react-icons/fa6";
 
-const eduItems = [
-  {
-    img: "/Edukasi Setelah Log/gempaEdu1.svg",
-    alt: "Gempa",
-    title: "Apa sih Gempa Bumi?",
-    desc:
-      "Gempa bumi adalah peristiwa alam berupa getaran atau guncangan di permukaan bumi yang disebabkan oleh pelepasan energi secara tiba-tiba di dalam litosfer, yang menghasilkan gelombang seismik. Getaran ini bisa berasal dari pergeseran lempeng tektonik, aktivitas vulkanik, atau aktivitas manusia seperti peledakan. ",
-    link: "https://www.youtube.com/watch?v=1nXkJq5OZl0",
-    hover: "hover:text-red-600",
-  },
-  {
-    img: "/Edukasi Setelah Log/gempaEdu2.svg",
-    alt: "Mitigasi Gempa",
-    title: "Mitigasi Saat Menghadapi Gempa",
-    desc:
-      "Panduan singkat mengenai langkah-langkah mitigasi yang dapat dilakukan sebelum, saat, dan setelah terjadi gempa bumi, dengan tujuan meningkatkan kesiapsiagaan dan keselamatan masyarakat dalam menghadapi bencana ini.",
-    link: "https://www.youtube.com/watch?v=mEL6vm1bujc",
-    hover: "hover:text-blue-600",
-  },
-  {
-    img: "/Edukasi Setelah Log/tsunamiEdu1.svg",
-    alt: "Tsunami",
-    title: "Apa sih Itu Tsunami?",
-    desc:
-      "Tsunami adalah serangkaian gelombang air laut raksasa yang disebabkan oleh gangguan di dasar laut, seperti gempa bumi, longsor bawah laut, atau letusan gunung berapi. Gelombang ini dapat bergerak dengan kecepatan sangat tinggi dan mencapai daratan dengan ketinggian hingga puluhan meter, menyebabkan kerusakan parah. ",
-    link: "https://www.youtube.com/watch?v=6qWWysS53E4",
-    hover: "hover:text-blue-600",
-  },
-  {
-    img: "/Edukasi Setelah Log/tsunamiEdu2.svg",
-    alt: "Mitigasi Tsunami",
-    title: "Mitigasi Saat Menghadapi Tsunami",
-    desc:
-      "Panduan singkat mengenai langkah-langkah mitigasi yang dapat dilakukan sebelum, saat, dan setelah terjadi tsunami, dengan tujuan meningkatkan kesiapsiagaan dan keselamatan masyarakat dalam menghadapi bencana ini.​",
-    link: "https://www.youtube.com/watch?v=YXpIW3GoGco",
-    hover: "hover:text-blue-600",
-  },
-];
+// Fix for default Leaflet icon issues
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl,
+  iconUrl,
+  shadowUrl,
+});
 
-function Education() {
+function Map() {
+  const [selectedCity, setSelectedCity] = useState(null);
+  const [prediction, setPrediction] = useState(null);
+
+  useEffect(() => {
+    console.log("Selected city:", selectedCity);
+  }, [selectedCity]);
+
   return (
-    <div className="font-poppins text-black">
+    // Hapus 'min-h-screen flex flex-col' dari div terluar
+    // Biarkan tinggi div ini menyesuaikan dengan kontennya.
+    <div className="font-poppins text-black"> {/* Tambahkan class font jika diperlukan */}
       <Navbar />
 
-      <div className="pt-24 pb-16">
-        {/* Header */}
-        <div className="text-center py-16 px-4 bg-[#ECECEC]">
-          <h2 className="text-xl md:text-2xl sm:text-xl lg:text-4xl font-bold">
-            Edukasi <span>Gempa dan Tsunami</span>
-          </h2>
-          <p className="mt-2 text-sm md:text-base max-w-xl mx-auto">
-            Materi edukatif untuk pemahaman dan kesiapsiagaan menghadapi gempa bumi dan tsunami.
-          </p>
+      {/* Tambahkan padding-top untuk offset Navbar, seperti di Education.jsx */}
+      {/* Hapus mt-20 dari div ini karena sudah diganti dengan pt-24 */}
+      <div className="pt-24 pb-16 flex flex-col md:flex-row gap-6"> {/* Menyesuaikan layout utama */}
+        {/* MAP SECTION */}
+        {/* Pertimbangkan untuk mengubah h-[500px] agar lebih responsif vertikal,
+            misalnya menggunakan 'h-96' atau 'aspect-video' jika memungkinkan,
+            atau membiarkan flex-1 jika parent-nya punya tinggi yang terkontrol.
+            Untuk awal, kita bisa pertahankan h-[500px] dulu dan lihat hasilnya. */}
+        <div className="w-full md:w-2/3 h-[500px] rounded-xl overflow-hidden shadow-lg">
+          <MapContainer
+            center={
+              selectedCity?.lat && selectedCity?.long
+                ? [selectedCity.lat, selectedCity.long]
+                : [-2.5, 118]
+            }
+            zoom={selectedCity ? 10 : 5}
+            scrollWheelZoom={true}
+            style={{ height: "100%", width: "100%" }}
+          >
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {selectedCity && selectedCity.lat && selectedCity.long && (
+              <Marker position={[selectedCity.lat, selectedCity.long]}>
+                <Popup>
+                  {selectedCity.label}
+                  <br />
+                  Lat: {selectedCity.lat}, Long: {selectedCity.long}
+                </Popup>
+              </Marker>
+            )}
+            <ChangeView
+              center={
+                selectedCity?.lat && selectedCity?.long
+                  ? [selectedCity.lat, selectedCity.long]
+                  : [-2.5, 118]
+              }
+              zoom={selectedCity ? 10 : 5}
+            />
+          </MapContainer>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 mt-10 space-y-16">
-          {eduItems.map((item, index) => (
-            <div
-              key={index}
-              className="flex flex-col md:flex-row gap-6 items-center md:items-start text-center md:text-left"
+        {/* PREDICTION PANEL SECTION */}
+        {/* Jika ingin panel ini memiliki tinggi yang lebih dinamis,
+            Anda mungkin perlu menghapus max-h-[500px] atau mengaturnya dengan lebih fleksibel. */}
+        <div className="w-full md:w-1/3 bg-[#0D3553] p-6 rounded-xl shadow-lg text-white flex flex-col justify-between">
+          {/* Form Prediksi */}
+          <div className="bg-white rounded-xl shadow p-6 space-y-6">
+            <CitySelect onCityChange={setSelectedCity} />
+            <button
+              onClick={() =>
+                handlePredictionPresenter(selectedCity, setPrediction)
+              }
+              className="w-full bg-[#0D3553] text-white font-poppins font-bold py-3 px-6 rounded hover:bg-[#09263b] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={!selectedCity}
             >
-              <div className="md:w-1/3 w-full max-w-sm mx-auto">
-                <img
-                  src={item.img}
-                  alt={item.alt}
-                  className="w-full h-auto object-contain rounded-lg"
-                />
-              </div>
-              <div className="md:w-2/3 w-full space-y-2">
-                <h3 className="text-lg md:text-xl font-bold">{item.title}</h3>
-                <p className="text-sm md:text-base text-gray-700">{item.desc}</p>
-                <a
-                  href={item.link}
-                  className={`text-sm font-semibold underline transition duration-300 ${item.hover}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              Prediksi
+            </button>
+          </div>
+
+          {/* Hasil Prediksi */}
+          {prediction && (
+            <div className="bg-white text-black p-6 rounded-xl shadow mt-6 space-y-4 text-sm overflow-auto max-h-[500px]">
+              <h3 className="text-2xl font-semibold mb-4 font-poppins text-center">Informasi Prediksi</h3>
+              <p className="flex items-center gap-3">
+                <FaLocationDot color="6D0000" size={25} />
+                <strong className="text-black font-bold font-poppins text-xl">Lokasi:</strong> 
+                <span className="text-black font-poppins text-xl">{prediction.city}</span>
+              </p>
+              <p className="flex items-center gap-3">
+                <FaCircleInfo color="0D3553" size={25} />
+                <strong className="text-black font-bold font-poppins text-xl">Status:</strong> 
+                <span className="text-black font-poppins text-xl">{prediction.status}</span>
+              </p>
+              <p className="flex items-center gap-3">
+                <FaWaveSquare color="C43238" size={25} />
+                <strong className="text-black font-bold font-poppins text-xl">Gempa Bumi:</strong> 
+                <span className="font-poppins text-black text-xl">{prediction.magnitude} M</span>
+              </p>
+              <p className="flex items-center gap-3">
+                <FaWater color="0687C3" size={25} />
+                <strong className="text-black font-bold font-poppins text-xl">Potensi Tsunami:</strong> 
+                <span className="font-poppins text-black text-xl">{prediction.potensi_tsunami}</span>
+              </p>
+              <p className="flex items-center gap-3">
+                <FaCloudSun color="FB9608" size={30} />
+                <strong className="text-black font-bold font-poppins text-xl">Cuaca:</strong> 
+                <span className="font-poppins text-black text-xl">{prediction.temperature_2m_max} °C</span>
+              </p>
+              <div className="flex justify-center mt-4">
+                <button
+                  onClick={() => handleSaveHistoryPresenter(prediction)}
+                  className="bg-[#C43238] hover:bg-[#a92d32] text-white font-semibold py-3 px-8 rounded text-sm transition-colors flex items-center gap-2"
                 >
-                  Lihat Video →
-                </a>
+                  <FaDownload color="white" size={20} />
+                  Simpan ke History
+                </button>
               </div>
             </div>
-          ))}
+          )}
         </div>
       </div>
 
@@ -91,4 +143,4 @@ function Education() {
   );
 }
 
-export default Education;
+export default Map;

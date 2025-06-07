@@ -29,110 +29,116 @@ function Map() {
   }, [selectedCity]);
 
   return (
-  <div className="min-h-screen flex flex-col">
-    <Navbar />
-
-    <div className="flex flex-col md:flex-row flex-1 p-4 gap-6 mt-20">
-      {/* MAP SECTION */}
-      <div className="w-full md:w-2/3 h-[500px] rounded-xl overflow-hidden shadow-lg">
-        <MapContainer
-          center={
-            selectedCity?.lat && selectedCity?.long
-              ? [selectedCity.lat, selectedCity.long]
-              : [-2.5, 118]
-          }
-          zoom={selectedCity ? 10 : 5}
-          scrollWheelZoom={true}
-          style={{ height: "100%", width: "100%" }}
-        >
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          />
-          {selectedCity && selectedCity.lat && selectedCity.long && (
-            <Marker position={[selectedCity.lat, selectedCity.long]}>
-              <Popup>
-                {selectedCity.label}
-                <br />
-                Lat: {selectedCity.lat}, Long: {selectedCity.long}
-              </Popup>
-            </Marker>
-          )}
-          <ChangeView
+    <div className="flex flex-col">
+      <Navbar className="fixed top-0 left-0 w-full z-[9999] bg-white shadow-md" />
+      
+      <div className="w-full max-w-screen-xl mx-auto">
+        <div className="flex flex-col md:flex-row flex-1 p-4 gap-4 mt-[100px]">
+        
+        {/* MAP SECTION */}
+        <div className="w-full h-[250px] sm:h-[300px] md:w-2/3 md:h-[500px] rounded-lg overflow-hidden shadow-lg z-10 order-1 md:order-1">
+          <MapContainer
             center={
               selectedCity?.lat && selectedCity?.long
                 ? [selectedCity.lat, selectedCity.long]
                 : [-2.5, 118]
             }
             zoom={selectedCity ? 10 : 5}
-          />
-        </MapContainer>
-      </div>
-
-      {/* PREDICTION PANEL SECTION */}
-      <div className="w-full md:w-1/3 bg-[#0D3553] p-6 rounded-xl shadow-lg text-white flex flex-col justify-between">
-        {/* Form Prediksi */}
-        <div className="bg-white rounded-xl shadow p-6 space-y-6">
-          <CitySelect onCityChange={setSelectedCity} />
-          <button
-            onClick={() =>
-              handlePredictionPresenter(selectedCity, setPrediction)
-            }
-            className="w-full bg-[#0D3553] text-white font-poppins font-bold py-3 px-6 rounded hover:bg-[#09263b] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={!selectedCity}
+            scrollWheelZoom={true}
+            style={{ height: "100%", width: "100%", zIndex: 10 }}
           >
-            Prediksi
-          </button>
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {selectedCity && selectedCity.lat && selectedCity.long && (
+              <Marker position={[selectedCity.lat, selectedCity.long]}>
+                <Popup>
+                  {selectedCity.label}
+                  <br />
+                  Lat: {selectedCity.lat}, Long: {selectedCity.long}
+                </Popup>
+              </Marker>
+            )}
+            <ChangeView
+              center={
+                selectedCity?.lat && selectedCity?.long
+                  ? [selectedCity.lat, selectedCity.long]
+                  : [-2.5, 118]
+              }
+              zoom={selectedCity ? 10 : 5}
+            />
+          </MapContainer>
         </div>
 
-        {/* Hasil Prediksi */}
-        {prediction && (
-          <div className="bg-white text-black p-6 rounded-xl shadow mt-6 space-y-4 text-sm overflow-auto max-h-[500px]">
-            <h3 className="text-2xl font-semibold mb-4 font-poppins text-center">Informasi Prediksi</h3>
-            <p className="flex items-center gap-3">
-              <FaLocationDot color="6D0000" size={25} />
-              <strong className="text-black font-bold font-poppins text-xl">Lokasi:</strong> 
-              <span className="text-black font-poppins text-xl">{prediction.city}</span>
-            </p>
-            <p className="flex items-center gap-3">
-              <FaCircleInfo color="0D3553" size={25} />
-              <strong className="text-black font-bold font-poppins text-xl">Status:</strong> 
-              <span className="text-black font-poppins text-xl">{prediction.status}</span>
-            </p>
-            <p className="flex items-center gap-3">
-              <FaWaveSquare color="C43238" size={25} />
-              <strong className="text-black font-bold font-poppins text-xl">Gempa Bumi:</strong> 
-              <span className="font-poppins text-black text-xl">{prediction.magnitude} M</span>
-            </p>
-            <p className="flex items-center gap-3">
-              <FaWater color="0687C3" size={25} />
-              <strong className="text-black font-bold font-poppins text-xl">Potensi Tsunami:</strong> 
-              <span className="font-poppins text-black text-xl">{prediction.potensi_tsunami}</span>
-            </p>
-            <p className="flex items-center gap-3">
-              <FaCloudSun color="FB9608" size={30} />
-              <strong className="text-black font-bold font-poppins text-xl">Cuaca:</strong> 
-              <span className="font-poppins text-black text-xl">{prediction.temperature_2m_max} °C</span>
-            </p>
-            <div className="flex justify-center mt-4">
+        {/* PREDICTION PANEL SECTION */}
+        <div className="w-full md:w-1/3 bg-[#0D3553] p-4 sm:p-5 md:p-6 rounded-lg shadow-lg text-white flex flex-col justify-between z-20 order-2 md:order-2">
+          {/* Form Prediksi */}
+          <div className="bg-white rounded-sm shadow p-6 space-y-6 text-black font-poppins">
+            <CitySelect onCityChange={setSelectedCity} />
             <button
-              onClick={() => handleSaveHistoryPresenter(prediction)}
-              className="bg-[#C43238] hover:bg-[#a92d32] text-white font-semibold py-3 px-8 rounded text-sm transition-colors flex items-center gap-2"
+              onClick={() =>
+                handlePredictionPresenter(selectedCity, setPrediction)
+              }
+              className="w-full bg-[#0D3553] text-white font-poppins font-bold py-3 px-6 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={!selectedCity}
             >
-              <FaDownload color="white" size={20} />
-              Simpan ke History
+              Prediksi
             </button>
           </div>
-          </div>
-        )}
+
+          {/* Hasil Prediksi */}
+          {prediction && (
+            <div className="bg-white text-black p-6 rounded-sm shadow mt-6 space-y-4 text-sm overflow-auto max-h-[500px] items-center">
+              <h3 className="text-lg sm:text-xl md:text-xl font-semibold mb-4 font-poppins text-center">Informasi Prediksi</h3>
+              {prediction ? (
+              <>
+                <p className="flex items-center gap-3">
+                  <FaLocationDot color="6D0000" size={20} />
+                  <strong className="text-black font-bold font-poppins text-lg">Lokasi:</strong> 
+                  <span className="text-black font-poppins text-lg">{prediction.city}</span>
+                </p>
+                <p className="flex items-center gap-3">
+                  <FaCircleInfo color="0D3553" size={20} />
+                  <strong className="text-black font-bold font-poppins text-lg">Status:</strong> 
+                  <span className="text-black font-poppins text-lg">{prediction.status}</span>
+                </p>
+                <p className="flex items-center gap-3">
+                  <FaWaveSquare color="C43238" size={20} />
+                  <strong className="text-black font-bold font-poppins text-lg">Gempa Bumi:</strong> 
+                  <span className="font-poppins text-black text-lg">{prediction.magnitude} M</span>
+                </p>
+                <p className="flex items-center gap-3">
+                  <FaWater color="0687C3" size={20} />
+                  <strong className="text-black font-bold font-poppins text-lg">Potensi Tsunami:</strong> 
+                  <span className="font-poppins text-black text-lg">{prediction.potensi_tsunami}</span>
+                </p>
+                <p className="flex items-center gap-3">
+                  <FaCloudSun color="FB9608" size={25} />
+                  <strong className="text-black font-bold font-poppins text-lg">Cuaca:</strong> 
+                  <span className="font-poppins text-black text-lg">{prediction.temperature_2m_max} °C</span>
+                </p>
+                <div className="flex justify-center mt-4">
+                  <button
+                    onClick={() => handleSaveHistoryPresenter(prediction)}
+                    className="bg-[#C43238] text-white font-semibold py-3 px-4 rounded text-sm transition-colors flex items-center gap-2"
+                  >
+                    <FaDownload color="white" size={20} />
+                    Simpan ke History
+                  </button>
+                </div>
+              </>
+            ) : (
+              <p className="text-center text-white text-base">Silakan pilih lokasi dan klik tombol "Prediksi" untuk melihat hasil prediksi bencana.</p>
+            )}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-
-    <Footer />
-  </div>
-);
-
-
+      </div>
+      <Footer />
+    </div>  
+  );
 }
 
 export default Map;
