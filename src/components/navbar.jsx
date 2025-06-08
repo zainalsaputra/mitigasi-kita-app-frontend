@@ -47,9 +47,9 @@ function LogoutButton({ fullWidth = false, onClose, onLogout }) {
             await MySwal.fire({
               icon: "success",
               title: "Logout Berhasil",
-              background: "#0D3553",
+              background: "#C43238",
               color: "white",
-              timer: 1500,
+              timer: 3000,
               showConfirmButton: false,
               allowOutsideClick: false,
             });
