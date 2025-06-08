@@ -2,20 +2,57 @@ import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { logout } from "../utils/auth";
-
+import MySwal from "sweetalert2"
 function LogoutButton({ fullWidth = false, onClose, onLogout }) {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout();
-    if (onLogout) onLogout();
-    if (onClose) onClose();
-    navigate("/");
+  const confirmLogout = () => {
+    MySwal.fire({
+      html: `
+        <div class="text-white text-center font-bold text-lg mb-4">
+          Apakah Anda yakin ingin keluar?
+        </div>
+        <div class="flex justify-center gap-4">
+          <button id="cancel-logout" class="bg-white text-gray-700 font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
+            Batal
+          </button>
+          <button id="confirm-logout" class="bg-white text-red-700 font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
+            Keluar
+          </button>
+        </div>
+      `,
+      background: "#0D3553",
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      customClass: {
+        popup: "rounded-lg px-8 py-6",
+      },
+      didOpen: () => {
+        const cancelBtn = document.getElementById("cancel-logout");
+        const confirmBtn = document.getElementById("confirm-logout");
+
+        if (cancelBtn) {
+          cancelBtn.addEventListener("click", () => {
+            MySwal.close();
+          });
+        }
+
+        if (confirmBtn) {
+          confirmBtn.addEventListener("click", () => {
+            MySwal.close();
+            logout(); // fungsi logout dari utils
+            if (onLogout) onLogout();
+            if (onClose) onClose();
+            navigate("/");
+          });
+        }
+      },
+    });
   };
 
   return (
     <button
-      onClick={handleLogout}
+      onClick={confirmLogout}
       className={`text-white px-4 py-2 rounded-md bg-[#C43238] font-poppins font-semibold ${
         fullWidth ? "w-full text-lg py-3 rounded-lg mt-6" : ""
       }`}

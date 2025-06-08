@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
+import { NavLink } from "react-router-dom";
 const LoginNavbar = () => {
   const navigate = useNavigate();
 
@@ -14,14 +14,18 @@ const LoginNavbar = () => {
         <div className="grid grid-cols-3 items-center h-16 sm:h-20">
           {/* Kolom 1: Logo + Nama */}
           <div className="flex items-center space-x-2">
-            <img
-              className="h-10 sm:h-12 md:h-15 w-auto"
-              src="/logo-removebg-preview 1.svg"
-              alt="Logo MitigasiKita"
-            />
-            <p className="font-patua-one text-base sm:text-lg md:text-xl text-[#0D3553]">
-              MITIGASIKITA
-            </p>
+            <NavLink to="/" end >
+              <img
+                className="h-10 sm:h-12 md:h-15 w-auto"
+                src="/logo-removebg-preview 1.svg"
+                alt="Logo MitigasiKita"
+              />
+            </NavLink>
+            <NavLink to="/" end >
+              <p className="font-patua-one text-base sm:text-lg md:text-xl text-[#0D3553]">
+                MITIGASIKITA
+              </p>
+            </NavLink>
           </div>
 
           {/* Kolom 2: Kosong */}

@@ -1,4 +1,4 @@
-import { loginUser, getUserFromToken } from "../src/utils/auth";
+import { loginUser } from "../src/utils/auth";
 
 export async function handleLoginSubmit({
   email,
@@ -28,10 +28,6 @@ export async function handleLoginSubmit({
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
     }
-
-    
-    const user = getUserFromToken();
-    console.log(user);
     navigate("/");
   } catch (error) {
     onError(error.message || "Login failed");
