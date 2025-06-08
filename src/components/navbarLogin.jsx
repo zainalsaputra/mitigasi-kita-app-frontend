@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const LoginNavbar = () => {
+const NavbarLogin = () => {
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
@@ -46,4 +46,4 @@ const LoginNavbar = () => {
   );
 };
 
-export default LoginNavbar;
+export default NavbarLogin;
