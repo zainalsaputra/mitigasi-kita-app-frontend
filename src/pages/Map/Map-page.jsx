@@ -23,10 +23,7 @@ L.Icon.Default.mergeOptions({
 function Map() {
   const [selectedCity, setSelectedCity] = useState(null);
   const [prediction, setPrediction] = useState(null);
-  const navigate = useNavigate()
-  // useEffect(() => {
-  //   console.log("Selected city:", selectedCity);
-  // }, [selectedCity]);
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col ">
