@@ -4,6 +4,17 @@ import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
 import { loadHistoryDetailPresenter, deleteHistoryAndRedirectPresenter } from "../../../presenters/detailHistory-presenter";
 import MySwal from "sweetalert2"
+import {
+  FaMapMarkerAlt,
+  FaWaveSquare,
+  FaWater,
+  FaTrash,
+  FaArrowRight,
+  FaArrowLeft
+} from 'react-icons/fa';
+import { FaCircleInfo, FaCloudSun } from 'react-icons/fa6';
+
+
 function DetailHistory() {
     const { id } = useParams();
     const [data, setHistory] = useState(null);
@@ -61,26 +72,30 @@ function DetailHistory() {
       if (!data) return <p>Loading...</p>;
 
       return (
-        <div>
+        <div className="min-h-screen flex flex-col bg-white">
           <Navbar />
-          <div className="pt-24 px-6 min-h-screen flex justify-center items-start">
-            <div className="bg-[#002B5B] p-6 rounded-2xl text-white w-full max-w-md shadow-lg">
+
+          <main className="flex-1 pt-24 px-4 md:px-6 pb-8 flex justify-center items-start">
+            <div className="bg-[#002B5B] p-6 rounded-2xl text-white w-full max-w-lg shadow-lg">
+              
+              {/* Tombol Kembali */}
               <button
                 onClick={() => navigate(-1)}
-                className="text-sm mb-4 text-white"
+                className="flex items-center mb-6 text-white font-poppins"
               >
-                ← Kembali
+                <FaArrowLeft className="mr-2" /> Kembali
               </button>
-              <div className="bg-white text-black rounded-xl p-6">
-                <p className="font-bold text-center mb-2">
-                  Lokasi: {data.city}
-                </p>
-                <p className="text-center mb-1">
-                  <b>Agency:</b> {data.agency}
-                </p>
-                <div className="text-center mb-4">
+
+
+              {/* Kartu Utama */}
+              <div className="bg-white text-black rounded-xl p-6 space-y-4">
+                
+                {/* Info Lokasi & Status */}
+                <div className="text-center">
+                  <p className="font-bold text-lg mb-1">Lokasi: {data.city}</p>
+                  <p className="mb-1"><b>Agency:</b> {data.agency}</p>
                   <span
-                    className={`inline-block px-3 py-1 rounded-full text-white text-sm ${
+                    className={`inline-block mt-2 px-3 py-1 rounded-full text-white text-sm ${
                       data.status === "Aman"
                         ? "bg-green-600"
                         : data.status === "Waspada"
@@ -92,32 +107,36 @@ function DetailHistory() {
                   </span>
                 </div>
 
-                <div className="bg-[#022D5A] text-white rounded-lg p-4 mb-4">
-                  <p className="font-bold mb-2"> Informasi Gempa Bumi</p>
-                  <p> Magnitudo: {data.magnitude}</p>
-                  <p> Kedalaman: {data.depth} km</p>
-                  <p> Potensi Tsunami: {data.potensi_tsunami}</p>
-                </div>
-
+                {/* Info Gempa */}
                 <div className="bg-[#022D5A] text-white rounded-lg p-4">
-                  <p className="font-bold mb-2"> Informasi Cuaca</p>
-                  <p> Suhu Min: {data.temperature_2m_min} °C</p>
-                  <p> Suhu Max: {data.temperature_2m_max} °C</p>
-                  <p> Kecepatan Angin: {data.windspeed_10m_max} km/h</p>
-                  <p> Curah Hujan: {data.precipitation_sum} mm</p>
+                  <h3 className="font-bold mb-2 text-base">Informasi Gempa Bumi</h3>
+                  <p>Magnitudo: {data.magnitude}</p>
+                  <p>Kedalaman: {data.depth} km</p>
+                  <p>Potensi Tsunami: {data.potensi_tsunami}</p>
                 </div>
 
-                <div className="text-center mt-6">
+                {/* Info Cuaca */}
+                <div className="bg-[#022D5A] text-white rounded-lg p-4">
+                  <h3 className="font-bold mb-2 text-base">Informasi Cuaca</h3>
+                  <p>Suhu Min: {data.temperature_2m_min} °C</p>
+                  <p>Suhu Max: {data.temperature_2m_max} °C</p>
+                  <p>Kecepatan Angin: {data.windspeed_10m_max} km/h</p>
+                  <p>Curah Hujan: {data.precipitation_sum} mm</p>
+                </div>
+
+                {/* Tombol Delete */}
+                <div className="text-center pt-2">
                   <button
                     onClick={() => confirmDelete(id)}
-                    className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+                    className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-medium"
                   >
                     Delete
                   </button>
                 </div>
               </div>
             </div>
-          </div>
+          </main>
+
           <Footer />
         </div>
       );
