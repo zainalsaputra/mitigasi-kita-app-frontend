@@ -57,7 +57,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-xs">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-white">
       <div className="px-4 sm:px-6 lg:px-12 relative h-16 sm:h-20 flex items-center">
         {/* Logo (Kiri) */}
         <div className="flex items-center space-x-2 flex-shrink-0">

@@ -46,7 +46,7 @@ function HistoryPage() {
       {/* Content Wrapper */}
       <main className="flex-1 pt-24 px-4 md:px-6 pb-8">
         <div className="max-w-7xl mx-auto p-6 md:p-8 rounded-lg bg-[#0D3553] text-white" style={{ boxShadow: "6px 6px 2px rgba(0, 0, 0, 0.5)" }}>
-          <h2 className="text-2xl font-bold text-center mb-6 text-white">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 text-white">
             History {monthNames[monthIndex]}
           </h2>
 
