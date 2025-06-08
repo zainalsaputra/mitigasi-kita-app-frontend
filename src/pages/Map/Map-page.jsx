@@ -1,5 +1,6 @@
 import Footer from "../../components/footer";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
@@ -22,6 +23,7 @@ L.Icon.Default.mergeOptions({
 function Map() {
   const [selectedCity, setSelectedCity] = useState(null);
   const [prediction, setPrediction] = useState(null);
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col ">
@@ -120,12 +122,13 @@ function Map() {
                 </p>
                 <div className="flex justify-center mt-4 ">
                   <button
-                    onClick={() => handleSaveHistoryPresenter(prediction)}
+                    onClick={() => handleSaveHistoryPresenter(prediction, navigate)}
                     className="bg-[#C43238] text-white font-semibold py-3 px-4 rounded text-xs sm:text-sm md:text-base transition-colors flex items-center gap-2"
                   >
                     <FaDownload color="white" />
                     Simpan ke History
                   </button>
+
                 </div>
               </div>
               </>
