@@ -37,7 +37,7 @@ function Map() {
         
         {/* MAP SECTION */}
         <div className="w-full h-[250px] sm:h-[300px] md:w-2/3 md:h-[500px] rounded-lg overflow-hidden shadow-lg z-10 order-1 md:order-1"
-        style={{ boxShadow: "-4px 4px 4px rgba(0, 0, 0, 0.5)" }}>
+        style={{ boxShadow: "1px 1px 12px rgba(0, 0, 0, 0.5)" }}>
           <MapContainer
             center={
               selectedCity?.lat && selectedCity?.long
@@ -74,7 +74,7 @@ function Map() {
 
         {/* PREDICTION PANEL SECTION */}
         <div className="w-full md:w-1/3 bg-[#0D3553] p-4 sm:p-5 md:p-6 rounded-lg text-white text-md sm:text-lg md:text-base font-poppins flex flex-col justify-between z-20 order-2 md:order-2"
-        style={{ boxShadow: "4px 4px 4px rgba(0, 0, 0, 0.5)"}}>
+        style={{ boxShadow: "4px 4px 2px rgba(0, 0, 0, 0.5)"}}>
           {/* Form Prediksi */}
           <div className="bg-white rounded-sm shadow p-6 space-y-3 text-black font-poppins"
           style={{ boxShadow: " inset 8px 4px 4px rgba(0, 0, 0, 0.5)" }}>
@@ -83,7 +83,7 @@ function Map() {
               onClick={() =>
                 handlePredictionPresenter(selectedCity, setPrediction)
               }
-              className="w-full bg-[#0D3553] text-white py-2 px-6 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-[#0D3553] text-white font-bold py-2 px-6 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={!selectedCity}
             >
               Prediksi
@@ -99,17 +99,25 @@ function Map() {
               <>
               <div className="text-black font-poppins text-xs sm:text-sm md:text-lg space-y-3">
                 <p className="flex items-center gap-3">
-                  <FaLocationDot color="6D0000"/>
+                  <FaLocationDot className="text-black"/>
                   <strong className="font-bold">Lokasi:</strong> 
                   <span>{prediction.city}</span>
                 </p>
                 <p className="flex items-center gap-3">
-                  <FaCircleInfo color="0D3553" />
-                  <strong className="font-bold">Status:</strong> 
+                  <FaCircleInfo
+                    color={
+                      prediction.status === "Aman"
+                        ? "#16a34a"
+                        : prediction.status === "Waspada"
+                        ? "#eab308"
+                        : "#dc2626"
+                    }
+                  />
+                  <strong className="font-bold">Status:</strong>
                   <span>{prediction.status}</span>
                 </p>
                 <p className="flex items-center gap-3">
-                  <FaWaveSquare color="C43238"/>
+                  <FaWaveSquare color="6D0000"/>
                   <strong className="font-bold">Gempa Bumi:</strong> 
                   <span>{prediction.magnitude} M</span>
                 </p>

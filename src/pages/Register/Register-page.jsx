@@ -125,7 +125,7 @@ function Register() {
             <div className="flex items-center justify-center mt-8">
               <button
                 type="submit"
-                className="w-45 h-11 px-3 py-2 text-lg font-bold rounded-md text-[#0D3553] bg-white hover:bg-gray-100 transition"
+                className="w-30 h-11 px-3 py-2 text-lg font-bold font-poppins sm:text-sm md:text-lg rounded-md text-[#0D3553] bg-white hover:bg-gray-100 transition"
               >
                 Register
               </button>

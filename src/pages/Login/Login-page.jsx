@@ -90,7 +90,7 @@ function Login() {
             <div className="flex items-center justify-center">
               <button
                 type="submit"
-                className="w-full sm:w-auto h-11 px-6 py-2 text-base font-bold rounded-md text-[#0D3553] bg-white hover:bg-gray-200 transition"
+                className="w-30 sm:w-auto h-11 px-6 py-2 text-lg sm:text-sm md:text-lg font-poppins font-bold rounded-md text-[#0D3553] bg-white hover:bg-gray-200 transition"
               >
                 Login
               </button>

@@ -18,15 +18,24 @@ function HistoryCard({
   onDetail,
 }) {
   return (
-    <div className="bg-white px-6 py-4 rounded-lg" style={{ boxShadow: 'inset 8px 6px 8px rgba(0, 0, 0, 0.5)' }}>
+    <div className="bg-white px-6 py-4 rounded-lg" style={{ boxShadow: 'inset 8px 6px 2px rgba(0, 0, 0, 0.5)' }}>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 text-sm md:text-base text-black font-poppins text-xs sm:text-sm md:text-lg">
         <div className="flex items-center gap-1">
-          <FaMapMarkerAlt color='6D0000'/>
+          <FaMapMarkerAlt className="text-black" />
           <span className="font-semibold">Lokasi:</span>
           <span>{city}</span>
         </div>
         <div className="flex items-center gap-1">
-          <FaCircleInfo color='0D3553' />
+          <FaCircleInfo
+            className="text-base"
+            color={
+              status === "Aman"
+                ? "#16a34a"
+                : status === "Waspada"
+                ? "#eab308"
+                : "#dc2626"
+            }
+          />
           <span className="font-semibold">Status:</span>
           <span>{status}</span>
         </div>
