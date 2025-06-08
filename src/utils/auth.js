@@ -182,3 +182,38 @@ export function getUserFromToken() {
     return null;
   }
 }
+
+export async function forgotPassword(email) {
+  const res = await fetch(
+    "https://mitigasi-kita-app-backend-production.up.railway.app/api/auth/forgot-password",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    }
+  );
+  if (!res.ok) {
+    const data = await res.json();
+    throw new Error(data.message || "Gagal mengirim email reset password");
+  }
+  return "Email reset password berhasil dikirim. Silakan cek email Anda.";
+}
+
+export async function resetPassword(token, password) {
+  const res = await fetch(
+    "https://mitigasi-kita-app-backend-production.up.railway.app/api/auth/reset-password",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token, password }),
+    }
+  );
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message || "Gagal mereset password");
+  }
+
+  return data.message || "Password berhasil direset.";
+}

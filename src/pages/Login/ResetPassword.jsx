@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-
+import { ResetPasswordPresenter } from "../../../presenters/resetPass-presenter";
+import MySwal from "sweetalert2";
 function ResetPassword() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [token, setToken] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+  const [password, setNewPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -19,24 +20,70 @@ function ResetPassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setMessage("");
-    setError("");
-    try {
-      const res = await fetch("", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, newPassword }),
+    await ResetPasswordPresenter({
+      token,
+      password,
+      setLoading,
+      setMessage,
+      setError,
+    });
+    if (message) {
+      MySwal.fire({
+        html: `
+          <div class="text-white text-center font-bold text-lg mb-4">
+            Password berhasil direset <br /> Silahkan login dengan
+            <br />Password baru Anda.
+          </div>
+           <button id="back-to-login-btn" class="bg-white text-green-700 font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
+      Kembali ke login
+    </button>
+        `,
+        background: "#22c55e",
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        customClass: {
+          popup: "rounded-lg px-8 py-6",
+        },
+        didOpen: () => {
+          const backBtn = document.getElementById("back-to-login-btn");
+          if (backBtn) {
+            backBtn.addEventListener("click", () => {
+              MySwal.close();
+              navigate("/login");
+            });
+          }
+        },
       });
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.message || "Gagal mereset password");
-      }
-      setMessage("Password berhasil direset. Silakan login dengan password baru Anda.");
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+    }
+
+    // Jika error
+    if (error) {
+      MySwal.fire({
+        html: `
+    <div class="text-white text-center font-bold text-lg mb-4">
+      Gagal mereset <br /> Password
+    </div>
+    <button id="retry-btn" class="bg-white text-red-700 font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
+      Coba Lagi
+    </button>
+  `,
+        background: "#dc2626",
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        customClass: {
+          popup: "rounded-lg px-8 py-6",
+        },
+        didOpen: () => {
+                  const retryBtn = document.getElementById("retry-btn");
+                  if (retryBtn) {
+                    retryBtn.addEventListener("click", () => {
+                      MySwal.close();
+                      // Trigger ulang form submit kalau mau
+                      // handleSubmit(); atau reload: window.location.reload();
+                    });
+                  }
+                },
+      });
     }
   };
 
@@ -72,7 +119,7 @@ function ResetPassword() {
                 type="password"
                 id="newPassword"
                 placeholder="Masukkan Password Baru"
-                value={newPassword}
+                value={password}
                 onChange={(e) => setNewPassword(e.target.value)}
                 required
                 className="w-full px-4 py-2 rounded-md bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -87,7 +134,6 @@ function ResetPassword() {
                 {loading ? "Memproses..." : "Kirim"}
               </button>
             </div>
-            {message && <p className="text-green-400 text-center">{message}</p>}
             {error && <p className="text-red-400 text-center">{error}</p>}
           </form>
         </div>

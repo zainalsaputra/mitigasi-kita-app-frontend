@@ -1,6 +1,7 @@
+import { ForgotPasswordPresenter } from "../../../presenters/forgotPass-presenter";
 import { useState } from "react";
-
-export default function ForgotPasswordForm({ onSuccess }) {
+import MySwal from "sweetalert2";
+export default function ForgotPasswordForm() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -8,25 +9,55 @@ export default function ForgotPasswordForm({ onSuccess }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setMessage("");
-    setError("");
-    try {
-      const res = await fetch("", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+     const result = await ForgotPasswordPresenter({
+      email,
+      setLoading,
+      setMessage,
+      setError,
+    });
+    if (result.success) {
+      MySwal.fire({
+        html: `
+          <div class="text-white text-center font-bold text-lg">
+            Email reset password <br /> berhasil dikirim.
+            <br />Silakan cek email Anda.
+          </div>
+        `,
+        background: "#22c55e", 
+        showConfirmButton: false,
+        showCloseButton: true,
+        customClass: {
+          popup: "rounded-lg px-8 py-6",
+          closeButton: "text-white text-2xl",
+        },
       });
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.message || "Gagal mengirim email reset password");
-      }
-      setMessage("Email reset password berhasil dikirim. Silakan cek email Anda.");
-      if (onSuccess) onSuccess();
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+    } else {
+      MySwal.fire({
+        html: `
+    <div class="text-white text-center font-bold text-lg mb-4">
+      Gagal mengirim E-mail <br /> untuk reset Password
+    </div>
+    <button id="retry-btn" class="bg-white text-red-700 font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
+      Coba Lagi
+    </button>
+  `,
+        background: "#dc2626",
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        customClass: {
+          popup: "rounded-lg px-8 py-6",
+        },
+        didOpen: () => {
+          const retryBtn = document.getElementById("retry-btn");
+          if (retryBtn) {
+            retryBtn.addEventListener("click", () => {
+              MySwal.close();
+              // Trigger ulang form submit kalau mau
+              // handleSubmit(); atau reload: window.location.reload();
+            });
+          }
+        },
+      });
     }
   };
 

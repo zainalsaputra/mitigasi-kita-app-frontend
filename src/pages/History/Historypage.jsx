@@ -8,7 +8,7 @@ import {
   loadHistoryListPresenter,
   deleteHistoryPresenter,
 } from "../../../presenters/history-presenter";
-
+import MySwal from "sweetalert2";
 const monthNames = [
   "Januari", "Februari", "Maret", "April", "Mei", "Juni",
   "Juli", "Agustus", "September", "Oktober", "November", "Desember",
@@ -26,6 +26,48 @@ function HistoryPage() {
   const handleDelete = (id) => {
     deleteHistoryPresenter(id, setHistoryList);
   };
+
+  const confirmDelete = (id) => {
+    MySwal.fire({
+      html: `
+        <div class="text-white text-center font-bold text-lg mb-4">
+          Yakin Anda Mau Delete<br />History ini?
+        </div>
+         <div class="flex justify-center gap-4">
+        <button id="cancel-btn" class="bg-white text-gray-700 font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
+          Cancel
+        </button>
+        <button id="confirm-delete-btn" class="bg-white text-red-700 font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
+          Delete
+        </button>
+      </div>
+      `,
+      background: "#dc2626",
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      customClass: {
+        popup: "rounded-lg px-8 py-6",
+      },
+      didOpen: () => {
+        const confirmBtn = document.getElementById("confirm-delete-btn");
+        const cancelBtn = document.getElementById("cancel-btn");
+
+        if (confirmBtn) {
+          confirmBtn.addEventListener("click", () => {
+            MySwal.close();
+            handleDelete(id); // panggil delete setelah konfirmasi
+          });
+        }
+
+        if (cancelBtn) {
+          cancelBtn.addEventListener("click", () => {
+            MySwal.close();
+          });
+        }
+      },
+    });
+  };
+  
 
   const handleDetail = (id) => {
     navigate(`/history/${id}`);
@@ -62,7 +104,7 @@ function HistoryPage() {
                   magnitude={item.magnitude}
                   tsunami={item.potensi_tsunami}
                   temperature={item.temperature_2m_max}
-                  onDelete={() => handleDelete(item.id)}
+                  onDelete={() => confirmDelete(item.id)}
                   onDetail={() => handleDetail(item.id)}
                 />
               ))}
