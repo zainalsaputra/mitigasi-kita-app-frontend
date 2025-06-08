@@ -1,3 +1,4 @@
+import MySwal from "sweetalert2";
 import { loginUser } from "../src/utils/auth";
 
 export async function handleLoginSubmit({
@@ -11,7 +12,6 @@ export async function handleLoginSubmit({
 
     let accessToken = null;
     let refreshToken = null;
-    let user = null;
 
     if (
       data.response &&
@@ -20,15 +20,9 @@ export async function handleLoginSubmit({
     ) {
       accessToken = data.response.accessToken;
       refreshToken = data.response.refreshToken;
-      user = { ...data.response };
-      delete user.accessToken;
-      delete user.refreshToken;
     } else if (data.accessToken && data.refreshToken) {
       accessToken = data.accessToken;
       refreshToken = data.refreshToken;
-      user = data.response || {};
-    } else if (data.response) {
-      user = data.response;
     }
 
     if (accessToken && refreshToken) {
@@ -36,12 +30,25 @@ export async function handleLoginSubmit({
       localStorage.setItem("refreshToken", refreshToken);
     }
 
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-    }
+    // Tampilkan notifikasi sukses langsung
+    await MySwal.fire({
+      icon: "success",
+      title: "Login Berhasil",
+      background: "#0D3553",
+      color: "white",
+      timer: 1500,
+      showConfirmButton: false,
+    });
 
     navigate("/");
   } catch (error) {
+    MySwal.fire({
+      icon: "error",
+      title: "Gagal Login",
+      text: error.message || "Login failed",
+      background: "#0D3553",
+      color: "white",
+    });
     onError(error.message || "Login failed");
   }
 }

@@ -1,86 +1,182 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { logout } from "../utils/auth";
+import MySwal from "sweetalert2"
+function LogoutButton({ fullWidth = false, onClose, onLogout }) {
+  const navigate = useNavigate();
+
+  const confirmLogout = () => {
+    MySwal.fire({
+      html: `
+        <div class="text-white text-center font-bold font-poppins text-lg mb-2 text-md sm:text-lg md:text-xl ">
+          <div class="text-white text-center font-bold mb-4">
+            Apakah Anda yakin ingin Logout?
+          </div>
+          <div class="flex justify-center gap-4">
+            <button id="cancel-logout" class="bg-white text-[#0D3553] font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
+              Cancel
+            </button>
+            <button id="confirm-logout" class="bg-white text-[#C43238] font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
+              Logout
+            </button>
+          </div>
+        </div>
+      `,
+      background: "#0D3553",
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      customClass: {
+        popup: "rounded-lg px-8 py-6",
+      },
+      didOpen: () => {
+        const cancelBtn = document.getElementById("cancel-logout");
+        const confirmBtn = document.getElementById("confirm-logout");
+
+        if (cancelBtn) {
+          cancelBtn.addEventListener("click", () => {
+            MySwal.close();
+          });
+        }
+
+        if (confirmBtn) {
+          confirmBtn.addEventListener("click", async () => {
+            MySwal.close();
+            logout(); // fungsi logout dari utils
+
+            await MySwal.fire({
+              icon: "success",
+              title: "Logout Berhasil",
+              background: "#0D3553",
+              color: "white",
+              timer: 1500,
+              showConfirmButton: false,
+              allowOutsideClick: false,
+            });
+
+            if (onLogout) onLogout();
+            if (onClose) onClose();
+            navigate("/");
+          });
+        }
+
+
+      },
+    });
+  };
+
+  return (
+    <button
+      onClick={confirmLogout}
+      className={`text-white px-4 py-2 rounded-md bg-[#C43238] font-poppins font-semibold ${
+        fullWidth ? "w-full text-lg py-3 rounded-lg mt-6" : ""
+      }`}
+    >
+      Logout
+    </button>
+  );
+}
 
 function Navbar() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleLogout = async () => {
-    await logout();
-    navigate("/login");
-    setIsOpen(false);
-  };
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    setIsLoggedIn(!!token);
+  }, []);
 
   const openMenu = () => setIsOpen(true);
   const closeMenu = () => setIsOpen(false);
   const handleLinkClick = () => closeMenu();
 
   const navLinkClass = ({ isActive }) =>
-  `text-base md:text-lg font-medium ${
-    isActive ? "text-red-600" : "text-blue-950"
-  }`;
-
-  const mobileNavLinkClass = ({ isActive }) =>
-    `block py-2 text-lg font-medium ${
-      isActive ? "text-red-600" : "text-blue-950"
+    `text-base md:text-lg font-medium transition-colors duration-200 ${
+      isActive ? "text-red-600" : "text-black"
     }`;
 
-  const handleLoginClick = () => {
-    navigate("/login"); // Ganti sesuai route login kamu
+  const mobileNavLinkClass = ({ isActive }) =>
+    `block py-2 text-lg font-medium transition-colors duration-200 ${
+      isActive ? "text-red-600" : "text-black"
+    }`;
+
+  const handleAuthClick = () => {
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+    setIsOpen(false);
   };
 
   return (
-    <nav className="bg-white fixed top-0 left-0 w-full z-50">
-      <div className="px-6 sm:px-12">
-        <div className="grid grid-cols-3 items-center h-20">
-
-          {/*Kolom Kiri: Logo MitigasiKita */}
-          <div className="flex items-center space-x-2">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-white">
+      <div className="px-4 sm:px-6 lg:px-12 relative h-16 sm:h-20 flex items-center">
+        {/* Logo (Kiri) */}
+        <div className="flex items-center space-x-2 flex-shrink-0">
+          <NavLink to="/" end onClick={handleLinkClick}>
             <img
-              className="h-12 md:h-14 w-auto"
+              className="h-10 sm:h-12 md:h-14 w-auto"
               src="/logo-removebg-preview 1.svg"
               alt="Logo MitigasiKita"
             />
-            <p className="font-patua-one text-lg md:text-xl text-[#0D3553]">
+          </NavLink>
+          <NavLink to="/" end onClick={handleLinkClick}>
+            <p className="font-patua-one text-lg sm:text-xl text-[#0D3553]">
               MITIGASIKITA
             </p>
-          </div>
+          </NavLink>
+        </div>
 
-          {/*Kolom Tengah: Desktop Navigation */}
-          <div className="hidden sm:flex items-center space-x-6 justify-center">
-            <NavLink to="/" end onClick={handleLinkClick} className={navLinkClass}>
-              Beranda
-            </NavLink>
-            <NavLink to="/map" onClick={handleLinkClick} className={navLinkClass}>
-              Peta Resiko
-            </NavLink>
-            <NavLink to="/education" onClick={handleLinkClick} className={navLinkClass}>
-              Edukasi
-            </NavLink>
-            <NavLink to="/history" onClick={handleLinkClick} className={navLinkClass}>
+        {/* Navigasi Tengah */}
+        <div className="hidden lg:flex space-x-6 items-center absolute left-1/2 transform -translate-x-1/2">
+          <NavLink
+            to="/"
+            end
+            onClick={handleLinkClick}
+            className={navLinkClass}
+          >
+            Beranda
+          </NavLink>
+          <NavLink to="/map" onClick={handleLinkClick} className={navLinkClass}>
+            Peta Resiko
+          </NavLink>
+          <NavLink
+            to="/education"
+            onClick={handleLinkClick}
+            className={navLinkClass}
+          >
+            Edukasi
+          </NavLink>
+          {isLoggedIn && (
+            <NavLink
+              to="/history"
+              onClick={handleLinkClick}
+              className={navLinkClass}
+            >
               History
             </NavLink>
+          )}
+        </div>
 
-          </div>
-
-          {/*Kolom Kanan: Desktop Logout Button */}
-          <div className="flex justify-end">
+        {/* Login/Logout (Kanan) */}
+        <div className="hidden lg:flex flex-shrink-0 ml-auto">
+          {isLoggedIn ? (
+            <LogoutButton onLogout={() => setIsLoggedIn(false)} />
+          ) : (
             <button
-              onClick={handleLoginClick}
-              className="text-lg md:text-base font-medium text-white px-4 py-2 rounded-md bg-[#0D3553]"
+              onClick={handleAuthClick}
+              className="text-white px-4 py-2 rounded-md bg-[#0D3553] font-poppins font-semibold"
             >
               Login
             </button>
-          </div>
+          )}
+        </div>
 
-          {/* Mobile Hamburger Button */}
-          <div className="sm:hidden flex items-center">
-            <button onClick={openMenu} className="text-white">
-              <FaBars />
-            </button>
-          </div>
+        {/* Hamburger Button */}
+        <div className="lg:hidden ml-auto">
+          <button onClick={openMenu} className="text-[#000000] text-2xl">
+            <FaBars />
+          </button>
         </div>
       </div>
 
@@ -89,23 +185,27 @@ function Navbar() {
         <>
           <div
             onClick={closeMenu}
-            className="sm:hidden fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity duration-300 ease-in-out"
+            className="lg:hidden fixed inset-0 bg-black opacity-25 z-30"
           ></div>
-
-          <div className="sm:hidden fixed top-0 right-0 h-full w-3/4 max-w-xs bg-white shadow-xl z-40 flex flex-col p-6 transition-transform duration-300 ease-in-out transform translate-x-0">
-            <div className="flex justify-between items-center mb-6">
-              <p className="font-patua-one text-lg text-blue-950">MENU</p>
+          <div className="lg:hidden fixed top-0 right-0 h-full w-1/2 max-w-xs bg-white shadow-xl z-40 flex flex-col p-6">
+            <div className="flex justify-end items-center mb-6">
               <button onClick={closeMenu} className="text-2xl text-blue-950">
                 <FaTimes />
               </button>
             </div>
-
-            {/* Mobile Navigation */}
-            <nav className="flex-grow flex flex-col space-y-3">
-              <NavLink to="/" onClick={handleLinkClick} className={mobileNavLinkClass}>
+            <nav className="flex-grow flex flex-col space-y-3 items-center">
+              <NavLink
+                to="/"
+                onClick={handleLinkClick}
+                className={mobileNavLinkClass}
+              >
                 Beranda
               </NavLink>
-              <NavLink to="/map" onClick={handleLinkClick} className={mobileNavLinkClass}>
+              <NavLink
+                to="/map"
+                onClick={handleLinkClick}
+                className={mobileNavLinkClass}
+              >
                 Peta Resiko
               </NavLink>
               <NavLink
@@ -115,17 +215,32 @@ function Navbar() {
               >
                 Edukasi
               </NavLink>
-              <NavLink to="/history" onClick={handleLinkClick} className={mobileNavLinkClass}>
-                History
-              </NavLink>
+              {isLoggedIn && (
+                <NavLink
+                  to="/history"
+                  onClick={handleLinkClick}
+                  className={mobileNavLinkClass}
+                >
+                  History
+                </NavLink>
+              )}
             </nav>
-
-            <button
-              onClick={handleLogout}
-              className="w-full bg-red-600 text-white mt-6 px-4 py-3 rounded-lg hover:bg-red-700 text-lg font-medium"
-            >
-              Logout
-            </button>
+            {isLoggedIn ? (
+              <LogoutButton
+                fullWidth
+                onClose={closeMenu}
+                onLogout={() => setIsLoggedIn(false)}
+              />
+            ) : (
+              <div className="flex justify-center mt-4">
+                <button
+                  onClick={handleAuthClick}
+                  className="bg-[#0D3553] text-white px-4 py-2 rounded-lg text-lg font-bold w-40 h-12 flex justify-center items-center"
+                >
+                  Login
+                </button>
+              </div>
+            )}
           </div>
         </>
       )}

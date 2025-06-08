@@ -7,13 +7,12 @@ export async function handleRegister(form, onSuccess, onError) {
   }
 
   try {
-    const { data } = await registerUser({
+    await registerUser({
       name: form.name,
       email: form.email,
       password: form.password,
     });
-
-    localStorage.setItem("user", JSON.stringify(data));
+    
     onSuccess();
   } catch (error) {
     onError(error.message || "Registration failed");

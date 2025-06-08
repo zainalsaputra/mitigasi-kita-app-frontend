@@ -1,5 +1,12 @@
-import { FaMapMarkerAlt, FaBuilding, FaTrash, FaHeartbeat } from 'react-icons/fa';
-
+import React from 'react';
+import {
+  FaMapMarkerAlt,
+  FaWaveSquare,
+  FaWater,
+  FaTrash,
+  FaArrowRight,
+} from 'react-icons/fa';
+import { FaCircleInfo, FaCloudSun } from 'react-icons/fa6';
 
 function HistoryCard({
   city,
@@ -11,31 +18,57 @@ function HistoryCard({
   onDetail,
 }) {
   return (
-    <div className="flex justify-between items-center bg-white rounded-lg shadow-md p-4 my-2">
-      <div className="flex items-center space-x-4">
-        <FaMapMarkerAlt className="text-black" />
-        <p>
-          <strong>Lokasi:</strong> {city}
-        </p>
-        <p>
-          <strong>Status:</strong> {status}
-        </p>
-        <p>
-          <strong>Gempa Bumi:</strong> {magnitude} M
-        </p>
-        <p>
-          <strong>Potensi Tsunami:</strong> {tsunami}
-        </p>
-        <p>
-          <strong>Cuaca:</strong> {temperature} C
-        </p>
+    <div className="bg-white px-6 py-4 rounded-lg" style={{ boxShadow: 'inset 8px 6px 2px rgba(0, 0, 0, 0.5)' }}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 text-sm md:text-base text-black font-poppins text-xs sm:text-sm md:text-lg">
+        <div className="flex items-center gap-1">
+          <FaMapMarkerAlt className="text-black" />
+          <span className="font-semibold">Lokasi:</span>
+          <span>{city}</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <FaCircleInfo
+            className="text-base"
+            color={
+              status === "Aman"
+                ? "#16a34a"
+                : status === "Waspada"
+                ? "#eab308"
+                : "#dc2626"
+            }
+          />
+          <span className="font-semibold">Status:</span>
+          <span>{status}</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <FaWaveSquare color='6D0000' />
+          <span className="font-semibold">Gempa:</span>
+          <span>{magnitude} M</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <FaWater className="text-blue-500" />
+          <span className="font-semibold">Tsunami:</span>
+          <span>{tsunami}</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <FaCloudSun className="text-orange-500" />
+          <span className="font-semibold">Cuaca:</span>
+          <span>{temperature}°C</span>
+        </div>
       </div>
-      <div className="flex items-center space-x-4">
-        <button onClick={onDetail} className="text-blue-600 hover:underline">
-          Lihat Detail
+
+      <div className="flex justify-center gap-4 mt-4 font-poppins">
+        <button
+          onClick={onDetail}
+          className="px-6 py-1 text-white text-xs sm:text-sm md:text-base bg-[#0D3553] rounded flex items-center"
+        >
+          Lihat Detail <FaArrowRight className="ml-2" />
         </button>
-        <button onClick={onDelete} className="text-red-600">
-          Delete <FaTrash className="inline ml-1" />
+        
+        <button
+          onClick={onDelete}
+          className="px-4 py-2 bg-[#C43238] text-white text-xs sm:text-sm md:text-base rounded flex items-center"
+        >
+          Delete <FaTrash className="ml-2" /> 
         </button>
       </div>
     </div>
