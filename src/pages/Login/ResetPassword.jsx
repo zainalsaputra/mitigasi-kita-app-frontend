@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-
+import { ResetPasswordPresenter } from "../../../presenters/resetPass-presenter";
 function ResetPassword() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [token, setToken] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+  const [password, setNewPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -19,25 +19,13 @@ function ResetPassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setMessage("");
-    setError("");
-    try {
-      const res = await fetch("", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, newPassword }),
-      });
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.message || "Gagal mereset password");
-      }
-      setMessage("Password berhasil direset. Silakan login dengan password baru Anda.");
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+    await ResetPasswordPresenter({
+      token,
+      password,
+      setLoading,
+      setMessage,
+      setError,
+    });
   };
 
   return (
@@ -72,7 +60,7 @@ function ResetPassword() {
                 type="password"
                 id="newPassword"
                 placeholder="Masukkan Password Baru"
-                value={newPassword}
+                value={password}
                 onChange={(e) => setNewPassword(e.target.value)}
                 required
                 className="w-full px-4 py-2 rounded-md bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"

@@ -1,6 +1,6 @@
+import { ForgotPasswordPresenter } from "../../../presenters/forgotPass-presenter";
 import { useState } from "react";
-
-export default function ForgotPasswordForm({ onSuccess }) {
+export default function ForgotPasswordForm() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -8,26 +8,12 @@ export default function ForgotPasswordForm({ onSuccess }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setMessage("");
-    setError("");
-    try {
-      const res = await fetch("", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.message || "Gagal mengirim email reset password");
-      }
-      setMessage("Email reset password berhasil dikirim. Silakan cek email Anda.");
-      if (onSuccess) onSuccess();
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+    await ForgotPasswordPresenter({
+      email,
+      setLoading,
+      setMessage,
+      setError,
+    });
   };
 
   return (

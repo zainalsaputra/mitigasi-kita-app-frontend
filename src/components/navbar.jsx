@@ -61,19 +61,28 @@ function Navbar() {
       <div className="px-4 sm:px-6 lg:px-12 relative h-16 sm:h-20 flex items-center">
         {/* Logo (Kiri) */}
         <div className="flex items-center space-x-2 flex-shrink-0">
-          <img
-            className="h-10 sm:h-12 md:h-14 w-auto"
-            src="/logo-removebg-preview 1.svg"
-            alt="Logo MitigasiKita"
-          />
-          <p className="font-patua-one text-lg sm:text-xl text-[#0D3553]">
-            MITIGASIKITA
-          </p>
+          <NavLink to="/" end onClick={handleLinkClick}>
+            <img
+              className="h-10 sm:h-12 md:h-14 w-auto"
+              src="/logo-removebg-preview 1.svg"
+              alt="Logo MitigasiKita"
+            />
+          </NavLink>
+          <NavLink to="/" end onClick={handleLinkClick}>
+            <p className="font-patua-one text-lg sm:text-xl text-[#0D3553]">
+              MITIGASIKITA
+            </p>
+          </NavLink>
         </div>
 
         {/* Navigasi Tengah */}
         <div className="hidden lg:flex space-x-6 items-center absolute left-1/2 transform -translate-x-1/2">
-          <NavLink to="/" end onClick={handleLinkClick} className={navLinkClass}>
+          <NavLink
+            to="/"
+            end
+            onClick={handleLinkClick}
+            className={navLinkClass}
+          >
             Beranda
           </NavLink>
           <NavLink to="/map" onClick={handleLinkClick} className={navLinkClass}>
@@ -165,7 +174,11 @@ function Navbar() {
               )}
             </nav>
             {isLoggedIn ? (
-              <LogoutButton fullWidth onClose={closeMenu} onLogout={() => setIsLoggedIn(false)} />
+              <LogoutButton
+                fullWidth
+                onClose={closeMenu}
+                onLogout={() => setIsLoggedIn(false)}
+              />
             ) : (
               <div className="flex justify-center mt-4">
                 <button
