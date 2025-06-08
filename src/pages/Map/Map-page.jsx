@@ -1,5 +1,5 @@
 import Footer from "../../components/footer";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Navbar from "../../components/navbar";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
@@ -24,9 +24,9 @@ function Map() {
   const [selectedCity, setSelectedCity] = useState(null);
   const [prediction, setPrediction] = useState(null);
   const navigate = useNavigate()
-  useEffect(() => {
-    console.log("Selected city:", selectedCity);
-  }, [selectedCity]);
+  // useEffect(() => {
+  //   console.log("Selected city:", selectedCity);
+  // }, [selectedCity]);
 
   return (
     <div className="flex flex-col ">
