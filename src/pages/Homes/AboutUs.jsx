@@ -21,7 +21,7 @@ function AboutUs() {
         {/* Deskripsi */}
         <div className="md:w-2/1 w-full text-gray-800 text-center md:text-left text-sm sm:text-base md:text-lg leading-relaxed">
           <p className="mb-4">
-            MitigasiKita adalah aplikasi web yang dikembangkan oleh tim CC25-CF278 sebagai bagian dari Capstone Project program Studi Independen Dicoding. Aplikasi ini bertujuan untuk membantu masyarakat dalam memahami, mempersiapkan, dan merespons risiko bencana alam seperti gempa bumi dan tsunami.
+            MitigasiKita adalah aplikasi web yang dikembangkan oleh tim <strong>CC25-CF278</strong> sebagai bagian dari Capstone Project program Studi Independen Dicoding. Aplikasi ini bertujuan untuk membantu masyarakat dalam memahami, mempersiapkan, dan merespons risiko bencana alam seperti gempa bumi dan tsunami.
           </p>
           <p>
             Fitur utama yang disediakan meliputi peta risiko berbasis lokasi, edukasi mitigasi bencana, serta analisis zona bahaya dengan dukungan teknologi Machine Learning. Seluruh pengembangan dilakukan secara mandiri dengan teknologi modern dan mengikuti prinsip pengembangan web yang baik.
