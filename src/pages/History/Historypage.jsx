@@ -9,9 +9,10 @@ import {
   deleteHistoryPresenter,
 } from "../../../presenters/history-presenter";
 import MySwal from "sweetalert2";
+
 const monthNames = [
-  "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-  "Juli", "Agustus", "September", "Oktober", "November", "Desember",
+  "JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI",
+  "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER",
 ];
 
 function HistoryPage() {
@@ -30,19 +31,21 @@ function HistoryPage() {
   const confirmDelete = (id) => {
     MySwal.fire({
       html: `
-        <div class="text-white text-center font-bold text-lg mb-4">
-          Apa Anda yakin ingin <br />menghapus History ini?
+        <div class="text-white text-center font-bold font-poppins text-lg mb-2 text-md sm:text-lg md:text-xl ">
+          <div class="text-white text-center font-bold text-md mb-4">
+            Apa Anda yakin ingin <br />menghapus History ini?
+          </div>
+          <div class="flex justify-center gap-4">
+          <button id="cancel-btn" class=" w-auto px-2 py-1 bg-white text-[#0D3553] font-bold rounded hover:bg-gray-100 transition">
+            Cancel
+          </button>
+          <button id="confirm-delete-btn" class="bg-white text-[#C73134] font-bold px-2 py-1 rounded hover:bg-gray-100 transition">
+            Delete
+          </button>
+          </div>
         </div>
-         <div class="flex justify-center gap-4">
-        <button id="cancel-btn" class="bg-white text-gray-700 font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
-          Cancel
-        </button>
-        <button id="confirm-delete-btn" class="bg-white text-red-700 font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
-          Delete
-        </button>
-      </div>
       `,
-      background: "#dc2626",
+      background: "#0D3553",
       showConfirmButton: false,
       allowOutsideClick: false,
       customClass: {
@@ -55,7 +58,7 @@ function HistoryPage() {
         if (confirmBtn) {
           confirmBtn.addEventListener("click", () => {
             MySwal.close();
-            handleDelete(id); // panggil delete setelah konfirmasi
+            handleDelete(id);
           });
         }
 
@@ -89,7 +92,7 @@ function HistoryPage() {
       <main className="flex-1 pt-24 px-4 md:px-6 pb-8">
         <div className="max-w-7xl mx-auto p-6 md:p-8 rounded-lg bg-[#0D3553] text-white" style={{ boxShadow: "6px 6px 2px rgba(0, 0, 0, 0.5)" }}>
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 text-white">
-            History {monthNames[monthIndex]}
+            HISTORY BULAN {monthNames[monthIndex]}
           </h2>
 
           {/* List of Cards */}

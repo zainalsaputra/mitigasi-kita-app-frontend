@@ -9,16 +9,18 @@ function LogoutButton({ fullWidth = false, onClose, onLogout }) {
   const confirmLogout = () => {
     MySwal.fire({
       html: `
-        <div class="text-white text-center font-bold text-lg mb-4">
-          Apakah Anda yakin ingin keluar?
-        </div>
-        <div class="flex justify-center gap-4">
-          <button id="cancel-logout" class="bg-white text-gray-700 font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
-            Batal
-          </button>
-          <button id="confirm-logout" class="bg-white text-red-700 font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
-            Keluar
-          </button>
+        <div class="text-white text-center font-bold font-poppins text-lg mb-2 text-md sm:text-lg md:text-xl ">
+          <div class="text-white text-center font-bold mb-4">
+            Apakah Anda yakin ingin Logout?
+          </div>
+          <div class="flex justify-center gap-4">
+            <button id="cancel-logout" class="bg-white text-[#0D3553] font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
+              Cancel
+            </button>
+            <button id="confirm-logout" class="bg-white text-[#C43238] font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
+              Logout
+            </button>
+          </div>
         </div>
       `,
       background: "#0D3553",
@@ -38,14 +40,27 @@ function LogoutButton({ fullWidth = false, onClose, onLogout }) {
         }
 
         if (confirmBtn) {
-          confirmBtn.addEventListener("click", () => {
+          confirmBtn.addEventListener("click", async () => {
             MySwal.close();
             logout(); // fungsi logout dari utils
+
+            await MySwal.fire({
+              icon: "success",
+              title: "Logout Berhasil",
+              background: "#0D3553",
+              color: "white",
+              timer: 1500,
+              showConfirmButton: false,
+              allowOutsideClick: false,
+            });
+
             if (onLogout) onLogout();
             if (onClose) onClose();
             navigate("/");
           });
         }
+
+
       },
     });
   };

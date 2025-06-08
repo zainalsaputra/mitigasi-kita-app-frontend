@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import NavbarLogin from "../../components/navbarLogin";
+import NavbarLogin from "../../components/NavbarLogin";
 import { handleLoginSubmit } from "../../../presenters/login-presenter";
 
 function Login() {

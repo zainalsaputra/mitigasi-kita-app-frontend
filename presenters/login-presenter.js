@@ -1,3 +1,4 @@
+import MySwal from "sweetalert2";
 import { loginUser } from "../src/utils/auth";
 
 export async function handleLoginSubmit({
@@ -28,8 +29,26 @@ export async function handleLoginSubmit({
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
     }
+
+    // Tampilkan notifikasi sukses langsung
+    await MySwal.fire({
+      icon: "success",
+      title: "Login Berhasil",
+      background: "#0D3553",
+      color: "white",
+      timer: 1500,
+      showConfirmButton: false,
+    });
+
     navigate("/");
   } catch (error) {
+    MySwal.fire({
+      icon: "error",
+      title: "Gagal Login",
+      text: error.message || "Login failed",
+      background: "#0D3553",
+      color: "white",
+    });
     onError(error.message || "Login failed");
   }
 }

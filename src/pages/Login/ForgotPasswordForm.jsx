@@ -1,6 +1,9 @@
-import { ForgotPasswordPresenter } from "../../../presenters/forgotPass-presenter";
 import { useState } from "react";
+import { ForgotPasswordPresenter } from "../../../presenters/forgotPass-presenter";
 import MySwal from "sweetalert2";
+import { Link } from "react-router-dom"; 
+import NavbarLogin from "../../components/NavbarLogin";
+
 export default function ForgotPasswordForm() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -9,54 +12,58 @@ export default function ForgotPasswordForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-     const result = await ForgotPasswordPresenter({
+
+    const result = await ForgotPasswordPresenter({
       email,
       setLoading,
       setMessage,
       setError,
     });
+
     if (result.success) {
       MySwal.fire({
         html: `
-          <div class="text-white text-center font-bold text-lg">
-            Email reset password berhasil dikirim.
-            <br />Silakan cek email Anda.
-          </div>
-          <div class="text-white text-sm text-center mt-2">
-            Jika email belum masuk, cek folder <b>Spam</b> atau <b>Promosi</b>.
+          <div class="flex flex-col items-center justify-center text-white font-poppins text-lg sm:text-xl md:text-xl">
+            <h3 class="text-xl font-bold mb-2 text-center">Email berhasil dikirim</h3>
+            <p class="text-sm text-center">
+              Silakan cek email Anda untuk mereset password.
+              <br />
+              Jika belum masuk, periksa folder <strong>Spam</strong> atau <strong>Promosi</strong>.
+            </p>
           </div>
         `,
-        background: "#22c55e",
+        background: "#0D3553",
         showConfirmButton: false,
         showCloseButton: true,
         customClass: {
-          popup: "rounded-lg px-8 py-6",
-          closeButton: "text-white text-2xl",
+          popup: "rounded-md px-6 py-6",
+          closeButton: "text-white text-xl",
         },
       });
     } else {
       MySwal.fire({
         html: `
-    <div class="text-white text-center font-bold text-lg mb-4">
-      Gagal mengirim E-mail <br /> untuk reset Password
-    </div>
-    <button id="retry-btn" class="bg-white text-red-700 font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
-      Coba Lagi
-    </button>
-  `,
-        background: "#dc2626",
+          <div class="flex flex-col items-center justify-center text-white font-poppins">
+            <h3 class="text-xl font-bold mb-3 text-center font-poppins">Gagal mengirim email</h3>
+            <p class="text-sm text-center mb-4 font-poppins">
+              Terjadi kesalahan saat mencoba mengirim email reset password.
+            </p>
+            <button id="retry-btn" class="bg-white text-[#C73134] font-bold font-poppins px-4 py-2 rounded-md">
+              Coba Lagi
+            </button>
+          </div>
+        `,
+        background: "#C73134",
         showConfirmButton: false,
         allowOutsideClick: false,
         customClass: {
-          popup: "rounded-lg px-8 py-6",
+          popup: "rounded-lg px-6 py-6",
         },
         didOpen: () => {
           const retryBtn = document.getElementById("retry-btn");
           if (retryBtn) {
             retryBtn.addEventListener("click", () => {
               MySwal.close();
-              // Trigger ulang form submit kalau mau
-              // handleSubmit(); atau reload: window.location.reload();
             });
           }
         },
@@ -65,57 +72,58 @@ export default function ForgotPasswordForm() {
   };
 
   return (
-    <div
-      className="min-h-screen bg-cover bg-center relative"
-      style={{ backgroundImage: "url('/path/to/indonesia-map.png')" }}
-    >
-      {/* Header */}
-      <header className="absolute top-4 left-4 right-4 flex items-center justify-between">
-        {/* Logo + Title */}
-        <div className="flex items-center space-x-2">
-          <img src="/public/logo-app.png" alt="Logo" className="h-10 w-10" />
-          <span className="text-[#0D2C4E] font-bold text-lg">MITIGASIKITA</span>
-        </div>
-        {/* Login Button */}
-        <a
-          href="/login"
-          className="bg-[#0D2C4E] text-white py-2 px-4 rounded-md hover:bg-[#123A64] transition"
-        >
-          Login
-        </a>
-      </header>
+    <div className="min-h-screen flex flex-col">
+      <NavbarLogin />
 
-      {/* Overlay and Form */}
-      <div className="absolute inset-0 bg-black/40 flex items-center justify-center px-4">
-        <div className="bg-[#0D2C4E] text-white rounded-lg shadow-lg p-8 w-full max-w-md">
-          <h2 className="text-center text-xl font-bold mb-6">LUPA PASSWORD</h2>
-          <form onSubmit={handleSubmit} className="space-y-5">
+      <div className="flex-grow flex items-center justify-center px-4 py-10">
+        <div className="w-full max-w-md p-6 sm:p-8 rounded-lg bg-[#0D3553] shadow-lg">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-center text-white mb-6 font-poppins">
+            LUPA PASSWORD
+          </h2>
+
+          <form className="space-y-5" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="email" className="block mb-1 font-medium">
-                E-Mail
+              <label
+                htmlFor="email"
+                className="block text-sm sm:text-base font-bold text-white mb-1 font-poppins"
+              >
+                E-mail
               </label>
               <input
-                type="email"
                 id="email"
-                placeholder="Masukkan E-mail Anda"
+                name="email"
+                type="email"
+                required
+                placeholder="Example: puput@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
-                className="w-full px-4 py-2 rounded-md bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                style={{
+                  boxShadow: 'inset 8px 8px 4px rgba(0, 0, 0, 0.25)',
+                }}
+                className="w-full h-11 sm:h-12 px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none text-black font-poppins font-medium bg-white"
               />
             </div>
-            <div className="flex justify-center">
+
+            <div className="flex items-center justify-center">
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-white text-[#0D2C4E] font-bold py-2 px-6 rounded-md hover:bg-gray-100 transition"
+                className="w-30 sm:w-auto h-11 px-6 py-2 text-lg sm:text-sm md:text-lg font-poppins font-bold rounded-md text-[#0D3553] bg-white hover:bg-gray-200 transition"
               >
                 {loading ? "Mengirim..." : "Kirim"}
               </button>
             </div>
-            {message && <p className="text-green-400 text-center">{message}</p>}
-            {error && <p className="text-red-400 text-center">{error}</p>}
+
+            {message && <p className="text-[#C73134] font-semibold text-center font-poppins  text-xs sm:text-base md:text-base">{message}</p>}
+            {error && <p className="text-red-400 text-center font-poppins">{error}</p>}
           </form>
+
+          <p className="mt-4 text-center text-xs sm:text-sm text-white font-poppins">
+            Sudah ingat password?{" "}
+            <Link to="/login" className="font-semibold underline text-white hover:text-gray-200">
+              Login
+            </Link>
+          </p>
         </div>
       </div>
     </div>
