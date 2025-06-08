@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
 import { loadHistoryDetailPresenter, deleteHistoryAndRedirectPresenter } from "../../../presenters/detailHistory-presenter";
+import MySwal from "sweetalert2"
 import {
   FaMapMarkerAlt,
   FaWaveSquare,
@@ -30,6 +31,49 @@ function DetailHistory() {
     const handleDelete = async () => {
       deleteHistoryAndRedirectPresenter(id, navigate);
       };
+
+      const confirmDelete = (id) => {
+          MySwal.fire({
+            html: `
+              <div class="text-white text-center font-bold text-lg mb-4">
+                Apa Anda yakin ingin <br />menghapus History ini?
+              </div>
+               <div class="flex justify-center gap-4">
+              <button id="cancel-btn" class="bg-white text-gray-700 font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
+                Cancel
+              </button>
+              <button id="confirm-delete-btn" class="bg-white text-red-700 font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
+                Delete
+              </button>
+            </div>
+            `,
+            background: "#dc2626",
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            customClass: {
+              popup: "rounded-lg px-8 py-6",
+            },
+            didOpen: () => {
+              const confirmBtn = document.getElementById("confirm-delete-btn");
+              const cancelBtn = document.getElementById("cancel-btn");
+      
+              if (confirmBtn) {
+                confirmBtn.addEventListener("click", () => {
+                  MySwal.close();
+                  handleDelete(id); // panggil delete setelah konfirmasi
+                });
+              }
+      
+              if (cancelBtn) {
+                cancelBtn.addEventListener("click", () => {
+                  MySwal.close();
+                });
+              }
+            },
+          });
+        };
+        
+      
     
       if (!data) return <p>Loading...</p>;
 
@@ -126,7 +170,7 @@ function DetailHistory() {
                 {/* Tombol Delete */}
                 <div className="text-center pt-2">
                   <button
-                    onClick={handleDelete}
+                    onClick={() => confirmDelete(id)}
                     className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-medium"
                   >
                     Delete
