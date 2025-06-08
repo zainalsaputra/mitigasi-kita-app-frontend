@@ -31,7 +31,7 @@ function HistoryPage() {
     MySwal.fire({
       html: `
         <div class="text-white text-center font-bold text-lg mb-4">
-          Yakin Anda Mau Delete<br />History ini?
+          Apa Anda yakin ingin <br />menghapus History ini?
         </div>
          <div class="flex justify-center gap-4">
         <button id="cancel-btn" class="bg-white text-gray-700 font-bold px-4 py-2 rounded hover:bg-gray-100 transition">

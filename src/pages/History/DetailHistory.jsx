@@ -2,10 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
-import {
-  loadHistoryDetailPresenter,
-  deleteHistoryAndRedirectPresenter,
-} from "../../../presenters/detailHistory-presenter";
+import { loadHistoryDetailPresenter, deleteHistoryAndRedirectPresenter } from "../../../presenters/detailHistory-presenter";
 import {
   FaMapMarkerAlt,
   FaWaveSquare,
@@ -30,11 +27,11 @@ function DetailHistory() {
     loadHistoryDetailPresenter(id, setHistory);
   }, [id]);
 
-  const handleDelete = async () => {
-    deleteHistoryAndRedirectPresenter(id, navigate);
-  };
-
-  if (!data) return <p className="text-center py-10">Loading...</p>;
+    const handleDelete = async () => {
+      deleteHistoryAndRedirectPresenter(id, navigate);
+      };
+    
+      if (!data) return <p>Loading...</p>;
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -126,18 +123,18 @@ function DetailHistory() {
               </p>
             </div>
 
-            {/* Tombol Delete */}
-            <div className="text-center pt-4">
-              <button
-                onClick={handleDelete}
-                className="bg-[#C43238] text-white px-6 py-2 rounded-lg font-semibold inline-flex items-center gap-2"
-              >
-                Delete <FaTrash /> 
-              </button>
+                {/* Tombol Delete */}
+                <div className="text-center pt-2">
+                  <button
+                    onClick={handleDelete}
+                    className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-medium"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </main>
+          </main>
 
       <Footer className="mt-auto" />
     </div>
