@@ -1,5 +1,5 @@
 import { getAccessTokenWithRefresh, fetchPrediction, savePredictionToHistory } from "../src/utils/auth";
-import MySwal from "sweetalert2"
+import MySwal from "sweetalert2";
 
 export async function handlePredictionPresenter(selectedCity, setPrediction) {
   if (!selectedCity?.lat || !selectedCity?.long) return;

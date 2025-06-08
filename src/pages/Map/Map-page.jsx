@@ -11,6 +11,7 @@ import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 import ChangeView from "../../components/ChangeView";
 import { handlePredictionPresenter, handleSaveHistoryPresenter } from "../../../presenters/map-presenter";
 import { FaLocationDot, FaCircleInfo, FaWaveSquare, FaWater, FaCloudSun, FaDownload } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 // Fix for default Leaflet icon issues
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -22,6 +23,7 @@ L.Icon.Default.mergeOptions({
 function Map() {
   const [selectedCity, setSelectedCity] = useState(null);
   const [prediction, setPrediction] = useState(null);
+  const navigate = useNavigate()
   // useEffect(() => {
   //   console.log("Selected city:", selectedCity);
   // }, [selectedCity]);
@@ -123,7 +125,7 @@ function Map() {
                 </p>
                 <div className="flex justify-center mt-4 ">
                   <button
-                    onClick={() => handleSaveHistoryPresenter(prediction)}
+                    onClick={() => handleSaveHistoryPresenter(prediction, navigate)}
                     className="bg-[#C43238] text-white font-semibold py-3 px-4 rounded text-xs sm:text-sm md:text-base transition-colors flex items-center gap-2"
                   >
                     <FaDownload color="white" />

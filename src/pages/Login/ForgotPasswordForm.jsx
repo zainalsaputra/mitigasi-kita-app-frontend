@@ -19,11 +19,14 @@ export default function ForgotPasswordForm() {
       MySwal.fire({
         html: `
           <div class="text-white text-center font-bold text-lg">
-            Email reset password <br /> berhasil dikirim.
+            Email reset password berhasil dikirim.
             <br />Silakan cek email Anda.
           </div>
+          <div class="text-white text-sm text-center mt-2">
+            Jika email belum masuk, cek folder <b>Spam</b> atau <b>Promosi</b>.
+          </div>
         `,
-        background: "#22c55e", 
+        background: "#22c55e",
         showConfirmButton: false,
         showCloseButton: true,
         customClass: {

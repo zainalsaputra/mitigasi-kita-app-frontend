@@ -57,56 +57,6 @@ function App() {
       </Routes>
     </Router>
   );
-  // return (
-  //   <Router>
-  //     <Routes>
-  //       <Route
-  //         path="/"
-  //         element={
-  //           <PrivateRoute>
-  //             <Home />
-  //           </PrivateRoute>
-  //         }
-  //       />
-  //       <Route path="/login" element={<Login />} />
-  //       <Route path="/register" element={<Register />} />
-  //       <Route
-  //         path="/education"
-  //         element={
-  //           <PrivateRoute>
-  //             <Education />
-  //           </PrivateRoute>
-  //         }
-  //       />
-  //       <Route
-  //         path="/map"
-  //         element={
-  //           <PrivateRoute>
-  //             <Map />
-  //           </PrivateRoute>
-  //         }
-  //       />
-  //       <Route path="/forgot-password" element={<ForgotPasswordForm />} />
-  //       <Route path="/reset-password" element={<ResetPassword />} />
-  //       <Route
-  //         path="/city-select"
-  //         element={
-  //           <PrivateRoute>
-  //             <CitySelect />
-  //           </PrivateRoute>
-  //         }
-  //       />
-  //       <Route
-  //         path="/history"
-  //         element={
-  //           <PrivateRoute>
-  //             <HistoryPage />
-  //           </PrivateRoute>
-  //         }
-  //       />
-  //     </Routes>
-  //   </Router>
-  // );
 }
 
 export default App
