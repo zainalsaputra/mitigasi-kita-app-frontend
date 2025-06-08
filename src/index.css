@@ -16,7 +16,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-
+.swal2-success [stroke] {
+  stroke: white !important;
+}
 
 body {
   position: relative;

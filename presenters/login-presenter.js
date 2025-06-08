@@ -5,7 +5,6 @@ export async function handleLoginSubmit({
   email,
   password,
   navigate,
-  onError,
 }) {
   try {
     const data = await loginUser(email, password);
@@ -30,7 +29,10 @@ export async function handleLoginSubmit({
       localStorage.setItem("refreshToken", refreshToken);
     }
 
-    // Tampilkan notifikasi sukses langsung
+    // Tutup loading
+    MySwal.close();
+
+    // Tampilkan notifikasi sukses
     await MySwal.fire({
       icon: "success",
       title: "Login Berhasil",
@@ -42,13 +44,18 @@ export async function handleLoginSubmit({
 
     navigate("/");
   } catch (error) {
-    MySwal.fire({
+    // Tutup loading
+    MySwal.close();
+
+    // Tampilkan notifikasi error
+    await MySwal.fire({
       icon: "error",
       title: "Gagal Login",
-      text: error.message || "Login failed",
+      text: error.message || "Email atau password salah.",
       background: "#0D3553",
       color: "white",
+      confirmButtonColor: "#C73134",
+      confirmButtonText: "OK",
     });
-    onError(error.message || "Login failed");
   }
 }
