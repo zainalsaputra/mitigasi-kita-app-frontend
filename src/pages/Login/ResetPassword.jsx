@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { ResetPasswordPresenter } from "../../../presenters/resetPass-presenter";
 import MySwal from "sweetalert2";
-import NavbarLogin from "../../components/NavbarLogin"; // pastikan import NavbarLogin
+import NavbarLogin from "../../components/navbarLogin"; // pastikan import NavbarLogin
 
 function ResetPassword() {
   const navigate = useNavigate();
