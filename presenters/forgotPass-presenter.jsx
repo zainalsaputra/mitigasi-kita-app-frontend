@@ -13,8 +13,10 @@ export async function ForgotPasswordPresenter({
     try {
       const successMessage = await forgotPassword(email);
       setMessage(successMessage);
+      return { success: true, message: successMessage };
     } catch (err) {
       setError(err.message);
+      return { success: false, error: err.message };
     } finally {
       setLoading(false);
     }

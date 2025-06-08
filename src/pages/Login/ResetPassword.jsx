@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ResetPasswordPresenter } from "../../../presenters/resetPass-presenter";
+import MySwal from "sweetalert2";
 function ResetPassword() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -26,6 +27,64 @@ function ResetPassword() {
       setMessage,
       setError,
     });
+    if (message) {
+      MySwal.fire({
+        html: `
+          <div class="text-white text-center font-bold text-lg mb-4">
+            Password berhasil direset <br /> Silahkan login dengan
+            <br />Password baru Anda.
+          </div>
+           <button id="back-to-login-btn" class="bg-white text-green-700 font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
+      Kembali ke login
+    </button>
+        `,
+        background: "#22c55e",
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        customClass: {
+          popup: "rounded-lg px-8 py-6",
+        },
+        didOpen: () => {
+          const backBtn = document.getElementById("back-to-login-btn");
+          if (backBtn) {
+            backBtn.addEventListener("click", () => {
+              MySwal.close();
+              navigate("/login");
+            });
+          }
+        },
+      });
+    }
+
+    // Jika error
+    if (error) {
+      MySwal.fire({
+        html: `
+    <div class="text-white text-center font-bold text-lg mb-4">
+      Gagal mereset <br /> Password
+    </div>
+    <button id="retry-btn" class="bg-white text-red-700 font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
+      Coba Lagi
+    </button>
+  `,
+        background: "#dc2626",
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        customClass: {
+          popup: "rounded-lg px-8 py-6",
+        },
+        didOpen: () => {
+                  const retryBtn = document.getElementById("retry-btn");
+                  if (retryBtn) {
+                    retryBtn.addEventListener("click", () => {
+                      MySwal.close();
+                      // Trigger ulang form submit kalau mau
+                      // handleSubmit(); atau reload: window.location.reload();
+                    });
+                  }
+                },
+      });
+    }
   };
 
   return (
@@ -75,7 +134,6 @@ function ResetPassword() {
                 {loading ? "Memproses..." : "Kirim"}
               </button>
             </div>
-            {message && <p className="text-green-400 text-center">{message}</p>}
             {error && <p className="text-red-400 text-center">{error}</p>}
           </form>
         </div>
