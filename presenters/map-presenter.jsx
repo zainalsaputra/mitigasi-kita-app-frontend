@@ -63,7 +63,22 @@ export async function handleSaveHistoryPresenter(prediction, navigate) {
 
   try {
     await savePredictionToHistory(prediction, token);
-    alert("Prediksi berhasil disimpan!");
+    // alert("Prediksi berhasil disimpan!");
+    MySwal.fire({
+            html: `
+              <div class="text-white text-center font-bold text-lg">
+                Prediksi berhasil disimpan.
+              </div>
+            `,
+            background: "#22c55e", 
+            showConfirmButton: false,
+            showCloseButton: false,
+            timer:1000,
+            customClass: {
+              popup: "rounded-lg px-8 py-6",
+              closeButton: "text-white text-2xl",
+            },
+          });
   } catch (error) {
     alert(error.message);
     console.error("Save History Error:", error);
