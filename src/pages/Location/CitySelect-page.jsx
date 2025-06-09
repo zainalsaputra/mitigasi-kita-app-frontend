@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import Select from 'react-select';
-import CityData from '../../data/CityData';
+import React, { useState, useEffect } from "react";
+import Select from "react-select";
+import CityData from "../../data/CityData";
 
 function CitySelect({ onCityChange }) {
   const [cities, setCities] = useState([]);
@@ -9,7 +9,7 @@ function CitySelect({ onCityChange }) {
     const fetchCities = async () => {
       try {
         const provinceRes = await fetch(
-          "https://zainalsaputra.github.io/api-wilayah-indonesia/api/provinces.json"
+          "https://zainalsaputra.github.io/api-wilayah-indonesia/api/provinces.json",
         );
         const provinces = await provinceRes.json();
 
@@ -19,14 +19,14 @@ function CitySelect({ onCityChange }) {
           provinces.map(async (province) => {
             try {
               const res = await fetch(
-                `https://zainalsaputra.github.io/api-wilayah-indonesia/api/regencies/${province.id}.json`
+                `https://zainalsaputra.github.io/api-wilayah-indonesia/api/regencies/${province.id}.json`,
               );
               if (!res.ok) return;
               const regencies = await res.json();
 
               regencies.forEach((city) => {
                 const found = CityData.find(
-                  (d) => d.name.toUpperCase() === city.name.toUpperCase()
+                  (d) => d.name.toUpperCase() === city.name.toUpperCase(),
                 );
                 allCities.push({
                   value: city.id,
@@ -38,7 +38,7 @@ function CitySelect({ onCityChange }) {
             } catch (err) {
               console.error(`Error fetching regencies for ${province.id}`, err);
             }
-          })
+          }),
         );
 
         setCities(allCities);
@@ -53,11 +53,11 @@ function CitySelect({ onCityChange }) {
   const customStyles = {
     option: (provided) => ({
       ...provided,
-      color: 'black',
+      color: "black",
     }),
     singleValue: (provided) => ({
       ...provided,
-      color: 'black',
+      color: "black",
     }),
   };
 

@@ -2,66 +2,40 @@ import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { logout } from "../utils/auth";
-import MySwal from "sweetalert2"
+import MySwal from "sweetalert2";
 function LogoutButton({ fullWidth = false, onClose, onLogout }) {
   const navigate = useNavigate();
 
   const confirmLogout = () => {
     MySwal.fire({
-      html: `
-        <div class="text-white text-center font-bold font-poppins text-lg mb-2 text-md sm:text-lg md:text-xl ">
-          <div class="text-white text-center font-bold mb-4">
-            Apakah Anda yakin ingin Logout?
-          </div>
-          <div class="flex justify-center gap-4">
-            <button id="cancel-logout" class="bg-white text-[#0D3553] font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
-              Cancel
-            </button>
-            <button id="confirm-logout" class="bg-white text-[#C43238] font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
-              Logout
-            </button>
-          </div>
-        </div>
-      `,
-      background: "#0D3553",
-      showConfirmButton: false,
-      allowOutsideClick: false,
+      title: "Apakah Anda yakin ingin Logout?",
+      icon: "warning",
+      showCancelButton: true,
+      background: "#fff",
+      confirmButtonColor: "#C73134", // merah logout (sesuaikan dengan warna tombol logout)
+      cancelButtonColor: "#0D3553", // biru cancel
+      confirmButtonText: "Logout",
+      cancelButtonText: "Batal",
       customClass: {
-        popup: "rounded-lg px-8 py-6",
+        popup: "font-poppins",
       },
-      didOpen: () => {
-        const cancelBtn = document.getElementById("cancel-logout");
-        const confirmBtn = document.getElementById("confirm-logout");
-
-        if (cancelBtn) {
-          cancelBtn.addEventListener("click", () => {
-            MySwal.close();
-          });
-        }
-
-        if (confirmBtn) {
-          confirmBtn.addEventListener("click", async () => {
-            MySwal.close();
-            logout(); // fungsi logout dari utils
-
-            await MySwal.fire({
-              icon: "success",
-              title: "Logout Berhasil",
-              background: "#C43238",
-              color: "white",
-              timer: 3000,
-              showConfirmButton: false,
-              allowOutsideClick: false,
-            });
-
-            if (onLogout) onLogout();
-            if (onClose) onClose();
-            navigate("/");
-          });
-        }
-
-
-      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logout();
+        MySwal.fire({
+          icon: "success",
+          title: "Logout Berhasil",
+          timer: 2000,
+          showConfirmButton: false,
+          background: "#fff",
+          customClass: {
+            popup: "font-poppins",
+          },
+        });
+        if (onLogout) onLogout();
+        if (onClose) onClose();
+        navigate("/");
+      }
     });
   };
 

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Typo 'navigate.' diperbaiki
 import { FaBars, FaTimes } from "react-icons/fa";
 
-
 function NavbarMap() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -142,7 +141,6 @@ function NavbarMap() {
               >
                 History
               </Link>
-
             </nav>
             {/* Tombol Logout Mobile di bagian bawah panel */}
             <button

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { handleRegister } from "../../../presenters/register-presenter";
-import NavbarLogin from "../../components/navbarLogin";
+import NavbarLogin from "../../components/NavbarLogin";
 
 function Register() {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ function Register() {
     handleRegister(
       form,
       () => navigate("/login"),
-      (message) => alert(message)
+      (message) => alert(message),
     );
   };
 

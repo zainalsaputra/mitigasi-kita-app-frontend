@@ -3,15 +3,17 @@ import { loginUser } from "../src/utils/auth";
 
 export async function handleLoginSubmit({ email, password, navigate }) {
   try {
-    // Tampilkan loading
     MySwal.fire({
       title: "Sedang login...",
       allowOutsideClick: false,
-      background: "#0D3553",
-      color: "white",
+      background: "#fff",
+      customClass: {
+        popup: "font-poppins",
+      },
       didOpen: () => {
         MySwal.showLoading();
       },
+      showConfirmButton: false,
     });
 
     const data = await loginUser(email, password);
@@ -32,34 +34,33 @@ export async function handleLoginSubmit({ email, password, navigate }) {
       localStorage.setItem("refreshToken", refreshToken);
     }
 
-    // Tutup loading
     MySwal.close();
 
-    // Notifikasi sukses
     await MySwal.fire({
       icon: "success",
       title: "Login Berhasil",
-      background: "#0D3553",
-      color: "white",
       timer: 1500,
       showConfirmButton: false,
+      background: "#fff",
+      customClass: {
+        popup: "font-poppins",
+      },
     });
 
     navigate("/");
-
   } catch (error) {
-    // Tutup loading
     MySwal.close();
 
-    // Notifikasi gagal
+    // Notifikasi error default
     await MySwal.fire({
       icon: "error",
       title: "Gagal Login",
       text: error.message || "Email atau password salah.",
-      background: "#0D3553",
-      color: "white",
-      confirmButtonColor: "#C73134",
       confirmButtonText: "OK",
+      background: "#fff",
+      customClass: {
+        popup: "font-poppins",
+      },
     });
   }
 }

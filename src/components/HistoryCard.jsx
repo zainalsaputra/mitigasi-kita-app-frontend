@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 import {
   FaMapMarkerAlt,
   FaWaveSquare,
   FaWater,
   FaTrash,
   FaArrowRight,
-} from 'react-icons/fa';
-import { FaCircleInfo, FaCloudSun } from 'react-icons/fa6';
+} from "react-icons/fa";
+import { FaCircleInfo, FaCloudSun } from "react-icons/fa6";
 
 function HistoryCard({
   city,
@@ -18,7 +18,10 @@ function HistoryCard({
   onDetail,
 }) {
   return (
-    <div className="bg-white px-6 py-4 rounded-lg" style={{ boxShadow: 'inset 8px 6px 2px rgba(0, 0, 0, 0.5)' }}>
+    <div
+      className="bg-white px-6 py-4 rounded-lg"
+      style={{ boxShadow: "inset 8px 6px 2px rgba(0, 0, 0, 0.5)" }}
+    >
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 text-sm md:text-base text-black font-poppins text-xs sm:text-sm md:text-lg">
         <div className="flex items-center gap-1">
           <FaMapMarkerAlt className="text-black" />
@@ -32,15 +35,15 @@ function HistoryCard({
               status === "Aman"
                 ? "#16a34a"
                 : status === "Waspada"
-                ? "#eab308"
-                : "#dc2626"
+                  ? "#eab308"
+                  : "#dc2626"
             }
           />
           <span className="font-semibold">Status:</span>
           <span>{status}</span>
         </div>
         <div className="flex items-center gap-1">
-          <FaWaveSquare color='6D0000' />
+          <FaWaveSquare color="6D0000" />
           <span className="font-semibold">Gempa:</span>
           <span>{magnitude} M</span>
         </div>
@@ -63,12 +66,12 @@ function HistoryCard({
         >
           Lihat Detail <FaArrowRight className="ml-2" />
         </button>
-        
+
         <button
           onClick={onDelete}
           className="px-4 py-2 bg-[#C43238] text-white text-xs sm:text-sm md:text-base rounded flex items-center"
         >
-          Delete <FaTrash className="ml-2" /> 
+          Delete <FaTrash className="ml-2" />
         </button>
       </div>
     </div>

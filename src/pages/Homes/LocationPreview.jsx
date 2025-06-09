@@ -20,9 +20,9 @@ function LocationPreview() {
         {/* Deskripsi kanan */}
         <div className="md:w-12/3 w-full text-sm sm:text-base md:text-lg text-black leading-relaxed">
           <p className="mb-6">
-            Ketahui posisi Anda untuk melihat potensi resiko dan panduan 
-            keselamatan di sekitar--sebagai langkah awal perlindungan dari bencana
-            seperti gempa dan tsunami.
+            Ketahui posisi Anda untuk melihat potensi resiko dan panduan
+            keselamatan di sekitar--sebagai langkah awal perlindungan dari
+            bencana seperti gempa dan tsunami.
           </p>
           <Link to="/city-select" className="relative z-20">
             <button

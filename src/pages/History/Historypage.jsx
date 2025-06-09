@@ -11,8 +11,18 @@ import {
 import MySwal from "sweetalert2";
 
 const monthNames = [
-  "JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI",
-  "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER",
+  "JANUARI",
+  "FEBRUARI",
+  "MARET",
+  "APRIL",
+  "MEI",
+  "JUNI",
+  "JULI",
+  "AGUSTUS",
+  "SEPTEMBER",
+  "OKTOBER",
+  "NOVEMBER",
+  "DESEMBER",
 ];
 
 function HistoryPage() {
@@ -35,16 +45,16 @@ function HistoryPage() {
         MySwal.showLoading();
       },
       allowOutsideClick: false,
-      background: "#0D3553",
-      color: "white",
       showConfirmButton: false,
+      customClass: {
+        popup: "font-poppins",
+      },
     });
 
-    // Simulasi proses loading (bisa diganti request async kalau perlu)
     setTimeout(() => {
       MySwal.close();
       navigate(`/history/${id}`);
-    }, 700); // 700ms delay, sesuaikan jika perlu
+    }, 700);
   };
 
   const handlePrevMonth = () => {
@@ -70,7 +80,9 @@ function HistoryPage() {
 
           <div className="space-y-4">
             {historyList
-              .filter((item) => new Date(item.createdAt).getMonth() === monthIndex)
+              .filter(
+                (item) => new Date(item.createdAt).getMonth() === monthIndex,
+              )
               .map((item) => (
                 <HistoryCard
                   key={item.id}

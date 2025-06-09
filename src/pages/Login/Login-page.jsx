@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import NavbarLogin from "../../components/navbarLogin";
+import NavbarLogin from "../../components/NavbarLogin";
 import { handleLoginSubmit } from "../../../presenters/login-presenter";
 
 function Login() {
@@ -29,7 +29,10 @@ function Login() {
           <form className="space-y-4" onSubmit={handleSubmit}>
             {/* Email Field */}
             <div>
-              <label htmlFor="email-address" className="block text-sm sm:text-base font-bold text-white mb-1 font-poppins">
+              <label
+                htmlFor="email-address"
+                className="block text-sm sm:text-base font-bold text-white mb-1 font-poppins"
+              >
                 E-mail
               </label>
               <input
@@ -43,14 +46,17 @@ function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 style={{
-                  boxShadow: 'inset 8px 8px 4px rgba(0, 0, 0, 0.25)',
+                  boxShadow: "inset 8px 8px 4px rgba(0, 0, 0, 0.25)",
                 }}
               />
             </div>
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm sm:text-base font-bold text-white mb-1 font-poppins">
+              <label
+                htmlFor="password"
+                className="block text-sm sm:text-base font-bold text-white mb-1 font-poppins"
+              >
                 Password
               </label>
               <input
@@ -64,11 +70,14 @@ function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 style={{
-                  boxShadow: 'inset 8px 8px 4px rgba(0, 0, 0, 0.25)',
+                  boxShadow: "inset 8px 8px 4px rgba(0, 0, 0, 0.25)",
                 }}
               />
               <div className="text-left mt-1">
-                <Link to="/forgot-password" className="text-xs sm:text-sm text-white hover:underline font-poppins">
+                <Link
+                  to="/forgot-password"
+                  className="text-xs sm:text-sm text-white hover:underline font-poppins"
+                >
                   Lupa Password?
                 </Link>
               </div>
@@ -88,7 +97,10 @@ function Login() {
           {/* Register Link */}
           <p className="mt-4 text-center text-xs sm:text-sm text-white font-poppins">
             Belum punya akun?{" "}
-            <Link to="/register" className="font-semibold underline text-white hover:text-gray-200">
+            <Link
+              to="/register"
+              className="font-semibold underline text-white hover:text-gray-200"
+            >
               Register
             </Link>
           </p>

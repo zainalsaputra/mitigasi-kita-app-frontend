@@ -31,15 +31,19 @@ export async function deleteHistoryPresenter(id, setHistoryList) {
       showCancelButton: true,
       confirmButtonText: "Ya, hapus!",
       cancelButtonText: "Batal",
-      background: "#0D3553",
-      color: "white",
-      confirmButtonColor: "#C43238",
-      cancelButtonColor: "#3085d6",
+      confirmButtonColor: "#C73134",
+      cancelButtonColor: "#0D3553",
       showLoaderOnConfirm: true,
+      background: "#fff",
+      customClass: {
+        popup: "font-poppins",
+      },
       preConfirm: async () => {
         try {
           await deleteHistoryItem(id, token);
-          setHistoryList((prevList) => prevList.filter((item) => item.id !== id));
+          setHistoryList((prevList) =>
+            prevList.filter((item) => item.id !== id),
+          );
         } catch (error) {
           MySwal.showValidationMessage(`Gagal hapus: ${error.message}`);
           throw error;
@@ -53,10 +57,12 @@ export async function deleteHistoryPresenter(id, setHistoryList) {
         icon: "success",
         title: "Terhapus!",
         text: "Data history berhasil dihapus.",
-        background: "#0D3553",
-        color: "white",
         timer: 2000,
         showConfirmButton: false,
+        background: "#fff",
+        customClass: {
+          popup: "font-poppins",
+        },
       });
     }
   } catch (error) {
