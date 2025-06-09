@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { handleRegister } from "../../../presenters/register-presenter";
-import NavbarLogin from "../../components/NavbarLogin";
+import NavbarLogin from "../../components/navbarLogin";
 
 function Register() {
   const navigate = useNavigate();
