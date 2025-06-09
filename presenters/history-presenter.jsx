@@ -71,7 +71,7 @@ export async function deleteHistoryPresenter(id, setHistoryList) {
       await MySwal.fire({
         icon: "success",
         title: "Terhapus!",
-        text: "Data history berhasil dihapus.",
+        text: "Data berhasil dihapus.",
         timer: 2000,
         showConfirmButton: false,
         background: "#fff",
