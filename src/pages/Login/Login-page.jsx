@@ -2,11 +2,12 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import NavbarLogin from "../../components/navbarLogin";
 import { handleLoginSubmit } from "../../../presenters/login-presenter";
-
+import { FiEye, FiEyeOff } from "react-icons/fi";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -59,10 +60,11 @@ function Login() {
               >
                 Password
               </label>
+              <div className="relative">
               <input
                 id="password"
                 name="password"
-                type="password"
+                type={showPassword ? "text" : "password" }
                 autoComplete="current-password"
                 required
                 className="w-full h-11 sm:h-12 px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none text-black font-poppins font-medium bg-white"
@@ -73,6 +75,14 @@ function Login() {
                   boxShadow: "inset 8px 8px 4px rgba(0, 0, 0, 0.25)",
                 }}
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+              >
+                {showPassword ? <FiEye /> : <FiEyeOff />}
+              </button>
+              </div>
               <div className="text-left mt-1">
                 <Link
                   to="/forgot-password"

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { handleRegister } from "../../../presenters/register-presenter";
 import NavbarLogin from "../../components/navbarLogin";
-
+import { FiEye, FiEyeOff } from "react-icons/fi";
 function Register() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -12,6 +12,9 @@ function Register() {
     password: "",
     confirmPassword: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -87,17 +90,26 @@ function Register() {
               >
                 Password
               </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                placeholder="Example: mitigasi@123"
-                className="w-full h-12 px-3 py-2 rounded-md bg-white text-black placeholder-gray-400 font-poppins font-medium focus:outline-none"
-                style={{ boxShadow: "inset 8px 8px 4px rgba(0, 0, 0, 0.25)" }}
-                value={form.password}
-                onChange={handleChange}
-              />
+              <div className="relative">
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  required
+                  placeholder="Example: mitigasi@123"
+                  className="w-full h-12 px-3 py-2 rounded-md bg-white text-black placeholder-gray-400 font-poppins font-medium focus:outline-none"
+                  style={{ boxShadow: "inset 8px 8px 4px rgba(0, 0, 0, 0.25)" }}
+                  value={form.password}
+                  onChange={handleChange}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                >
+                  {showPassword ? <FiEye /> : <FiEyeOff />}
+                </button>
+              </div>
             </div>
 
             {/* Konfirmasi Password */}
@@ -108,17 +120,26 @@ function Register() {
               >
                 Konfirmasi Password
               </label>
-              <input
-                id="confirmPassword"
-                name="confirmPassword"
-                type="password"
-                required
-                placeholder="Ulangi Password"
-                className="w-full h-12 px-3 py-2 rounded-md bg-white text-black placeholder-gray-400 font-poppins font-medium focus:outline-none"
-                style={{ boxShadow: "inset 8px 8px 4px rgba(0, 0, 0, 0.25)" }}
-                value={form.confirmPassword}
-                onChange={handleChange}
-              />
+              <div className="relative">
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  required
+                  placeholder="Ulangi Password"
+                  className="w-full h-12 px-3 py-2 rounded-md bg-white text-black placeholder-gray-400 font-poppins font-medium focus:outline-none"
+                  style={{ boxShadow: "inset 8px 8px 4px rgba(0, 0, 0, 0.25)" }}
+                  value={form.confirmPassword}
+                  onChange={handleChange}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword((prev) => !prev)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 transform -translate-y-1/2 text-gray-500"
+                >
+                  {showConfirmPassword ? <FiEye /> : <FiEyeOff />}
+                </button>
+              </div>
             </div>
 
             {/* Button */}
