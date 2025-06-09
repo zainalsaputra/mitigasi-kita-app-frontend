@@ -31,7 +31,7 @@ function HistoryPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    loadHistoryListPresenter(setHistoryList);
+    loadHistoryListPresenter(setHistoryList, navigate);
   }, []);
 
   const handleDelete = (id) => {

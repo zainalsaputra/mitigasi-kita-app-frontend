@@ -1,7 +1,7 @@
 import { fetchHistoryList, deleteHistoryItem } from "../src/utils/auth";
 import MySwal from "sweetalert2";
 
-export async function loadHistoryListPresenter(setHistoryList) {
+export async function loadHistoryListPresenter(setHistoryList, navigate) {
   const token = localStorage.getItem("accessToken");
   if (!token) {
     console.error("Token tidak ditemukan");
@@ -17,13 +17,16 @@ export async function loadHistoryListPresenter(setHistoryList) {
       MySwal.fire({
         icon: "info",
         title: "Tidak Ada Riwayat",
-        text: "Belum ada data yang tersimpan.",
+        text: "Simpan Prediksi Untuk Menampilkan Riwayat",
         confirmButtonColor: "#0D3553",
         customClass: {
           popup: "font-poppins",
         },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/map");
+        }
       });
-    
     }
   }
 }
