@@ -147,7 +147,7 @@ function Map() {
                           className="bg-[#C43238] text-white font-semibold py-3 px-4 rounded text-xs sm:text-sm md:text-base transition-colors flex items-center gap-2"
                         >
                           <FaDownload color="white" />
-                          Simpan ke History
+                          Simpan ke Riwayat
                         </button>
                       </div>
                     </div>
