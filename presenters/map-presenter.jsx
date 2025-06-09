@@ -1,12 +1,34 @@
-import { getAccessTokenWithRefresh, fetchPrediction, savePredictionToHistory } from "../src/utils/auth";
+import {
+  getAccessTokenWithRefresh,
+  fetchPrediction,
+  savePredictionToHistory,
+} from "../src/utils/auth";
 import MySwal from "sweetalert2";
 
 export async function handlePredictionPresenter(selectedCity, setPrediction) {
   if (!selectedCity?.lat || !selectedCity?.long) return;
+
   try {
+    MySwal.fire({
+      title: "Sedang mengambil prediksi...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        MySwal.showLoading();
+      },
+      showConfirmButton: false,
+      background: "#fff",
+      customClass: {
+        popup: "font-poppins",
+      },
+    });
+
     const data = await fetchPrediction(selectedCity.lat, selectedCity.long);
+
+    MySwal.close();
+
     setPrediction(data);
   } catch (error) {
+    MySwal.close();
     alert(error.message);
     console.error("Prediction Error:", error);
   }
@@ -15,47 +37,25 @@ export async function handlePredictionPresenter(selectedCity, setPrediction) {
 export async function handleSaveHistoryPresenter(prediction, navigate) {
   const token = await getAccessTokenWithRefresh();
   if (!token) {
-        MySwal.fire({
-          html: `
-            <div class="flex flex-col items-center justify-center text-white font-poppins text-xs sm:text-xl md:text-xl">
-              <div class="text-white text-center font-bold mb-4">
-                Anda Harus Login Untuk <br /> Menyimpan Data ke History
-              </div>
-              <div class="flex justify-center gap-4">
-                <button id="cancel-btn" class="bg-white text-[#C73134] font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
-                  Cancel
-                </button>
-                <button id="login-btn" class="bg-white text-[#C73134] font-bold px-4 py-2 rounded hover:bg-gray-100 transition">
-                  Login
-                </button>
-              </div>
-            </div>
-          `,
-          background: "#C73134",
-          showConfirmButton: false,
-          allowOutsideClick: false,
-          customClass: {
-            popup: "rounded-lg px-6 py-3",
-          },
-          didOpen: () => {
-            const loginBtn = document.getElementById("login-btn");
-            const cancelBtn = document.getElementById("cancel-btn");
-    
-            if (loginBtn) {
-              loginBtn.addEventListener("click", () => {
-                MySwal.close();
-                navigate("/login"); 
-              });
-            }
-    
-            if (cancelBtn) {
-              cancelBtn.addEventListener("click", () => {
-                MySwal.close();
-              });
-            }
-          },
-        });
-      return;
+    MySwal.fire({
+      title: "Anda harus login untuk menyimpan data ke history",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Login",
+      cancelButtonText: "Batal",
+      confirmButtonColor: "#C73134",
+      cancelButtonColor: "#0D3553",
+      allowOutsideClick: false,
+      background: "#fff",
+      customClass: {
+        popup: "font-poppins",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/login");
+      }
+    });
+    return;
   }
 
   if (!prediction) {
@@ -65,22 +65,38 @@ export async function handleSaveHistoryPresenter(prediction, navigate) {
 
   try {
     await savePredictionToHistory(prediction, token);
-    // alert("Prediksi berhasil disimpan!");
+
+    await MySwal.fire({
+      icon: "success",
+      title: "Prediksi berhasil disimpan.",
+      timer: 1500,
+      showConfirmButton: false,
+      background: "#fff",
+      customClass: {
+        popup: "font-poppins",
+      },
+    });
+
+    // Loading singkat sebelum pindah halaman
     MySwal.fire({
-            html: `
-              <div class="text-white text-center font-bold font-poppins text-xs sm:text-xl md:text-xl">
-                Prediksi berhasil disimpan.
-              </div>
-            `,
-            background: "#0D3553", 
-            showConfirmButton: false,
-            showCloseButton: false,
-            timer:3000,
-            customClass: {
-              popup: "rounded-lg px-8 py-6",
-              closeButton: "text-white text-2xl",
-            },
-          });
+      title: "Memuat halaman history...",
+      allowOutsideClick: false,
+      didOpen: () => {
+        MySwal.showLoading();
+      },
+      showConfirmButton: false,
+      background: "#fff",
+      customClass: {
+        popup: "font-poppins",
+      },
+      timer: 1000,
+    });
+
+    await new Promise((r) => setTimeout(r, 1000));
+
+    MySwal.close();
+
+    navigate("/history");
   } catch (error) {
     alert(error.message);
     console.error("Save History Error:", error);

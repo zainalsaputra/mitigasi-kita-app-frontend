@@ -20,12 +20,12 @@ function MapPreview() {
         {/* Deskripsi kanan */}
         <div className="md:w-12/3 w-full text-sm sm:text-base md:text-lg text-black leading-relaxed">
           <p className="mb-6">
-            Menampilkan peta interaktif yang memberikan informasi visual mengenai tingkat risiko bencana (gempa dan tsunami) pada wilayah Indonesia atau sesuai lokasi pengguna. Ini menjadi fitur utama aplikasi untuk memberi pemahaman langsung terhadap zona rawan.
+            Menampilkan peta interaktif yang memberikan informasi visual
+            mengenai tingkat risiko bencana (gempa dan tsunami) pada wilayah
+            Indonesia atau sesuai lokasi pengguna. Ini menjadi fitur utama
+            aplikasi untuk memberi pemahaman langsung terhadap zona rawan.
           </p>
-          <Link
-            to="/map"
-            className="relative z-20"
-          >
+          <Link to="/map" className="relative z-20">
             <button
               className="px-4 py-2 text-white font-semibold rounded-md transition duration-300"
               style={{ backgroundColor: "#C43238" }}

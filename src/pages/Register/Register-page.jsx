@@ -22,7 +22,7 @@ function Register() {
     handleRegister(
       form,
       () => navigate("/login"),
-      (message) => alert(message)
+      (message) => alert(message),
     );
   };
 

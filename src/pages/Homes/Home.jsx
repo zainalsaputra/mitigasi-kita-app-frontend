@@ -5,16 +5,16 @@ import EduPreview from "./EduPreview";
 import HeroSection from "./HeroSection";
 import MapPreview from "./MapPreview";
 function Home() {
-    return (
-        <div>
-            <Navbar />
-            <HeroSection />
-            <MapPreview />
-            <EduPreview />
-            <AboutUs />
-            <Footer />
-        </div>
-    )
+  return (
+    <div>
+      <Navbar />
+      <HeroSection />
+      <MapPreview />
+      <EduPreview />
+      <AboutUs />
+      <Footer />
+    </div>
+  );
 }
 
 export default Home;

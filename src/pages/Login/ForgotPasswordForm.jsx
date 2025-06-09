@@ -94,11 +94,11 @@ export default function ForgotPasswordForm() {
                 name="email"
                 type="email"
                 required
-                placeholder="Example: puput@gmail.com"
+                placeholder="Masukkan email Anda"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 style={{
-                  boxShadow: 'inset 8px 8px 4px rgba(0, 0, 0, 0.25)',
+                  boxShadow: "inset 8px 8px 4px rgba(0, 0, 0, 0.25)",
                 }}
                 className="w-full h-11 sm:h-12 px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none text-black font-poppins font-medium bg-white"
               />
@@ -114,13 +114,22 @@ export default function ForgotPasswordForm() {
               </button>
             </div>
 
-            {message && <p className="text-[#C73134] font-semibold text-center font-poppins  text-xs sm:text-base md:text-base">{message}</p>}
-            {error && <p className="text-red-400 text-center font-poppins">{error}</p>}
+            {message && (
+              <p className="text-[#C73134] font-semibold text-center font-poppins  text-xs sm:text-base md:text-base">
+                {message}
+              </p>
+            )}
+            {error && (
+              <p className="text-red-400 text-center font-poppins">{error}</p>
+            )}
           </form>
 
           <p className="mt-4 text-center text-xs sm:text-sm text-white font-poppins">
             Sudah ingat password?{" "}
-            <Link to="/login" className="font-semibold underline text-white hover:text-gray-200">
+            <Link
+              to="/login"
+              className="font-semibold underline text-white hover:text-gray-200"
+            >
               Login
             </Link>
           </p>

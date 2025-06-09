@@ -11,7 +11,7 @@ export async function refreshAccessToken() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ refreshToken }),
-      }
+      },
     );
     if (!res.ok) return null;
     const data = await res.json();
@@ -45,7 +45,7 @@ export async function loginUser(email, password) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
-    }
+    },
   );
 
   if (!res.ok) {
@@ -63,7 +63,7 @@ export async function registerUser({ name, email, password }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, password }),
-    }
+    },
   );
 
   if (!res.ok) {
@@ -81,7 +81,7 @@ export async function fetchPrediction(latitude, longitude) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ latitude, longitude }),
-    }
+    },
   );
 
   const result = await res.json();
@@ -101,7 +101,7 @@ export async function savePredictionToHistory(prediction, token) {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(prediction),
-    }
+    },
   );
 
   if (!res.ok) {
@@ -118,7 +118,7 @@ export async function fetchHistoryList(token) {
         Authorization: `Bearer ${token}`,
         Accept: "application/json",
       },
-    }
+    },
   );
 
   const result = await res.json();
@@ -139,7 +139,7 @@ export async function deleteHistoryItem(id, token) {
         Authorization: `Bearer ${token}`,
         Accept: "application/json",
       },
-    }
+    },
   );
 
   if (!res.ok) {
@@ -155,7 +155,7 @@ export async function fetchHistoryDetail(id, token) {
         Authorization: `Bearer ${token}`,
         Accept: "application/json",
       },
-    }
+    },
   );
 
   const result = await res.json();
@@ -174,7 +174,7 @@ export function getUserFromToken() {
     const decoded = jwtDecode(token);
     const now = Date.now() / 1000;
     if (decoded.exp && decoded.exp < now) {
-      return null; 
+      return null;
     }
 
     return decoded;
@@ -190,7 +190,7 @@ export async function forgotPassword(email) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
-    }
+    },
   );
   if (!res.ok) {
     const data = await res.json();
@@ -206,7 +206,7 @@ export async function resetPassword(token, password) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token, password }),
-    }
+    },
   );
 
   const data = await res.json();

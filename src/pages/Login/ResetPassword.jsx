@@ -88,67 +88,66 @@ function ResetPassword() {
   };
 
   return (
-  <div className="min-h-screen flex flex-col">
-    <NavbarLogin />
+    <div className="min-h-screen flex flex-col">
+      <NavbarLogin />
 
-    <div className="flex-grow flex items-center justify-center px-4 py-10 text-white text-lg sm:text-lg md:text-xl font-poppins">
-      <div className="w-full max-w-md p-6 sm:p-8 rounded-lg bg-[#0D3553] shadow-lg">
-        <h2 className="font-bold text-center text-white mb-6">
-          RESET PASSWORD
-        </h2>
+      <div className="flex-grow flex items-center justify-center px-4 py-10 text-white text-lg sm:text-lg md:text-xl font-poppins">
+        <div className="w-full max-w-md p-6 sm:p-8 rounded-lg bg-[#0D3553] shadow-lg">
+          <h2 className="font-bold text-center text-white mb-6">
+            RESET PASSWORD
+          </h2>
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <div>
-            <label
-              htmlFor="new-password"
-              className="block  font-bold text-white mb-1 text-md sm:text-lg md:text-xl"
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            <div>
+              <label
+                htmlFor="new-password"
+                className="block  font-bold text-white mb-1 text-md sm:text-lg md:text-xl"
+              >
+                Password Baru
+              </label>
+              <input
+                id="new-password"
+                name="password"
+                type="password"
+                required
+                placeholder="Masukkan password baru"
+                value={password}
+                onChange={(e) => setNewPassword(e.target.value)}
+                className="w-full h-11 sm:h-12 px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none text-black font-poppins font-medium bg-white"
+                style={{
+                  boxShadow: "inset 8px 8px 4px rgba(0, 0, 0, 0.25)",
+                }}
+              />
+            </div>
+
+            <div className="flex items-center justify-center">
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-auto h-11 px-6 py-2 font-bold rounded-md text-[#0D3553] bg-white hover:bg-gray-200 transition"
+              >
+                {loading ? "Memproses..." : "Reset Password"}
+              </button>
+            </div>
+
+            {error && (
+              <p className="text-red-400 text-center font-poppins">{error}</p>
+            )}
+          </form>
+
+          <p className="mt-4 text-center text-base sm:text-sm text-white font-poppins">
+            Sudah ingat password?{" "}
+            <span
+              onClick={() => navigate("/login")}
+              className="font-semibold underline cursor-pointer hover:text-gray-200"
             >
-              Password Baru
-            </label>
-            <input
-              id="new-password"
-              name="password"
-              type="password"
-              required
-              placeholder="Masukkan password baru"
-              value={password}
-              onChange={(e) => setNewPassword(e.target.value)}
-              className="w-full h-11 sm:h-12 px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none text-black font-poppins font-medium bg-white"
-              style={{
-                boxShadow: "inset 8px 8px 4px rgba(0, 0, 0, 0.25)",
-              }}
-            />
-          </div>
-
-          <div className="flex items-center justify-center">
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-auto h-11 px-6 py-2 font-bold rounded-md text-[#0D3553] bg-white hover:bg-gray-200 transition"
-            >
-              {loading ? "Memproses..." : "Reset Password"}
-            </button>
-          </div>
-
-          {error && (
-            <p className="text-red-400 text-center font-poppins">{error}</p>
-          )}
-        </form>
-
-        <p className="mt-4 text-center text-base sm:text-sm text-white font-poppins">
-          Sudah ingat password?{" "}
-          <span
-            onClick={() => navigate("/login")}
-            className="font-semibold underline cursor-pointer hover:text-gray-200"
-          >
-            Login
-          </span>
-        </p>
+              Login
+            </span>
+          </p>
+        </div>
       </div>
     </div>
-  </div>
-);
-
+  );
 }
 
 export default ResetPassword;

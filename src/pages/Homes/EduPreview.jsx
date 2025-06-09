@@ -20,7 +20,8 @@ function EduPreview() {
         {/* Deskripsi dan tombol kanan */}
         <div className="w-full md:w-2/1 text-sm sm:text-base md:text-lg text-black leading-relaxed">
           <p className="mb-6">
-            Edukasi berisi panduan dan tips untuk mempersiapkan diri sebelum, saat, dan setelah terjadi bencana seperti gempa bumi dan tsunami.
+            Edukasi berisi panduan dan tips untuk mempersiapkan diri sebelum,
+            saat, dan setelah terjadi bencana seperti gempa bumi dan tsunami.
           </p>
           <Link to="/education" className="relative z-20">
             <button

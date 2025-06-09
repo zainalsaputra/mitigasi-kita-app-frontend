@@ -12,7 +12,7 @@ export async function handleRegister(form, onSuccess, onError) {
       email: form.email,
       password: form.password,
     });
-    
+
     onSuccess();
   } catch (error) {
     onError(error.message || "Registration failed");
