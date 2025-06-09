@@ -75,7 +75,7 @@ function HistoryPage() {
           style={{ boxShadow: "6px 6px 2px rgba(0, 0, 0, 0.5)" }}
         >
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 text-white">
-            HISTORY BULAN {monthNames[monthIndex]}
+            RIWAYAT BULAN {monthNames[monthIndex]}
           </h2>
 
           <div className="space-y-4">

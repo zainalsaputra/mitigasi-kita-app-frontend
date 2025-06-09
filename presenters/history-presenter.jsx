@@ -13,6 +13,18 @@ export async function loadHistoryListPresenter(setHistoryList) {
     setHistoryList(data);
   } catch (error) {
     console.error("Gagal memuat history:", error.message);
+    if (error.status === 404) {
+      MySwal.fire({
+        icon: "info",
+        title: "Tidak Ada Riwayat",
+        text: "Belum ada data yang tersimpan.",
+        confirmButtonColor: "#0D3553",
+        customClass: {
+          popup: "font-poppins",
+        },
+      });
+    
+    }
   }
 }
 
