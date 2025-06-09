@@ -79,7 +79,7 @@ export async function handleSaveHistoryPresenter(prediction, navigate) {
 
     // Loading singkat sebelum pindah halaman
     MySwal.fire({
-      title: "Memuat halaman history...",
+      title: "Memuat halaman riwayat...",
       allowOutsideClick: false,
       didOpen: () => {
         MySwal.showLoading();

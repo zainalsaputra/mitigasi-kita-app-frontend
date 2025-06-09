@@ -40,7 +40,7 @@ export async function deleteHistoryPresenter(id, setHistoryList) {
 
   try {
     const result = await MySwal.fire({
-      title: "Yakin ingin menghapus data history?",
+      title: "Yakin ingin menghapus data ini?",
       text: "Data yang dihapus tidak bisa dikembalikan!",
       icon: "warning",
       showCancelButton: true,
