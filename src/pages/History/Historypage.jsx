@@ -83,6 +83,7 @@ function HistoryPage() {
               .filter(
                 (item) => new Date(item.createdAt).getMonth() === monthIndex,
               )
+              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
               .map((item) => (
                 <HistoryCard
                   key={item.id}
