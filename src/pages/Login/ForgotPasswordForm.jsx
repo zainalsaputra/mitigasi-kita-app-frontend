@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ForgotPasswordPresenter } from "../../../presenters/forgotPass-presenter";
 import MySwal from "sweetalert2";
 import { Link } from "react-router-dom"; 
-import NavbarLogin from "../../components/NavbarLogin";
+import NavbarLogin from "../../components/navbarLogin";
 
 export default function ForgotPasswordForm() {
   const [email, setEmail] = useState("");
@@ -94,7 +94,7 @@ export default function ForgotPasswordForm() {
                 name="email"
                 type="email"
                 required
-                placeholder="Example: puput@gmail.com"
+                placeholder="Masukkan email Anda"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 style={{
