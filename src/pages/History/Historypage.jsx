@@ -82,7 +82,13 @@ function HistoryPage() {
             {historyList
               .filter(
                 (item) => new Date(item.createdAt).getMonth() === monthIndex,
-              )
+              ).length === 0 ? (
+                <p className="text-center text-white text-lg">Tidak ada riwayat untuk bulan ini.</p>
+              ) : (
+                historyList
+                  .filter(
+                    (item) => new Date(item.createdAt).getMonth() === monthIndex,
+                  )
               .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
               .map((item) => (
                 <HistoryCard
@@ -95,7 +101,8 @@ function HistoryPage() {
                   onDelete={() => handleDelete(item.id)}
                   onDetail={() => handleDetail(item.id)}
                 />
-              ))}
+              ))
+            )}
           </div>
 
           <div className="flex justify-between mt-8">
