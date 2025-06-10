@@ -5,32 +5,21 @@ import {
 } from "../src/utils/auth";
 import MySwal from "sweetalert2";
 
-export async function handlePredictionPresenter(selectedCity, setPrediction) {
+export async function handlePredictionPresenter(
+  selectedCity,
+  setPrediction,
+  setIsLoading,
+) {
   if (!selectedCity?.lat || !selectedCity?.long) return;
-
+  setIsLoading(true);
   try {
-    MySwal.fire({
-      title: "Sedang mengambil prediksi...",
-      allowOutsideClick: false,
-      didOpen: () => {
-        MySwal.showLoading();
-      },
-      showConfirmButton: false,
-      background: "#fff",
-      customClass: {
-        popup: "font-poppins",
-      },
-    });
-
     const data = await fetchPrediction(selectedCity.lat, selectedCity.long);
-
-    MySwal.close();
-
     setPrediction(data);
   } catch (error) {
-    MySwal.close();
     alert(error.message);
     console.error("Prediction Error:", error);
+  } finally {
+    setIsLoading(false);
   }
 }
 
