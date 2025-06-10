@@ -31,8 +31,8 @@ function HistoryPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    loadHistoryListPresenter(setHistoryList);
-  }, []);
+    loadHistoryListPresenter(setHistoryList, navigate);
+  }, [navigate]);
 
   const handleDelete = (id) => {
     deleteHistoryPresenter(id, setHistoryList);
@@ -75,26 +75,34 @@ function HistoryPage() {
           style={{ boxShadow: "6px 6px 2px rgba(0, 0, 0, 0.5)" }}
         >
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 text-white">
-            HISTORY BULAN {monthNames[monthIndex]}
+            RIWAYAT BULAN {monthNames[monthIndex]}
           </h2>
 
           <div className="space-y-4">
             {historyList
               .filter(
                 (item) => new Date(item.createdAt).getMonth() === monthIndex,
-              )
+              ).length === 0 ? (
+                <p className="text-center text-white text-lg">Tidak ada riwayat untuk bulan ini.</p>
+              ) : (
+                historyList
+                  .filter(
+                    (item) => new Date(item.createdAt).getMonth() === monthIndex,
+                  )
+              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
               .map((item) => (
                 <HistoryCard
                   key={item.id}
                   city={item.city}
                   status={item.status}
-                  magnitude={item.magnitude}
+                  magnitude={parseFloat(item.magnitude).toFixed(4)}
                   tsunami={item.potensi_tsunami}
                   temperature={item.temperature_2m_max}
                   onDelete={() => handleDelete(item.id)}
                   onDetail={() => handleDetail(item.id)}
                 />
-              ))}
+              ))
+            )}
           </div>
 
           <div className="flex justify-between mt-8">

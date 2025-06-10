@@ -124,7 +124,9 @@ export async function fetchHistoryList(token) {
   const result = await res.json();
 
   if (!res.ok || !Array.isArray(result.data)) {
-    throw new Error(result.message || "Data history tidak valid");
+    const error = new Error(result.message || "Data history tidak valid");
+    error.status = res.status; // << Tambahkan status
+    throw error;
   }
 
   return result.data;

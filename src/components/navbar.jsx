@@ -127,7 +127,7 @@ function Navbar() {
               onClick={handleLinkClick}
               className={navLinkClass}
             >
-              History
+              Riwayat
             </NavLink>
           )}
         </div>
@@ -195,7 +195,7 @@ function Navbar() {
                   onClick={handleLinkClick}
                   className={mobileNavLinkClass}
                 >
-                  History
+                  Riwayat
                 </NavLink>
               )}
             </nav>

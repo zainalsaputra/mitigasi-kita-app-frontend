@@ -127,7 +127,7 @@ function Map() {
                       <p className="flex items-center gap-3">
                         <FaWaveSquare color="C43238" />
                         <strong className="font-bold">Gempa Bumi:</strong>
-                        <span>{prediction.magnitude} M</span>
+                        <span>{parseFloat(prediction.magnitude).toFixed(4)} M</span>
                       </p>
                       <p className="flex items-center gap-3">
                         <FaWater color="0687C3" />
@@ -147,7 +147,7 @@ function Map() {
                           className="bg-[#C43238] text-white font-semibold py-3 px-4 rounded text-xs sm:text-sm md:text-base transition-colors flex items-center gap-2"
                         >
                           <FaDownload color="white" />
-                          Simpan ke History
+                          Simpan ke Riwayat
                         </button>
                       </div>
                     </div>
