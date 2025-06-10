@@ -61,27 +61,27 @@ function Login() {
                 Password
               </label>
               <div className="relative">
-              <input
-                id="password"
-                name="password"
-                type={showPassword ? "text" : "password" }
-                autoComplete="current-password"
-                required
-                className="w-full h-11 sm:h-12 px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none text-black font-poppins font-medium bg-white"
-                placeholder="Example: mitigasi@123"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                style={{
-                  boxShadow: "inset 8px 8px 4px rgba(0, 0, 0, 0.25)",
-                }}
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword((prev) => !prev)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
-              >
-                {showPassword ? <FiEye /> : <FiEyeOff />}
-              </button>
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  autoComplete="current-password"
+                  required
+                  className="w-full h-11 sm:h-12 px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none text-black font-poppins font-medium bg-white"
+                  placeholder="Example: mitigasi@123"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  style={{
+                    boxShadow: "inset 8px 8px 4px rgba(0, 0, 0, 0.25)",
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                >
+                  {showPassword ? <FiEye /> : <FiEyeOff />}
+                </button>
               </div>
               <div className="text-left mt-1">
                 <Link

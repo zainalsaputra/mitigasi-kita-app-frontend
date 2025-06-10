@@ -22,10 +22,7 @@ function Register() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    handleRegister(
-      form,
-      () => navigate("/login"),
-    );
+    handleRegister(form, () => navigate("/login"));
   };
 
   return (

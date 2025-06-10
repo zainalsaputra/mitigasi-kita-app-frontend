@@ -1,5 +1,5 @@
 import { registerUser } from "../src/utils/auth";
-import MySwal from "sweetalert2"
+import MySwal from "sweetalert2";
 export async function handleRegister(form, onSuccess) {
   if (form.password !== form.confirmPassword) {
     await MySwal.fire({
@@ -17,17 +17,17 @@ export async function handleRegister(form, onSuccess) {
 
   try {
     MySwal.fire({
-          title: "Sedang register...",
-          allowOutsideClick: false,
-          background: "#fff",
-          customClass: {
-            popup: "font-poppins",
-          },
-          didOpen: () => {
-            MySwal.showLoading();
-          },
-          showConfirmButton: false,
-        });
+      title: "Sedang register...",
+      allowOutsideClick: false,
+      background: "#fff",
+      customClass: {
+        popup: "font-poppins",
+      },
+      didOpen: () => {
+        MySwal.showLoading();
+      },
+      showConfirmButton: false,
+    });
 
     await registerUser({
       name: form.name,
@@ -38,15 +38,15 @@ export async function handleRegister(form, onSuccess) {
     MySwal.close();
 
     await MySwal.fire({
-          icon: "success",
-          title: "Register Berhasil",
-          timer: 1500,
-          showConfirmButton: false,
-          background: "#fff",
-          customClass: {
-            popup: "font-poppins",
-          },
-        });
+      icon: "success",
+      title: "Register Berhasil",
+      timer: 1500,
+      showConfirmButton: false,
+      background: "#fff",
+      customClass: {
+        popup: "font-poppins",
+      },
+    });
 
     onSuccess();
   } catch (error) {

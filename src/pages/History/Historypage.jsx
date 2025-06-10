@@ -79,29 +79,30 @@ function HistoryPage() {
           </h2>
 
           <div className="space-y-4">
-            {historyList
-              .filter(
-                (item) => new Date(item.createdAt).getMonth() === monthIndex,
-              ).length === 0 ? (
-                <p className="text-center text-white text-lg">Tidak ada riwayat untuk bulan ini.</p>
-              ) : (
-                historyList
-                  .filter(
-                    (item) => new Date(item.createdAt).getMonth() === monthIndex,
-                  )
-              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-              .map((item) => (
-                <HistoryCard
-                  key={item.id}
-                  city={item.city}
-                  status={item.status}
-                  magnitude={parseFloat(item.magnitude).toFixed(4)}
-                  tsunami={item.potensi_tsunami}
-                  temperature={item.temperature_2m_max}
-                  onDelete={() => handleDelete(item.id)}
-                  onDetail={() => handleDetail(item.id)}
-                />
-              ))
+            {historyList.filter(
+              (item) => new Date(item.createdAt).getMonth() === monthIndex,
+            ).length === 0 ? (
+              <p className="text-center text-white text-lg">
+                Tidak ada riwayat untuk bulan ini.
+              </p>
+            ) : (
+              historyList
+                .filter(
+                  (item) => new Date(item.createdAt).getMonth() === monthIndex,
+                )
+                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                .map((item) => (
+                  <HistoryCard
+                    key={item.id}
+                    city={item.city}
+                    status={item.status}
+                    magnitude={parseFloat(item.magnitude).toFixed(4)}
+                    tsunami={item.potensi_tsunami}
+                    temperature={item.temperature_2m_max}
+                    onDelete={() => handleDelete(item.id)}
+                    onDetail={() => handleDetail(item.id)}
+                  />
+                ))
             )}
           </div>
 
