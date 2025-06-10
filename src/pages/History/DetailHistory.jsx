@@ -179,11 +179,11 @@ function DetailHistory() {
               </div>
               <p className="flex items-center gap-2">
                 <FaBolt /> Magnitudo:{" "}
-                <span className="font-normal">{parseFloat(data.magnitude).toFixed(2)} M</span>
+                <span className="font-normal">{parseFloat(data.magnitude).toFixed(4)} M</span>
               </p>
               <p className="flex items-center gap-2  ">
                 <FaArrowsAltV /> Kedalaman:{" "}
-                <span className="font-normal">{parseFloat(data.depth).toFixed(2)} km</span>
+                <span className="font-normal">{parseFloat(data.depth).toFixed(4)} km</span>
               </p>
               <p className="flex items-center gap-2  ">
                 <FaWater /> Potensi Tsunami:{" "}

@@ -127,7 +127,7 @@ function Map() {
                       <p className="flex items-center gap-3">
                         <FaWaveSquare color="C43238" />
                         <strong className="font-bold">Gempa Bumi:</strong>
-                        <span>{parseFloat(prediction.magnitude).toFixed(2)} M</span>
+                        <span>{parseFloat(prediction.magnitude).toFixed(4)} M</span>
                       </p>
                       <p className="flex items-center gap-3">
                         <FaWater color="0687C3" />

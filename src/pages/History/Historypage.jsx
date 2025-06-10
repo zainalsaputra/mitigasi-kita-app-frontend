@@ -89,7 +89,7 @@ function HistoryPage() {
                   key={item.id}
                   city={item.city}
                   status={item.status}
-                  magnitude={parseFloat(item.magnitude).toFixed(2)}
+                  magnitude={parseFloat(item.magnitude).toFixed(4)}
                   tsunami={item.potensi_tsunami}
                   temperature={item.temperature_2m_max}
                   onDelete={() => handleDelete(item.id)}
