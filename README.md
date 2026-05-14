@@ -58,8 +58,15 @@ MVP (Model-View-Presenter) Pattern:
 git clone https://github.com/zainalsaputra/mitigasi-kita-app-frontend.git
 cd mitigasi-kita-app-frontend
 npm install
+cp .env.example .env
+# sesuaikan VITE_API_BASE_URL ke backend Anda
 npm run dev
 ```
+
+## Environment Variables
+
+- `VITE_API_BASE_URL`: Base URL backend API (contoh: `http://localhost:3000`)
+- `VITE_API_PREFIX`: Prefix route API backend (default: `/api`)
 
 ## Contributing
 
